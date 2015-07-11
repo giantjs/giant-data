@@ -1,7 +1,7 @@
 {
     "name"           : "giant-data",
     "version"        : "0.0.3",
-    "description"    : "Essential data structures, and behaviors",
+    "description"    : "Data structures module for Giant",
     "keywords"       : [
         "tools",
         "data",
