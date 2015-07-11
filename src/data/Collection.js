@@ -1,4 +1,4 @@
-/*global giant, giant, giant */
+/*global giant */
 giant.postpone(giant, 'Collection', function () {
     "use strict";
 
@@ -610,7 +610,7 @@ giant.postpone(giant, 'Collection', function () {
              * @example
              * c.mapValues(function (item) {
              *  return 'hello' + item;
-             * }, giant.Collection.of(String));
+             * }.Collection.of(String));
              * @param {function} mapper Mapper function. Takes `item` and `itemKey` as arguments, and is expected
              * to return the mapped item value for the new collection.
              * @param {object} [context=this] Optional handler context. Set to the collection instance by default.

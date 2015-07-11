@@ -1,4 +1,4 @@
-/*global giant, giant, giant */
+/*global giant */
 giant.postpone(giant, 'Path', function () {
     "use strict";
 

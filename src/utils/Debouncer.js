@@ -1,4 +1,4 @@
-/*global giant, giant, Q, giant */
+/*global giant, Q */
 /*jshint browser:true, node:true */
 giant.postpone(giant, 'Debouncer', function () {
     "use strict";
