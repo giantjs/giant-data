@@ -1,15 +1,15 @@
-/*global dessert, troop, sntls */
-troop.postpone(sntls, 'Utils', function () {
+/*global giant, giant, giant */
+giant.postpone(giant, 'Utils', function () {
     "use strict";
 
     var hOP = Object.prototype.hasOwnProperty;
 
     /**
-     * @class sntls.Utils
-     * @extends troop.Base
+     * @class giant.Utils
+     * @extends giant.Base
      */
-    sntls.Utils = troop.Base.extend()
-        .addMethods(/** @lends sntls.Utils */{
+    giant.Utils = giant.Base.extend()
+        .addMethods(/** @lends giant.Utils */{
             /**
              * Determines whether an object has any enumerable
              * properties.

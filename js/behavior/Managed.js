@@ -1,26 +1,26 @@
-/*global dessert, troop, sntls */
-troop.postpone(sntls, 'Managed', function (ns, className) {
+/*global giant, giant, giant */
+giant.postpone(giant, 'Managed', function (ns, className) {
     "use strict";
 
-    var base = sntls.Documented,
+    var base = giant.Documented,
         self = base.extend(className);
 
     /**
-     * @name sntls.Managed.create
+     * @name giant.Managed.create
      * @function
-     * @returns {sntls.Managed}
+     * @returns {giant.Managed}
      */
 
     /**
      * Managed trait, extends `Documented` trait with a dynamic instance registry.
      * @class
-     * @extends sntls.Documented
+     * @extends giant.Documented
      */
-    sntls.Managed = self
-        .addPublic(/** @lends sntls.Managed */{
-            instanceRegistry: sntls.Collection.create()
+    giant.Managed = self
+        .addPublic(/** @lends giant.Managed */{
+            instanceRegistry: giant.Collection.create()
         })
-        .addMethods(/** @lends sntls.Managed# */{
+        .addMethods(/** @lends giant.Managed# */{
             /**
              * @ignore
              */
@@ -31,7 +31,7 @@ troop.postpone(sntls, 'Managed', function (ns, className) {
 
             /**
              * Adds instance to registry.
-             * @returns {sntls.Managed}
+             * @returns {giant.Managed}
              */
             addToRegistry: function () {
                 self.instanceRegistry.setItem(this.instanceId, this);
@@ -40,7 +40,7 @@ troop.postpone(sntls, 'Managed', function (ns, className) {
 
             /**
              * Removes instance from registry.
-             * @returns {sntls.Managed}
+             * @returns {giant.Managed}
              */
             removeFromRegistry: function () {
                 self.instanceRegistry.deleteItem(this.instanceId);
@@ -51,14 +51,14 @@ troop.postpone(sntls, 'Managed', function (ns, className) {
              * Prepares instance for garbage collection. Call it before disposing of instance in order to avoid
              * memory leaks.
              * @example
-             * MyManaged = troop.Base.extend()
-             *   .addTrait(sntls.Managed)
+             * MyManaged = giant.Base.extend()
+             *   .addTrait(giant.Managed)
              *   .addMethods({
-             *       init: function () {sntls.Managed.init.call(this);}
+             *       init: function () {giant.Managed.init.call(this);}
              *   });
              * instance = MyManaged.create(); // instance will be added to registry
              * instance.destroy(); // cleans up
-             * @returns {sntls.Managed}
+             * @returns {giant.Managed}
              */
             destroy: function () {
                 this.removeFromRegistry();
@@ -68,8 +68,8 @@ troop.postpone(sntls, 'Managed', function (ns, className) {
             /**
              * Fetches instance by ID.
              * @param {number|string} instanceId
-             * @returns {sntls.Managed}
-             * @memberOf sntls.Managed
+             * @returns {giant.Managed}
+             * @memberOf giant.Managed
              */
             getInstanceById: function (instanceId) {
                 return self.instanceRegistry.getItem(instanceId);

@@ -1,4 +1,4 @@
-/*global dessert, troop, sntls, sntls */
+/*global giant, giant, giant, giant */
 /*global module, test, asyncTest, start, expect, ok, equal, strictEqual, notStrictEqual, deepEqual, notDeepEqual, raises */
 (function () {
     "use strict";
@@ -7,17 +7,17 @@
 
     test("Instantiation", function () {
         raises(function () {
-            sntls.Debouncer.create();
+            giant.Debouncer.create();
         }, "should raise exception on missing argument");
 
         raises(function () {
-            sntls.Debouncer.create('foo');
+            giant.Debouncer.create('foo');
         }, "should raise exception on invalid argument");
 
         function originalFunction() {
         }
 
-        var debounced = sntls.Debouncer.create(originalFunction);
+        var debounced = giant.Debouncer.create(originalFunction);
 
         strictEqual(debounced.originalFunction, originalFunction, "should set originalFunction property to argument");
         ok(debounced.hasOwnProperty('debounceTimer'), "should add debounceTimer property");
@@ -33,7 +33,7 @@
 
         var debouncer = foo.toDebouncer();
 
-        ok(debouncer.isA(sntls.Debouncer), "should return Debouncer instance");
+        ok(debouncer.isA(giant.Debouncer), "should return Debouncer instance");
         strictEqual(debouncer.originalFunction, foo, "should set originalFunction property");
     });
 

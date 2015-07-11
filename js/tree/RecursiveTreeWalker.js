@@ -1,26 +1,26 @@
-/*global dessert, troop, sntls */
-troop.postpone(sntls, 'RecursiveTreeWalker', function () {
+/*global giant, giant, giant */
+giant.postpone(giant, 'RecursiveTreeWalker', function () {
     "use strict";
 
-    var base = sntls.TreeWalker,
+    var base = giant.TreeWalker,
         hOP = Object.prototype.hasOwnProperty;
 
     /**
      * Instantiates class
-     * @name sntls.RecursiveTreeWalker.create
+     * @name giant.RecursiveTreeWalker.create
      * @function
      * @param {function} handler
-     * @param {sntls.Query} [query]
-     * @returns {sntls.RecursiveTreeWalker}
+     * @param {giant.Query} [query]
+     * @returns {giant.RecursiveTreeWalker}
      */
 
     /**
      * Traverses tree recursively, according to a query expression.
-     * @class sntls.RecursiveTreeWalker
-     * @extends sntls.TreeWalker
+     * @class giant.RecursiveTreeWalker
+     * @extends giant.TreeWalker
      */
-    sntls.RecursiveTreeWalker = base.extend()
-        .addConstants(/** @lends sntls.RecursiveTreeWalker */{
+    giant.RecursiveTreeWalker = base.extend()
+        .addConstants(/** @lends giant.RecursiveTreeWalker */{
             /**
              * Key-value pair marker character for marking return value.
              * Queries will collect leaf nodes unless there's a kvp in the query is marked like this.
@@ -29,7 +29,7 @@ troop.postpone(sntls, 'RecursiveTreeWalker', function () {
              */
             RETURN_MARKER: '{'
         })
-        .addPrivateMethods(/** @lends sntls.RecursiveTreeWalker */{
+        .addPrivateMethods(/** @lends giant.RecursiveTreeWalker */{
             /**
              * Gathers all indices of specified value from specified array.
              * @param {Array} array
@@ -108,7 +108,7 @@ troop.postpone(sntls, 'RecursiveTreeWalker', function () {
              * Retrieves an array of keys from the node passed
              * according to the given pattern.
              * @param {object} node Node for which to obtain the keys.
-             * @param {string|sntls.KeyValuePattern} pattern
+             * @param {string|giant.KeyValuePattern} pattern
              * @returns {object} Lookup of suitable keys
              * @private
              */
@@ -157,7 +157,7 @@ troop.postpone(sntls, 'RecursiveTreeWalker', function () {
                                 }
                             }
                         }
-                    } else if (descriptor.symbol === sntls.KeyValuePattern.WILDCARD_SYMBOL) {
+                    } else if (descriptor.symbol === giant.KeyValuePattern.WILDCARD_SYMBOL) {
                         if (hOP.call(descriptor, 'value')) {
                             // there's a value specified within pattern
                             if (node instanceof Array) {
@@ -171,7 +171,7 @@ troop.postpone(sntls, 'RecursiveTreeWalker', function () {
                             // wildcard pattern
                             result = node;
                         }
-                    } else if (descriptor.symbol === sntls.KeyValuePattern.PRIMITIVE_SYMBOL) {
+                    } else if (descriptor.symbol === giant.KeyValuePattern.PRIMITIVE_SYMBOL) {
                         // obtaining all matching keys from object
                         result = this._getKeysForPrimitiveValues(node, descriptor.value);
                     }
@@ -201,7 +201,7 @@ troop.postpone(sntls, 'RecursiveTreeWalker', function () {
              * Traverses a set of keys under the specified parent node.
              * @param {string[]} parentPath
              * @param {*} parentNode
-             * @param {sntls.Set} keySet
+             * @param {giant.Set} keySet
              * @param {number} queryPos Position of the current KPV in the query.
              * @param {boolean} isInSkipMode
              * @param {boolean} hasMarkedParent
@@ -240,7 +240,7 @@ troop.postpone(sntls, 'RecursiveTreeWalker', function () {
              * @param {boolean} isInSkipMode
              * @param {boolean} isUnderMarkedNode
              * @returns {boolean} Indicates whether there were any matching nodes under the current node.
-             * @memberOf sntls.RecursiveTreeWalker#
+             * @memberOf giant.RecursiveTreeWalker#
              * @private
              */
             _walk: function (currentPath, currentNode, queryPos, isInSkipMode, isUnderMarkedNode) {
@@ -248,7 +248,7 @@ troop.postpone(sntls, 'RecursiveTreeWalker', function () {
                     currentKvp = queryAsArray[queryPos],
                     result = false;
 
-                if (currentKvp === sntls.Query.PATTERN_SKIP) {
+                if (currentKvp === giant.Query.PATTERN_SKIP) {
                     // current pattern is skipper
                     // setting skip mode on, and moving on to next KVP in query
                     isInSkipMode = true;
@@ -269,9 +269,9 @@ troop.postpone(sntls, 'RecursiveTreeWalker', function () {
                     return true;
                 }
 
-                var matchingKeySet = sntls.Set.create(this._getKeysByPattern(currentNode, currentKvp)),
+                var matchingKeySet = giant.Set.create(this._getKeysByPattern(currentNode, currentKvp)),
                     parentKvp = queryAsArray[queryPos - 1],
-                    hasMarkedParent = sntls.KeyValuePattern.isBaseOf(parentKvp) &&
+                    hasMarkedParent = giant.KeyValuePattern.isBaseOf(parentKvp) &&
                                       parentKvp.getMarker() === this.RETURN_MARKER;
 
                 if (matchingKeySet.getKeyCount()) {
@@ -295,7 +295,7 @@ troop.postpone(sntls, 'RecursiveTreeWalker', function () {
                     // we're in skip mode so rest of the keys under the current node must be traversed
 
                     // obtaining keys for properties that can be traversed
-                    objectKeySet = sntls.Set.create(this._getKeysForObjectProperties(currentNode));
+                    objectKeySet = giant.Set.create(this._getKeysForObjectProperties(currentNode));
                     traversableKeySet = matchingKeySet.subtractFrom(objectKeySet);
 
                     if (traversableKeySet.getKeyCount()) {
@@ -319,20 +319,20 @@ troop.postpone(sntls, 'RecursiveTreeWalker', function () {
                 return result;
             }
         })
-        .addMethods(/** @lends sntls.RecursiveTreeWalker# */{
+        .addMethods(/** @lends giant.RecursiveTreeWalker# */{
             /**
              * @param {function} handler
-             * @param {sntls.Query} [query]
+             * @param {giant.Query} [query]
              * @ignore
              */
             init: function (handler, query) {
-                dessert.isQueryOptional(query, "Invalid query");
+                giant.isQueryOptional(query, "Invalid query");
 
                 base.init.call(this, handler);
 
                 /**
                  * Query guiding the traversal.
-                 * @type {sntls.Query}
+                 * @type {giant.Query}
                  */
                 this.query = query || '\\>"'.toQuery();
             },
@@ -340,11 +340,11 @@ troop.postpone(sntls, 'RecursiveTreeWalker', function () {
             /**
              * Walks the specified node according to query
              * @param {*} node
-             * @returns {sntls.RecursiveTreeWalker}
+             * @returns {giant.RecursiveTreeWalker}
              */
             walk: function (node) {
                 // initializing traversal path state
-                this.currentPath = sntls.Path.create([]);
+                this.currentPath = giant.Path.create([]);
 
                 // walking node
                 this._walk([], node, 0, false, false);

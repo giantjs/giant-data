@@ -1,31 +1,31 @@
 /*global module, test, raises, ok, equal, strictEqual, deepEqual, notDeepEqual */
-/*global sntls */
+/*global giant */
 (function () {
     "use strict";
 
     module("Set");
 
     test("Type conversion", function () {
-        var hash = sntls.Hash.create();
+        var hash = giant.Hash.create();
 
-        ok(hash.toSet().isA(sntls.Set), "Converted to set");
+        ok(hash.toSet().isA(giant.Set), "Converted to set");
     });
 
     test("Array conversion", function () {
         var buffer = [1, 2, 3, 4],
             hash = buffer.toSet();
 
-        ok(hash.isA(sntls.Set), "Is set");
+        ok(hash.isA(giant.Set), "Is set");
         strictEqual(hash.items, buffer, "Same buffer");
     });
 
     test("Intersection", function () {
-        var set1 = sntls.Set.create({
+        var set1 = giant.Set.create({
                 foo  : 'bar',
                 hello: 'world',
                 howdy: 'all'
             }),
-            set2 = sntls.Set.create({
+            set2 = giant.Set.create({
                 foo  : 'baz',
                 santa: 'claus'
             }),
@@ -33,7 +33,7 @@
 
         result = set1.intersectWith(set2);
 
-        ok(result.isA(sntls.Set), "Return type");
+        ok(result.isA(giant.Set), "Return type");
         deepEqual(
             result.items,
             {
@@ -45,12 +45,12 @@
     });
 
     test("Union", function () {
-        var set1 = sntls.Set.create({
+        var set1 = giant.Set.create({
                 foo  : 'bar',
                 hello: 'world',
                 howdy: 'all'
             }),
-            set2 = sntls.Set.create({
+            set2 = giant.Set.create({
                 foo  : 'baz',
                 santa: 'claus'
             }),
@@ -58,7 +58,7 @@
 
         result = set1.unionWith(set2);
 
-        ok(result.isA(sntls.Set), "Result type");
+        ok(result.isA(giant.Set), "Result type");
         deepEqual(
             result.items,
             {
@@ -74,17 +74,17 @@
     });
 
     test("Subtraction", function () {
-        var set1 = sntls.Set.create({
+        var set1 = giant.Set.create({
                 foo  : 'bar',
                 hello: 'world',
                 howdy: 'all'
             }),
-            set2 = sntls.Set.create({
+            set2 = giant.Set.create({
                 foo  : 'baz',
                 santa: 'claus'
             });
 
-        ok(set1.subtract(set2).isA(sntls.Set), "Result type");
+        ok(set1.subtract(set2).isA(giant.Set), "Result type");
 
         deepEqual(
             set1.subtract(set2).items,
@@ -105,17 +105,17 @@
     });
 
     test("Subtraction 2", function () {
-        var set1 = sntls.Set.create({
+        var set1 = giant.Set.create({
                 foo  : 'bar',
                 hello: 'world',
                 howdy: 'all'
             }),
-            set2 = sntls.Set.create({
+            set2 = giant.Set.create({
                 foo  : 'baz',
                 santa: 'claus'
             });
 
-        ok(set1.subtractFrom(set2).isA(sntls.Set), "Result type");
+        ok(set1.subtractFrom(set2).isA(giant.Set), "Result type");
 
         deepEqual(
             set2.subtractFrom(set1).items,
@@ -136,12 +136,12 @@
     });
 
     test("Difference", function () {
-        var set1 = sntls.Set.create({
+        var set1 = giant.Set.create({
                 foo  : 'bar',
                 hello: 'world',
                 howdy: 'all'
             }),
-            set2 = sntls.Set.create({
+            set2 = giant.Set.create({
                 foo  : 'baz',
                 santa: 'claus'
             });

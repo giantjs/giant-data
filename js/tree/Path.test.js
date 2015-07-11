@@ -1,4 +1,4 @@
-/*global sntls, module, test, expect, ok, equal, strictEqual, notStrictEqual, deepEqual, raises */
+/*global giant, module, test, expect, ok, equal, strictEqual, notStrictEqual, deepEqual, raises */
 (function () {
     "use strict";
 
@@ -6,14 +6,14 @@
 
     test("Instantiation", function () {
         raises(function () {
-            sntls.Path.create();
+            giant.Path.create();
         }, "should raise exception on missing argument");
 
         raises(function () {
-            sntls.Path.create('foo');
+            giant.Path.create('foo');
         }, "should raise exception on invalid argument");
 
-        var path = sntls.Path.create(['test', 'path', 'it', 'is']);
+        var path = giant.Path.create(['test', 'path', 'it', 'is']);
 
         deepEqual(path.asArray, ['test', 'path', 'it', 'is'], "should preserve string keys");
     });
@@ -21,7 +21,7 @@
     test("Conversion from string", function () {
         var path = 'test>path>hello>world'.toPath();
 
-        ok(sntls.Path.isBaseOf(path), "should return Path instance");
+        ok(giant.Path.isBaseOf(path), "should return Path instance");
         deepEqual(path.asArray, ['test', 'path', 'hello', 'world'], "should set path buffer");
         deepEqual('test%5E>path'.toPath().asArray, ['test^', 'path'], "should URI decode path keys");
     });
@@ -29,7 +29,7 @@
     test("Conversion from array", function () {
         var path = ['test', 'path', 'hello', 'world'].toPath();
 
-        ok(sntls.Path.isBaseOf(path), "should return Path instance");
+        ok(giant.Path.isBaseOf(path), "should return Path instance");
         deepEqual(path.asArray, ['test', 'path', 'hello', 'world'], "should set path buffer");
     });
 
@@ -42,7 +42,7 @@
         var path = 'test>path>it>is'.toPath(),
             clonePath = path.clone();
 
-        ok(clonePath.isA(sntls.Path), "should return Path instance");
+        ok(clonePath.isA(giant.Path), "should return Path instance");
         deepEqual(path.asArray, clonePath.asArray, "should copy path buffer");
         notStrictEqual(path, clonePath, "should return different Path instance than original");
         notStrictEqual(path.asArray, clonePath.asArray, "should set different path buffer than original");
@@ -127,7 +127,7 @@
     });
 
     test("Equality tester", function () {
-        /** @type sntls.Path */
+        /** @type giant.Path */
         var path = 'test>path>it>is'.toPath();
 
         ok(!path.equals(), "should return false on passing undefined");

@@ -1,4 +1,4 @@
-/*global sntls, module, test, expect, ok, equal, strictEqual, notStrictEqual, deepEqual, raises */
+/*global giant, module, test, expect, ok, equal, strictEqual, notStrictEqual, deepEqual, raises */
 (function () {
     "use strict";
 
@@ -24,7 +24,7 @@
         keys = [];
         paths = [];
 
-        walker = sntls.IterativeTreeWalker
+        walker = giant.IterativeTreeWalker
             .create(function () {
                 paths.push(this.currentPath.toString());
                 keys.push(this.currentKey);
@@ -54,7 +54,7 @@
         paths = [];
 
         // setting up traversal to stop at key '1'
-        sntls.IterativeTreeWalker
+        giant.IterativeTreeWalker
             .create(function () {
                 paths.push(this.currentPath.toString());
                 if (this.currentKey === '1') {

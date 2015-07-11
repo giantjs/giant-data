@@ -1,34 +1,34 @@
-/*global dessert, troop, sntls */
-troop.postpone(sntls, 'ArrayCollection', function () {
+/*global giant, giant, giant */
+giant.postpone(giant, 'ArrayCollection', function () {
     "use strict";
 
     /**
-     * @name sntls.ArrayCollection.create
+     * @name giant.ArrayCollection.create
      * @function
      * @param {object} [items] Initial contents.
-     * @returns {sntls.ArrayCollection}
+     * @returns {giant.ArrayCollection}
      */
 
     /**
      * General collection for managing multiple arrays.
-     * @class sntls.ArrayCollection
-     * @extends sntls.Collection
+     * @class giant.ArrayCollection
+     * @extends giant.Collection
      * @extends Array
      * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array
      */
-    sntls.ArrayCollection = sntls.Collection.of(Array);
+    giant.ArrayCollection = giant.Collection.of(Array);
 });
 
-troop.amendPostponed(sntls, 'Hash', function () {
+giant.amendPostponed(giant, 'Hash', function () {
     "use strict";
 
-    sntls.Hash.addMethods(/** @lends sntls.Hash# */{
+    giant.Hash.addMethods(/** @lends giant.Hash# */{
         /**
          * Reinterprets hash as array collection.
-         * @returns {sntls.ArrayCollection}
+         * @returns {giant.ArrayCollection}
          */
         toArrayCollection: function () {
-            return sntls.ArrayCollection.create(this.items);
+            return giant.ArrayCollection.create(this.items);
         }
     });
 });
@@ -36,15 +36,15 @@ troop.amendPostponed(sntls, 'Hash', function () {
 (function () {
     "use strict";
 
-    troop.Properties.addProperties.call(
+    giant.Properties.addProperties.call(
         Array.prototype,
         /** @lends Array# */{
             /**
              * Creates a new ArrayCollection instance based on the current array.
-             * @returns {sntls.ArrayCollection}
+             * @returns {giant.ArrayCollection}
              */
             toArrayCollection: function () {
-                return sntls.ArrayCollection.create(this);
+                return giant.ArrayCollection.create(this);
             }
         },
         false, false, false);

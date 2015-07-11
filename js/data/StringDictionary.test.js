@@ -1,24 +1,24 @@
 /*global module, test, raises, ok, equal, strictEqual, deepEqual */
-/*global sntls */
+/*global giant */
 (function () {
     "use strict";
 
-    var StringDictionary = sntls.StringDictionary;
+    var StringDictionary = giant.StringDictionary;
 
     module("StringDictionary");
 
     test("Type conversion", function () {
-        var hash = sntls.Hash.create(),
+        var hash = giant.Hash.create(),
             dict = hash.toStringDictionary();
 
-        ok(dict.isA(sntls.StringDictionary), "Hash converted to string dictionary");
+        ok(dict.isA(giant.StringDictionary), "Hash converted to string dictionary");
     });
 
     test("Array conversion", function () {
         var buffer = [1, 2, 3, 4],
             hash = buffer.toStringDictionary();
 
-        ok(hash.isA(sntls.StringDictionary), "Is string dictionary");
+        ok(hash.isA(giant.StringDictionary), "Is string dictionary");
         strictEqual(hash.items, buffer, "Same buffer");
     });
 

@@ -1,5 +1,5 @@
 /*global module, test, expect, ok, raises, equal, strictEqual, notStrictEqual, deepEqual */
-/*global sntls */
+/*global giant */
 (function () {
     "use strict";
 
@@ -9,13 +9,13 @@
         var hash;
 
         raises(function () {
-            hash = sntls.Hash.create('foo');
+            hash = giant.Hash.create('foo');
         }, "Invalid items object");
 
-        hash = sntls.Hash.create();
+        hash = giant.Hash.create();
         deepEqual(hash.items, {}, "Empty items property on hash");
 
-        hash = sntls.Hash.create({
+        hash = giant.Hash.create({
             foo: 'bar'
         });
         deepEqual(hash.items, {
@@ -27,12 +27,12 @@
         var buffer = [1, 2, 3, 4],
             hash = buffer.toHash();
 
-        ok(hash.isA(sntls.Hash), "Is hash");
+        ok(hash.isA(giant.Hash), "Is hash");
         strictEqual(hash.items, buffer, "Same buffer");
     });
 
     test("Cloning hash", function () {
-        var original = sntls.Hash.create({
+        var original = giant.Hash.create({
                 foo  : 'bar',
                 hello: 'world'
             }),
@@ -45,7 +45,7 @@
     });
 
     test("Cloning with array buffer", function () {
-        var original = sntls.Hash.create(['foo', 'bar']),
+        var original = giant.Hash.create(['foo', 'bar']),
             clone = original.clone();
 
         ok(clone.items instanceof Array, "Cloning retains array buffer type");
@@ -56,15 +56,15 @@
     test("Single key & value extraction", function () {
         var hash;
 
-        hash = sntls.Hash.create({});
+        hash = giant.Hash.create({});
         equal(typeof hash.getFirstKey(), 'undefined', "First key in empty hash");
         equal(typeof hash.getFirstValue(), 'undefined', "First value in empty hash");
 
-        hash = sntls.Hash.create({hello: 'world'});
+        hash = giant.Hash.create({hello: 'world'});
         equal(hash.getFirstKey(), 'hello', "First key in singular hash");
         equal(hash.getFirstValue(), 'world', "First value in singular hash");
 
-        hash = sntls.Hash.create({
+        hash = giant.Hash.create({
             one : 'hello',
             two : 'world!',
             four: {},
@@ -75,7 +75,7 @@
     });
 
     test("Key extraction", function () {
-        var hash = sntls.Hash.create({
+        var hash = giant.Hash.create({
             one  : 'hello',
             two  : 'world!',
             three: 5,
@@ -89,7 +89,7 @@
     });
 
     test("Key counter", function () {
-        var hash = sntls.Hash.create({
+        var hash = giant.Hash.create({
             one  : 'hello',
             two  : 'world!',
             three: 5,
@@ -103,7 +103,7 @@
     });
 
     test("Value extraction", function () {
-        var hash = sntls.Hash.create({
+        var hash = giant.Hash.create({
             one  : 'hello',
             two  : 'world!',
             three: 5,
@@ -125,7 +125,7 @@
     });
 
     test("ValueExtraction wrapped", function () {
-        var hash = sntls.Hash.create({
+        var hash = giant.Hash.create({
                 one  : 'hello',
                 two  : 'world!',
                 three: 5,
@@ -136,7 +136,7 @@
 
         result = hash.getValuesAsHash();
 
-        ok(result.isA(sntls.Hash), "Hash retrieved");
+        ok(result.isA(giant.Hash), "Hash retrieved");
 
         deepEqual(
             result.items,
@@ -155,7 +155,7 @@
         var hash,
             result;
 
-        hash = sntls.Hash.create({
+        hash = giant.Hash.create({
             0: 'hello',
             1: 'world',
             3: '!'
@@ -187,7 +187,7 @@
     test("Clearing object based hash", function () {
         expect(4);
 
-        var hash = sntls.Hash.create({
+        var hash = giant.Hash.create({
             foo  : 'bar',
             hello: 'world'
         });
@@ -207,7 +207,7 @@
     test("Clearing array based hash", function () {
         expect(2);
 
-        var hash = sntls.Hash.create(['foo', 'bar', 'hello', 'world']);
+        var hash = giant.Hash.create(['foo', 'bar', 'hello', 'world']);
 
         hash.clear(function (items) {
             strictEqual(items, hash.items, "should pass new items to handler");
@@ -225,7 +225,7 @@
         var hash,
             result;
 
-        hash = sntls.Hash.create({
+        hash = giant.Hash.create({
             foo  : 'bar',
             hello: 'world'
         });
@@ -258,7 +258,7 @@
         var hash,
             result;
 
-        hash = sntls.Hash.create({
+        hash = giant.Hash.create({
             foo  : 'bar',
             hello: 'world'
         });

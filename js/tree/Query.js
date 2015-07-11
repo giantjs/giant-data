@@ -1,19 +1,19 @@
-/*global dessert, troop, sntls, sntls */
-troop.postpone(sntls, 'Query', function () {
+/*global giant, giant, giant, giant */
+giant.postpone(giant, 'Query', function () {
     "use strict";
 
-    var KeyValuePattern = sntls.KeyValuePattern,
-        base = sntls.Path;
+    var KeyValuePattern = giant.KeyValuePattern,
+        base = giant.Path;
 
     /**
      * Instantiates class.
      * Constructs query instance and populates it with query information. Keys in the query
      * (except for pattern objects) are assumed to be URI-encoded.
-     * @name sntls.Query.create
+     * @name giant.Query.create
      * @function
      * @param {Array} query Query in array representation (eg. ['this', 'is', '|'.toKeyValuePattern(), 'path']).
      * All patterns should be converted to KeyValuePattern instance.
-     * @returns {sntls.Query}
+     * @returns {giant.Query}
      */
 
     /**
@@ -30,40 +30,40 @@ troop.postpone(sntls, 'Query', function () {
      * 'hello>people>of>the>world' as well as 'hello>world', but not 'hello>all'.
      * - '^value' is ignored.
      * On top of that, individual key-value patterns may be marked as return values by placing them inside curly braces.
-     * @class sntls.Query
-     * @extends sntls.Path
+     * @class giant.Query
+     * @extends giant.Path
      */
-    sntls.Query = base.extend()
-        .addConstants(/** @lends sntls.Query */{
+    giant.Query = base.extend()
+        .addConstants(/** @lends giant.Query */{
             /**
              * Regular expression that tests whether string contains query patterns.
              * Should include all special KeyValuePattern characters.
              * @type {RegExp}
              */
             RE_QUERY_TESTER: new RegExp([
-                '\\' + sntls.KeyValuePattern.OPTION_SEPARATOR,
-                '\\' + sntls.KeyValuePattern.KEY_VALUE_SEPARATOR,
-                '\\' + sntls.KeyValuePattern.WILDCARD_SYMBOL,
-                '\\' + sntls.KeyValuePattern.PRIMITIVE_SYMBOL,
-                '\\' + sntls.KeyValuePattern.SKIP_SYMBOL,
-                '\\' + sntls.KeyValuePattern.MARKER_BRACKET,
-                '\\' + sntls.KeyValuePattern.MARKER_CURLY
+                '\\' + giant.KeyValuePattern.OPTION_SEPARATOR,
+                '\\' + giant.KeyValuePattern.KEY_VALUE_SEPARATOR,
+                '\\' + giant.KeyValuePattern.WILDCARD_SYMBOL,
+                '\\' + giant.KeyValuePattern.PRIMITIVE_SYMBOL,
+                '\\' + giant.KeyValuePattern.SKIP_SYMBOL,
+                '\\' + giant.KeyValuePattern.MARKER_BRACKET,
+                '\\' + giant.KeyValuePattern.MARKER_CURLY
             ].join('|')),
 
             /**
              * Pattern indicating skip mode. In skip mode, keys are skipped
              * in the path between the previous key and the nearest key matched
              * by the next pattern in the query.
-             * @type {sntls.KeyValuePattern}
+             * @type {giant.KeyValuePattern}
              */
             PATTERN_SKIP: KeyValuePattern.create(KeyValuePattern.SKIP_SYMBOL)
         })
-        .addMethods(/** @lends sntls.Query# */{
+        .addMethods(/** @lends giant.Query# */{
             /**
              * Prepares string query buffer for normalization.
              * @param {string} asString Array of strings
-             * @returns {string[]|sntls.KeyValuePattern[]}
-             * @memberOf sntls.Query
+             * @returns {string[]|giant.KeyValuePattern[]}
+             * @memberOf giant.Query
              */
             stringToQueryArray: function (asString) {
                 var asArray = asString.split(this.PATH_SEPARATOR),
@@ -92,9 +92,9 @@ troop.postpone(sntls, 'Query', function () {
              * Normalizes query buffer. Leaves key literals as they are,
              * converts array pattern expressions to actual pattern objects.
              * Makes sure skipper patterns all reference the same instance.
-             * @param {string[]|sntls.KeyValuePattern[]} asArray
-             * @returns {string[]|sntls.KeyValuePattern[]}
-             * @memberOf sntls.Query
+             * @param {string[]|giant.KeyValuePattern[]} asArray
+             * @returns {string[]|giant.KeyValuePattern[]}
+             * @memberOf giant.Query
              */
             arrayToQueryArray: function (asArray) {
                 var result = [],
@@ -117,7 +117,7 @@ troop.postpone(sntls, 'Query', function () {
                             result.push(pattern);
                         }
                     } else {
-                        dessert.assert(false, "Invalid key-value pattern", pattern);
+                        giant.assert(false, "Invalid key-value pattern", pattern);
                     }
                 }
 
@@ -128,8 +128,8 @@ troop.postpone(sntls, 'Query', function () {
              * Extracts the longest path from the start of the query.
              * Stem may not contain any wildcards, or other query expressions, only key literals.
              * @example
-             * sntls.Query.create('hello>world>|>foo>\>bar').getStemPath(); // path 'hello>world'
-             * @returns {sntls.Path}
+             * giant.Query.create('hello>world>|>foo>\>bar').getStemPath(); // path 'hello>world'
+             * @returns {giant.Path}
              */
             getStemPath: function () {
                 var asArray = this.asArray,
@@ -146,12 +146,12 @@ troop.postpone(sntls, 'Query', function () {
                     }
                 }
 
-                return sntls.Path.create(result);
+                return giant.Path.create(result);
             },
 
             /**
              * Determines whether the specified path matches the current query.
-             * @param {sntls.Path} path Path to be tested against the current query.
+             * @param {giant.Path} path Path to be tested against the current query.
              * @returns {boolean}
              */
             matchesPath: function (path) {
@@ -207,7 +207,7 @@ troop.postpone(sntls, 'Query', function () {
 
             /**
              * Determines whether paths matched by current query may be roots of the specified path.
-             * @param {sntls.Path} relativePath
+             * @param {giant.Path} relativePath
              * @returns {boolean}
              * @example
              * 'foo>|>bar'.toQuery().isRootOf('foo>baz>bar>hello'.toPath()) // true
@@ -222,7 +222,7 @@ troop.postpone(sntls, 'Query', function () {
              * Returns the string representation for the query, keys URI encoded and separated by '>',
              * patterns converted back to their symbol form ('|', '\', '<', and '^').
              * @example
-             * sntls.Query.create(['test^', '|'.toKeyValuePattern(), 'path']).toString() // "test%5E>|>path"
+             * giant.Query.create(['test^', '|'.toKeyValuePattern(), 'path']).toString() // "test%5E>|>path"
              * @returns {string}
              */
             toString: function () {
@@ -242,16 +242,16 @@ troop.postpone(sntls, 'Query', function () {
 (function () {
     "use strict";
 
-    var validators = dessert.validators;
+    var validators = giant.validators;
 
-    dessert.addTypes(/** @lends dessert */{
+    giant.addTypes(/** @lends giant */{
         isQuery: function (expr) {
-            return sntls.Query.isBaseOf(expr);
+            return giant.Query.isBaseOf(expr);
         },
 
         isQueryOptional: function (expr) {
             return typeof expr === 'undefined' ||
-                   sntls.Query.isBaseOf(expr);
+                   giant.Query.isBaseOf(expr);
         },
 
         /**
@@ -268,58 +268,58 @@ troop.postpone(sntls, 'Query', function () {
                     }
                 }
             } else if (this.isString(expr)) {
-                return sntls.Query.RE_QUERY_TESTER.test(expr);
+                return giant.Query.RE_QUERY_TESTER.test(expr);
             }
             return false;
         }
     });
 
-    troop.Properties.addProperties.call(
+    giant.Properties.addProperties.call(
         String.prototype,
         /** @lends String# */{
             /**
              * Creates a new Query instance based on the current string.
              * Keys are URI decoded or translated to the corresponding pattern object before being added to the internal buffer.
-             * @returns {sntls.Query}
+             * @returns {giant.Query}
              */
             toQuery: function () {
-                var Query = sntls.Query;
-                return /** @type {sntls.Query} */ Query.create(Query.stringToQueryArray(this));
+                var Query = giant.Query;
+                return /** @type {giant.Query} */ Query.create(Query.stringToQueryArray(this));
             },
 
             /**
              * Creates a new Path or Query instance based on the current string, depending on the
              * actual string contents.
-             * @returns {sntls.Path}
+             * @returns {giant.Path}
              */
             toPathOrQuery: function () {
-                var Query = sntls.Query;
-                return /** @type {sntls.Path} */ validators.isQueryExpression(this) ?
+                var Query = giant.Query;
+                return /** @type {giant.Path} */ validators.isQueryExpression(this) ?
                     this.toQuery() :
                     this.toPath();
             }
         },
         false, false, false);
 
-    troop.Properties.addProperties.call(
+    giant.Properties.addProperties.call(
         Array.prototype,
         /** @lends Array# */{
             /**
              * Creates a new Query instance based on the current array.
-             * @returns {sntls.Query}
+             * @returns {giant.Query}
              */
             toQuery: function () {
-                var Query = sntls.Query;
-                return /** @type {sntls.Query} */ Query.create(Query.arrayToQueryArray(this));
+                var Query = giant.Query;
+                return /** @type {giant.Query} */ Query.create(Query.arrayToQueryArray(this));
             },
 
             /**
              * Creates a new Path or Query instance based on the current array, depending on the
              * actual contents of the array.
-             * @returns {sntls.Path}
+             * @returns {giant.Path}
              */
             toPathOrQuery: function () {
-                return /** @type {sntls.Path} */ validators.isQueryExpression(this) ?
+                return /** @type {giant.Path} */ validators.isQueryExpression(this) ?
                     this.toQuery() :
                     this.toPath();
             }

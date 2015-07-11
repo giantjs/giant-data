@@ -1,22 +1,12 @@
-/**
- * Top-Level Library Namespace
- */
-/*global require */
+/*jshint node:true */
+
 /** @namespace */
-var sntls = {},
-    n$ = sntls;
+var giant = giant || require('giant-namespace');
 
-/**
- * @class
- * @see https://github.com/production-minds/dessert
- */
-var dessert = dessert || require('dessert');
-
-/**
- * @namespace
- * @see https://github.com/production-minds/troop
- */
-var troop = troop || require('troop');
+if (module.exports) {
+    require('giant-assertion');
+    require('giant-oop');
+}
 
 /**
  * @namespace

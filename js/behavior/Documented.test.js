@@ -1,4 +1,4 @@
-/*global phil, dessert, troop, sntls, module, test, expect, ok, equal, notEqual, strictEqual, deepEqual, raises */
+/*global phil, giant, giant, giant, module, test, expect, ok, equal, notEqual, strictEqual, deepEqual, raises */
 (function () {
     "use strict";
 
@@ -6,18 +6,18 @@
 
     test("Instantiation", function () {
         raises(function () {
-            troop.Base.extend()
-                .addTrait(sntls.Documented)
+            giant.Base.extend()
+                .addTrait(giant.Documented)
                 .extend();
         }, "Invalid class name");
 
-        var MyDocumented = troop.Base.extend()
-                .addTrait(sntls.Documented)
+        var MyDocumented = giant.Base.extend()
+                .addTrait(giant.Documented)
                 .extend('MyDocumented')
                 .addMethods({
-                    init: function () { sntls.Documented.init.call(this); }
+                    init: function () { giant.Documented.init.call(this); }
                 }),
-            nextInstanceId = sntls.Documented.nextInstanceId,
+            nextInstanceId = giant.Documented.nextInstanceId,
             myInstance;
 
         equal(MyDocumented.className, 'MyDocumented', "Class name");
@@ -26,6 +26,6 @@
 
         equal(myInstance.instanceId, nextInstanceId, "Assigned instance ID");
 
-        equal(sntls.Documented.nextInstanceId, nextInstanceId + 1, "Incremented instance ID");
+        equal(giant.Documented.nextInstanceId, nextInstanceId + 1, "Incremented instance ID");
     });
 }());

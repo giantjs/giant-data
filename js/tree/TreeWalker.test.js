@@ -1,4 +1,4 @@
-/*global sntls, module, test, expect, ok, equal, strictEqual, notStrictEqual, deepEqual, raises */
+/*global giant, module, test, expect, ok, equal, strictEqual, notStrictEqual, deepEqual, raises */
 (function () {
     "use strict";
 
@@ -8,10 +8,10 @@
         function handler() {}
 
         raises(function () {
-            sntls.TreeWalker.create();
+            giant.TreeWalker.create();
         }, "Invalid walker handler");
 
-        var walker = /** @type {sntls.IterativeTreeWalker} */ sntls.TreeWalker.create(handler);
+        var walker = /** @type {giant.IterativeTreeWalker} */ giant.TreeWalker.create(handler);
 
         strictEqual(walker.handler, handler, "Handler assigned");
         equal(typeof walker.currentKey, 'undefined', "Key uninitialized");
@@ -21,7 +21,7 @@
     });
 
     test("Termination", function () {
-        var walker = /** @type {sntls.IterativeTreeWalker} */ sntls.TreeWalker.create(function handler() {}),
+        var walker = /** @type {giant.IterativeTreeWalker} */ giant.TreeWalker.create(function handler() {}),
             result;
 
         result = walker.terminateTraversal();
@@ -33,7 +33,7 @@
     test("Reset", function () {
         function handler() {}
 
-        var walker = sntls.TreeWalker.create(handler),
+        var walker = giant.TreeWalker.create(handler),
             result;
 
         walker.currentKey = 'foo';

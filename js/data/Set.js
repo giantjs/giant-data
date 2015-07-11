@@ -1,33 +1,33 @@
-/*global dessert, troop, sntls */
-troop.postpone(sntls, 'Set', function () {
+/*global giant, giant, giant */
+giant.postpone(giant, 'Set', function () {
     "use strict";
 
-    var base = sntls.Hash,
+    var base = giant.Hash,
         self = base.extend(),
         hOP = Object.prototype.hasOwnProperty;
 
     /**
      * Instantiates class.
-     * @name sntls.Set.create
+     * @name giant.Set.create
      * @function
      * @param {object} items
-     * @returns {sntls.Set}
+     * @returns {giant.Set}
      */
 
     /**
      * Hash-based structure for performing standard set operations such as union, intersection, and difference.
      * @class
-     * @extends sntls.Hash
+     * @extends giant.Hash
      */
-    sntls.Set = self
-        .addMethods(/** @lends sntls.Set# */{
+    giant.Set = self
+        .addMethods(/** @lends giant.Set# */{
             /**
              * Retrieves intersection of two sets.
-             * @param {sntls.Set} remoteSet
-             * @return {sntls.Set} New set instance with items present in both current and remote set.
+             * @param {giant.Set} remoteSet
+             * @return {giant.Set} New set instance with items present in both current and remote set.
              */
             intersectWith: function (remoteSet) {
-                dessert.isSet(remoteSet, "Invalid set");
+                giant.isSet(remoteSet, "Invalid set");
 
                 var currentItems = this.items,
                     remoteItems = remoteSet.items,
@@ -46,8 +46,8 @@ troop.postpone(sntls, 'Set', function () {
 
             /**
              * Extracts symmetric difference of two sets.
-             * @param {sntls.Set} remoteSet
-             * @returns {sntls.Set} New set instance with elements only present in either current or remote set.
+             * @param {giant.Set} remoteSet
+             * @returns {giant.Set} New set instance with elements only present in either current or remote set.
              */
             differenceWith: function (remoteSet) {
                 return this
@@ -57,13 +57,13 @@ troop.postpone(sntls, 'Set', function () {
 
             /**
              * Unites two sets.
-             * @param {sntls.Set} remoteSet
-             * @returns {sntls.Set} New set instance with items from both current and remote sets.
+             * @param {giant.Set} remoteSet
+             * @returns {giant.Set} New set instance with items from both current and remote sets.
              */
             unionWith: function (remoteSet) {
-                dessert.isSet(remoteSet, "Invalid set");
+                giant.isSet(remoteSet, "Invalid set");
 
-                var resultItems = sntls.Utils.shallowCopy(this.items),
+                var resultItems = giant.Utils.shallowCopy(this.items),
                     currentItems = this.items,
                     remoteItems = remoteSet.items,
                     itemKey;
@@ -79,12 +79,12 @@ troop.postpone(sntls, 'Set', function () {
 
             /**
              * Retrieves relative complement of two sets (A\B).
-             * @param {sntls.Set} remoteSet
-             * @returns {sntls.Set} New set instance with items from current instance except what's also present in
+             * @param {giant.Set} remoteSet
+             * @returns {giant.Set} New set instance with items from current instance except what's also present in
              * remote set.
              */
             subtract: function (remoteSet) {
-                dessert.isSet(remoteSet, "Invalid set");
+                giant.isSet(remoteSet, "Invalid set");
 
                 var currentItems = this.items,
                     remoteItems = remoteSet.items,
@@ -103,12 +103,12 @@ troop.postpone(sntls, 'Set', function () {
 
             /**
              * Retrieves relative complement of two sets (B\A).
-             * @param {sntls.Set} remoteSet
-             * @returns {sntls.Set} New set instance with items from remote instance except what's also present in
+             * @param {giant.Set} remoteSet
+             * @returns {giant.Set} New set instance with items from remote instance except what's also present in
              * current set.
              */
             subtractFrom: function (remoteSet) {
-                dessert.isSet(remoteSet, "Invalid set");
+                giant.isSet(remoteSet, "Invalid set");
 
                 var currentItems = this.items,
                     remoteItems = remoteSet.items,
@@ -127,16 +127,16 @@ troop.postpone(sntls, 'Set', function () {
         });
 });
 
-troop.amendPostponed(sntls, 'Hash', function () {
+giant.amendPostponed(giant, 'Hash', function () {
     "use strict";
 
-    sntls.Hash.addMethods(/** @lends sntls.Hash# */{
+    giant.Hash.addMethods(/** @lends giant.Hash# */{
         /**
          * Reinterprets hash as a string dictionary.
-         * @returns {sntls.Set}
+         * @returns {giant.Set}
          */
         toSet: function () {
-            return sntls.Set.create(this.items);
+            return giant.Set.create(this.items);
         }
     });
 });
@@ -144,26 +144,26 @@ troop.amendPostponed(sntls, 'Hash', function () {
 (function () {
     "use strict";
 
-    dessert.addTypes(/** @lends dessert */{
+    giant.addTypes(/** @lends giant */{
         isSet: function (expr) {
-            return sntls.Set.isBaseOf(expr);
+            return giant.Set.isBaseOf(expr);
         },
 
         isSetOptional: function (expr) {
             return typeof expr === 'undefined' ||
-                   sntls.Set.isBaseOf(expr);
+                   giant.Set.isBaseOf(expr);
         }
     });
 
-    troop.Properties.addProperties.call(
+    giant.Properties.addProperties.call(
         Array.prototype,
         /** @lends Array# */{
             /**
              * Creates a new Set instance based on the current array.
-             * @returns {sntls.Set}
+             * @returns {giant.Set}
              */
             toSet: function () {
-                return sntls.Set.create(this);
+                return giant.Set.create(this);
             }
         },
         false, false, false);

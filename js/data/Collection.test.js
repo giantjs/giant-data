@@ -1,4 +1,4 @@
-/*global sntls, troop, module, test, ok, equal, strictEqual, notStrictEqual, deepEqual, notDeepEqual, raises, expect */
+/*global giant, giant, module, test, ok, equal, strictEqual, notStrictEqual, deepEqual, notDeepEqual, raises, expect */
 (function () {
     "use strict";
 
@@ -6,7 +6,7 @@
 
     test("Object method names", function () {
         deepEqual(
-            sntls.Collection._getObjectMethodNames({foo: function () {
+            giant.Collection._getObjectMethodNames({foo: function () {
             }, bar                                     : "hello"}),
             ['foo'],
             "Gets method names from object (ES5)"
@@ -17,9 +17,9 @@
         Boolean.prototype.sntlsTest = function () {
         };
 
-        if (!troop.Feature.hasPropertyAttributes()) {
+        if (!giant.Feature.hasPropertyAttributes()) {
             deepEqual(
-                sntls.Collection._getObjectMethodNames(Boolean.prototype).sort(), // boolean is used b/c of the brevity of its method list
+                giant.Collection._getObjectMethodNames(Boolean.prototype).sort(), // boolean is used b/c of the brevity of its method list
                 ["sntlsTest", "toString", "valueOf"],
                 "ES3 general purpose object proto"
             );
@@ -29,7 +29,7 @@
     });
 
     test("Class method names", function () {
-        var MyClass = troop.Base.extend()
+        var MyClass = giant.Base.extend()
             .addMethods({
                 foo: function () {
                 }
@@ -41,15 +41,15 @@
             });
 
         deepEqual(
-            sntls.Collection._getClassMethodNames(MyClass).sort(),
-            ['foo', 'bar'].concat(Object.getOwnPropertyNames(troop.Base)).sort(),
+            giant.Collection._getClassMethodNames(MyClass).sort(),
+            ['foo', 'bar'].concat(Object.getOwnPropertyNames(giant.Base)).sort(),
             "Gets method names from class"
         );
     });
 
     test("Shortcuts", function () {
-        var mockCollection = sntls.Collection.create({a: 'a', b: 'b'});
-        mockCollection.toUpperCase = sntls.Collection._genShortcut('toUpperCase');
+        var mockCollection = giant.Collection.create({a: 'a', b: 'b'});
+        mockCollection.toUpperCase = giant.Collection._genShortcut('toUpperCase');
         deepEqual(
             mockCollection.toUpperCase().items,
             {a: 'A', b: 'B'},
@@ -58,9 +58,9 @@
     });
 
     test("Shortcuts with array buffer", function () {
-        var mockCollection = sntls.Collection.create(['a', 'b']),
+        var mockCollection = giant.Collection.create(['a', 'b']),
             result;
-        mockCollection.toUpperCase = sntls.Collection._genShortcut('toUpperCase');
+        mockCollection.toUpperCase = giant.Collection._genShortcut('toUpperCase');
 
         result = mockCollection.toUpperCase();
 
@@ -74,10 +74,10 @@
     });
 
     test("Specified collection", function () {
-        var StringCollection = sntls.Collection.of(String.prototype),
-            FatStringCollection = sntls.Collection.of(String),
-            ArrayCollection = sntls.Collection.of(Array.prototype),
-            Class = troop.Base.extend()
+        var StringCollection = giant.Collection.of(String.prototype),
+            FatStringCollection = giant.Collection.of(String),
+            ArrayCollection = giant.Collection.of(Array.prototype),
+            Class = giant.Base.extend()
                 .addMethods({
                     init: function (a) {
                         this.a = a;
@@ -89,7 +89,7 @@
                         return this;
                     }
                 }),
-            ClassCollection = sntls.Collection.of(Class),
+            ClassCollection = giant.Collection.of(Class),
             stringData = {
                 'foo': "Hello world!",
                 'bar': "E pluribus unum"
@@ -132,7 +132,7 @@
                 foo: "hello world",
                 bar: "howdy world"
             },
-            "Calling method over collection of troop instances"
+            "Calling method over collection of giant instances"
         );
 
         var collection = ClassCollection.create(classData);
@@ -146,7 +146,7 @@
 
     test("Sp. collection of extended class", function () {
         var result = [],
-            MyClass = troop.Base.extend()
+            MyClass = giant.Base.extend()
                 .addMethods({
                     init: function () {
                     },
@@ -160,7 +160,7 @@
                         result.push('bar');
                     }
                 }),
-            MyCollection = sntls.Collection.of(MyClass),
+            MyCollection = giant.Collection.of(MyClass),
             collection = MyCollection.create({0: MyClass.create()});
 
         collection.foo();
@@ -178,7 +178,7 @@
                 customFilter  : 0
             },
 
-            MyClass = troop.Base.extend()
+            MyClass = giant.Base.extend()
                 .addMethods({
                     init: function () {
                         this.foo = 'bar';
@@ -195,14 +195,14 @@
                     }
                 }),
 
-            Specified = sntls.Collection.of(MyClass),
+            Specified = giant.Collection.of(MyClass),
 
             specified = Specified.create();
 
-        equal(typeof sntls.Collection.nonConflicting, 'undefined', "Sanity check, non-conflicting method is absent on Collection");
+        equal(typeof giant.Collection.nonConflicting, 'undefined', "Sanity check, non-conflicting method is absent on Collection");
 
-        strictEqual(Specified.init, sntls.Collection.init, "Init not overridden");
-        strictEqual(Specified.filterByPrefix, sntls.Collection.filterByPrefix, "Conflicting method not overridden");
+        strictEqual(Specified.init, giant.Collection.init, "Init not overridden");
+        strictEqual(Specified.filterByPrefix, giant.Collection.filterByPrefix, "Conflicting method not overridden");
         equal(typeof Specified.nonConflicting, 'function', "Non-conflicting method applied");
 
         equal(reg.init, 0, "Conflicting .init was not called");
@@ -215,7 +215,7 @@
 
         // legitimate filter expression (conflicting method call)
 
-        sntls.Collection.addMocks({
+        giant.Collection.addMocks({
             filterByPrefix: function () {
                 reg.originalFilter++;
             }
@@ -223,7 +223,7 @@
 
         specified.filterByPrefix('f');
 
-        sntls.Collection.removeMocks();
+        giant.Collection.removeMocks();
 
         equal(reg.originalFilter, 1, "Original filter invoked");
         equal(reg.customFilter, 0, "Custom filter not invoked");
@@ -234,7 +234,7 @@
     });
 
     test("Specified extended collection", function () {
-        var ExtendedCollection = sntls.Collection.extend()
+        var ExtendedCollection = giant.Collection.extend()
                 .addMethods({
                     foo: function () {
                         return "bar";
@@ -266,10 +266,10 @@
     test("Initializing collection", function () {
         var collection;
 
-        collection = sntls.Collection.create();
+        collection = giant.Collection.create();
         equal(collection.keyCount, 0, "Count initialized to empty");
 
-        collection = sntls.Collection.create({
+        collection = giant.Collection.create({
             0: "hello",
             1: "world",
             2: "what",
@@ -290,14 +290,14 @@
     });
 
     test("Type conversion", function () {
-        var hash = sntls.Hash.create(),
+        var hash = giant.Hash.create(),
             collection = hash.toCollection();
 
-        ok(collection.isA(sntls.Collection), "Hash converted to collection");
+        ok(collection.isA(giant.Collection), "Hash converted to collection");
 
-        collection = hash.toCollection(sntls.Collection.of(String));
+        collection = hash.toCollection(giant.Collection.of(String));
 
-        ok(collection.isA(sntls.Collection), "Hash converted to specified collection");
+        ok(collection.isA(giant.Collection), "Hash converted to specified collection");
         equal(typeof collection.split, 'function', "String collection");
     });
 
@@ -305,12 +305,12 @@
         var buffer = [1, 2, 3, 4],
             hash = buffer.toCollection();
 
-        ok(hash.isA(sntls.Collection), "Is collection");
+        ok(hash.isA(giant.Collection), "Is collection");
         strictEqual(hash.items, buffer, "Same buffer");
     });
 
     test("Building collection", function () {
-        var collection = sntls.Collection.create();
+        var collection = giant.Collection.create();
 
         deepEqual(collection.items, {}, "Initial buffer is empty object");
         equal(collection.keyCount, 0, "Initial count");
@@ -328,26 +328,26 @@
     });
 
     test("Rebasing collection", function () {
-        var original = sntls.Collection.create({foo: 'bar'}),
+        var original = giant.Collection.create({foo: 'bar'}),
             rebased;
 
         raises(function () {
             rebased = original.asType('notCollection');
         }, "Invalid collection type");
 
-        rebased = original.asType(sntls.Collection.of(String));
-        ok(rebased.isA(sntls.Collection), "Rebased still a collection");
+        rebased = original.asType(giant.Collection.of(String));
+        ok(rebased.isA(giant.Collection), "Rebased still a collection");
         equal(typeof rebased.split, 'function', "Rebased is specified collection");
         strictEqual(rebased.items, original.items, "Rebased shares items w/ original");
         equal(rebased.keyCount, original.keyCount, "Rebased item count same as in original");
     });
 
     test("Merging collections", function () {
-        var collection1 = sntls.Collection.create({
+        var collection1 = giant.Collection.create({
                 foo  : 'bar',
                 hello: 'world'
             }),
-            collection2 = sntls.Collection.create({
+            collection2 = giant.Collection.create({
                 first : 1,
                 second: 2
             }),
@@ -387,11 +387,11 @@
     test("Merging with conflict", function () {
         expect(7);
 
-        var collection1 = sntls.Collection.create({
+        var collection1 = giant.Collection.create({
                 foo  : 'bar',
                 hello: 'world'
             }),
-            collection2 = sntls.Collection.create({
+            collection2 = giant.Collection.create({
                 foo   : 1,
                 second: 2
             }),
@@ -411,8 +411,8 @@
 
         merged = collection1.mergeWith(collection2, function (leftCollection, rightCollection, itemName) {
             notStrictEqual(leftCollection, rightCollection);
-            ok(leftCollection.isA(sntls.Collection));
-            ok(rightCollection.isA(sntls.Collection));
+            ok(leftCollection.isA(giant.Collection));
+            ok(rightCollection.isA(giant.Collection));
             return rightCollection.items[itemName];
         });
         equal(merged.getKeyCount(), 3, "Merged item count");
@@ -428,12 +428,12 @@
     });
 
     test("Merging specified collection", function () {
-        var ArrayCollection = sntls.Collection.of(Array),
+        var ArrayCollection = giant.Collection.of(Array),
             specified = ArrayCollection.create({
                 a: [1, 2, 3, 4],
                 b: [5, 6, 7, 8]
             }),
-            invalidColl = sntls.Collection.create({
+            invalidColl = giant.Collection.create({
                 foo  : 'bar',
                 hello: 'world'
             }),
@@ -464,7 +464,7 @@
 
     /**
      * Initializes lookup by filling it with sufficient amount of test data.
-     * @param {sntls.Collection} lookup Collection instance.
+     * @param {giant.Collection} lookup Collection instance.
      */
     function init(lookup) {
         lookup.setItem('one', 'hello');
@@ -475,7 +475,7 @@
     }
 
     test("Querying", function () {
-        var collection = sntls.Collection.create();
+        var collection = giant.Collection.create();
 
         equal(typeof collection.getItem('one'), 'undefined', "Querying non-existing item");
 
@@ -489,7 +489,7 @@
     });
 
     test("Selection by keys", function () {
-        var collection = sntls.Collection.create(),
+        var collection = giant.Collection.create(),
             result;
 
         init(collection);
@@ -513,7 +513,7 @@
     });
 
     test("Selection by keys on array buffer", function () {
-        var collection = sntls.Collection.create(['foo', 'friend', 'field', 'boom', 'bar']),
+        var collection = giant.Collection.create(['foo', 'friend', 'field', 'boom', 'bar']),
             filtered;
 
         filtered = collection.filterByKeys([1, 3, 10]);
@@ -528,7 +528,7 @@
     });
 
     test("Key extraction (RegExp)", function () {
-        var collection = sntls.Collection.create();
+        var collection = giant.Collection.create();
 
         init(collection);
 
@@ -543,7 +543,7 @@
     });
 
     test("Key extraction (prefix)", function () {
-        var collection = sntls.Collection.create({
+        var collection = giant.Collection.create({
             'hello world': 'foo',
             'world hello': 'bar',
             'hello'      : 'all'
@@ -558,26 +558,26 @@
     });
 
     test("Key extraction wrapped in hash", function () {
-        var collection = sntls.Collection.create(),
+        var collection = giant.Collection.create(),
             result;
 
         init(collection);
 
         result = collection.getKeysAsHash();
 
-        ok(result.isA(sntls.Hash), "Keys wrapped in hash");
+        ok(result.isA(giant.Hash), "Keys wrapped in hash");
 
         deepEqual(result.items, ['one', 'two', 'three', 'four', 'five'], "Items in hash");
     });
 
     test("Filtering", function () {
-        var collection = sntls.Collection.create(),
+        var collection = giant.Collection.create(),
             filtered;
 
         init(collection);
 
         filtered = collection.filterByRegExp(/f\w+/);
-        equal(filtered.getBase(), sntls.Collection, "Type of filtered collection is collection");
+        equal(filtered.getBase(), giant.Collection, "Type of filtered collection is collection");
         deepEqual(filtered.items, {
             four: {},
             five: true
@@ -610,7 +610,7 @@
     });
 
     test("Filtering on array buffer", function () {
-        var collection = sntls.Collection.create(['foo', 'friend', 'field', 'boom', 'bar']),
+        var collection = giant.Collection.create(['foo', 'friend', 'field', 'boom', 'bar']),
             filtered;
 
         filtered = collection.filterBySelector(function (item) {
@@ -627,7 +627,7 @@
     });
 
     test("Filtering of extended collection", function () {
-        var StringCollection = sntls.Collection.of(String.prototype),
+        var StringCollection = giant.Collection.of(String.prototype),
             names = StringCollection.create({
                 test : 'test',
                 hello: 'hello',
@@ -650,7 +650,7 @@
     });
 
     test("Removal", function () {
-        var collection = sntls.Collection.create(),
+        var collection = giant.Collection.create(),
             countBefore,
             beforeCount;
 
@@ -692,7 +692,7 @@
     });
 
     test("Sorted value extraction", function () {
-        var collection = sntls.Collection.create();
+        var collection = giant.Collection.create();
 
         init(collection);
 
@@ -724,14 +724,14 @@
     });
 
     test("Sorted value extraction wrapped", function () {
-        var collection = sntls.Collection.create(),
+        var collection = giant.Collection.create(),
             result;
 
         init(collection);
 
         result = collection.getSortedValuesAsHash();
 
-        ok(result.isA(sntls.Hash), "Hash retrieved");
+        ok(result.isA(giant.Hash), "Hash retrieved");
 
         deepEqual(
             result.items,
@@ -747,7 +747,7 @@
     });
 
     test("For Each", function () {
-        var collection = sntls.Collection.create();
+        var collection = giant.Collection.create();
 
         init(collection);
 
@@ -767,7 +767,7 @@
     });
 
     test("For-Next", function () {
-        var collection = sntls.Collection.create(),
+        var collection = giant.Collection.create(),
             order = [];
 
         init(collection);
@@ -795,7 +795,7 @@
     });
 
     test("For-Next with custom order", function () {
-        var collection = sntls.Collection.create(),
+        var collection = giant.Collection.create(),
             order = [];
 
         init(collection);
@@ -837,8 +837,8 @@
     });
 
     test("Key mapping", function () {
-        var StringCollection = sntls.Collection.of(String),
-            collection = sntls.Collection.create({
+        var StringCollection = giant.Collection.of(String),
+            collection = giant.Collection.create({
                 foo  : "bar",
                 hello: "world",
                 howdy: "all"
@@ -849,7 +849,7 @@
             return itemKey.toUpperCase();
         });
 
-        ok(result.isA(sntls.Collection), "Mapping returns collection");
+        ok(result.isA(giant.Collection), "Mapping returns collection");
         notStrictEqual(result, collection, "Mapping returns different collection");
         deepEqual(result.items, {
             FOO  : "bar",
@@ -892,7 +892,7 @@
     });
 
     test("Key mapping mimicking dictionary reverse", function () {
-        var collection = sntls.Collection.create({
+        var collection = giant.Collection.create({
                 foo  : 'bar',
                 baz  : 'bar',
                 hello: 'world'
@@ -920,8 +920,8 @@
     });
 
     test("Value mapping", function () {
-        var StringCollection = sntls.Collection.of(String),
-            collection = sntls.Collection.create(),
+        var StringCollection = giant.Collection.of(String),
+            collection = giant.Collection.create(),
             result;
 
         function lastChar(item) {
@@ -932,7 +932,7 @@
 
         result = collection.mapValues(lastChar);
 
-        ok(result.instanceOf(sntls.Collection), "Result plain collection");
+        ok(result.instanceOf(giant.Collection), "Result plain collection");
 
         deepEqual(
             result.items,
@@ -952,12 +952,12 @@
     });
 
     test("Property collection", function () {
-        var collection = sntls.Collection.create(["foo", null, "bar", undefined, "hello"]),
-            NumberCollection = sntls.Collection.of(Number),
+        var collection = giant.Collection.create(["foo", null, "bar", undefined, "hello"]),
+            NumberCollection = giant.Collection.of(Number),
             result;
 
         result = collection.collectProperty('length');
-        ok(result.isA(sntls.Collection), "Collection returned");
+        ok(result.isA(giant.Collection), "Collection returned");
         deepEqual(result.items, [3, undefined, 3, undefined, 5], "Result contents");
 
         result = collection.collectProperty('length', NumberCollection);
@@ -965,7 +965,7 @@
     });
 
     test("Corben Dallas multi-pass", function () {
-        var collection = sntls.Collection.create(["foo", "bar", "baz"]),
+        var collection = giant.Collection.create(["foo", "bar", "baz"]),
             context;
 
         function splitIntoLetters(str) {
@@ -1003,7 +1003,7 @@
     test("Creating new instance for each", function () {
         expect(4);
 
-        var collection = sntls.Collection.create([
+        var collection = giant.Collection.create([
                 ['foo', 'bar'],
                 ['hello', 'world'],
                 ['one', 'two', 'three']
@@ -1012,18 +1012,18 @@
 
         collection.addMocks({
             passEachItemTo: function (handler, context) {
-                strictEqual(handler, sntls.Path.create, "Handler set to constructor");
-                strictEqual(context, sntls.Path, "Context set to class");
+                strictEqual(handler, giant.Path.create, "Handler set to constructor");
+                strictEqual(context, giant.Path, "Context set to class");
             }
         });
 
-        collection.createWithEachItem(sntls.Path);
+        collection.createWithEachItem(giant.Path);
 
         collection.removeMocks();
 
-        result = collection.createWithEachItem(sntls.Path);
+        result = collection.createWithEachItem(giant.Path);
 
-        ok(result.isA(sntls.Collection), "Result is collection");
+        ok(result.isA(giant.Collection), "Result is collection");
         deepEqual(
             result.collectProperty('asArray').items,
             [
@@ -1035,7 +1035,7 @@
     });
 
     test("Mapping with array buffer", function () {
-        var collection = sntls.Collection.create(['foo', 'bar']),
+        var collection = giant.Collection.create(['foo', 'bar']),
             result;
 
         result = collection.mapValues(function (item) {
@@ -1052,7 +1052,7 @@
     });
 
     test("Call-each", function () {
-        var collection = sntls.Collection.create(),
+        var collection = giant.Collection.create(),
             i, result;
 
         expect(6);
@@ -1080,7 +1080,7 @@
     });
 
     test("Chainable call-each", function () {
-        var collection = sntls.Collection.create(),
+        var collection = giant.Collection.create(),
             i, result;
 
         expect(6);
@@ -1103,7 +1103,7 @@
     });
 
     test("Call each on array buffer", function () {
-        var collection = sntls.Collection.create(['foo', 'bar']),
+        var collection = giant.Collection.create(['foo', 'bar']),
             result;
 
         result = collection.callOnEachItem('split', '');

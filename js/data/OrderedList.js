@@ -1,26 +1,26 @@
-/*global dessert, troop, sntls */
-troop.postpone(sntls, 'OrderedList', function () {
+/*global giant, giant, giant */
+giant.postpone(giant, 'OrderedList', function () {
     "use strict";
 
-    var base = sntls.Hash;
+    var base = giant.Hash;
 
     /**
      * Instantiates class.
      * Sets the list up with initial items.
-     * @name sntls.OrderedList.create
+     * @name giant.OrderedList.create
      * @function
      * @param {string[]|number[]} [items] Initial values: array of strings or numbers.
      * @param {string} [orderType='ascending'] Order type. Either 'ascending' or 'descending'.
-     * @returns {sntls.OrderedList}
+     * @returns {giant.OrderedList}
      */
 
     /**
      * Manages a list of strings or numbers and keeps it prepared for quick access and queries.
-     * @class sntls.OrderedList
-     * @extends sntls.Hash
+     * @class giant.OrderedList
+     * @extends giant.Hash
      */
-    sntls.OrderedList = base.extend()
-        .addConstants(/** @lends sntls.OrderedList */{
+    giant.OrderedList = base.extend()
+        .addConstants(/** @lends giant.OrderedList */{
             /**
              * @type {object}
              * @constant
@@ -30,11 +30,11 @@ troop.postpone(sntls, 'OrderedList', function () {
                 descending: 'descending'
             }
         })
-        .addPrivateMethods(/** @lends sntls.OrderedList# */{
+        .addPrivateMethods(/** @lends giant.OrderedList# */{
             /**
              * Compares numbers in ascending order. To be supplied to Array.sort().
              * @private
-             * @memberOf sntls.OrderedList
+             * @memberOf giant.OrderedList
              */
             _compareAscending: function (a, b) {
                 return a > b ? 1 : a < b ? -1 : 0;
@@ -43,7 +43,7 @@ troop.postpone(sntls, 'OrderedList', function () {
             /**
              * Compares numbers in descending order. To be supplied to Array.sort().
              * @private
-             * @memberOf sntls.OrderedList
+             * @memberOf giant.OrderedList
              */
             _compareDescending: function (a, b) {
                 return b > a ? 1 : b < a ? -1 : 0;
@@ -82,13 +82,13 @@ troop.postpone(sntls, 'OrderedList', function () {
 
             /**
              * Gets splice index for descending order.
-             * Same as sntls.OrderedList#_spliceIndexOfAsc but with value comparisons flipped.
+             * Same as giant.OrderedList#_spliceIndexOfAsc but with value comparisons flipped.
              * @param {string|number} value
              * @param {number} start
              * @param {number} end
              * @returns {number}
              * @private
-             * @see sntls.OrderedList#_spliceIndexOfAsc
+             * @see giant.OrderedList#_spliceIndexOfAsc
              */
             _spliceIndexOfDesc: function (value, start, end) {
                 var items = this.items,
@@ -113,14 +113,14 @@ troop.postpone(sntls, 'OrderedList', function () {
                 return -1;
             }
         })
-        .addMethods(/** @lends sntls.OrderedList# */{
+        .addMethods(/** @lends giant.OrderedList# */{
             /**
              * @param {string[]|number[]} [items]
              * @param {boolean} [orderType='ascending']
              * @ignore
              */
             init: function (items, orderType) {
-                dessert
+                giant
                     .isArrayOptional(items, "Invalid items")
                     .isOrderTypeOptional(orderType, "Invalid order type");
 
@@ -134,7 +134,7 @@ troop.postpone(sntls, 'OrderedList', function () {
                 }
 
                 /**
-                 * @name sntls.OrderedList#items
+                 * @name giant.OrderedList#items
                  * @type {string[]|number[]}
                  */
 
@@ -155,7 +155,7 @@ troop.postpone(sntls, 'OrderedList', function () {
              * a given value would be spliced into or out of the list. For exact hits, this is the actual position,
              * but no information is given whether the value is present in the list or not.
              * @example
-             * var ol = sntls.OrderedList.create(['foo', 'bar', 'bee']);
+             * var ol = giant.OrderedList.create(['foo', 'bar', 'bee']);
              * ol.spliceIndexOf('bee') // 1
              * ol.spliceIndexOf('ban') // 0
              * ol.spliceIndexOf('fun') // 3
@@ -184,7 +184,7 @@ troop.postpone(sntls, 'OrderedList', function () {
             /**
              * Returns list items in a sorted array starting from `startValue` up to but not including `endValue`.
              * @example
-             * var ol = sntls.OrderedList.create(['foo', 'bar', 'ban', 'bee']);
+             * var ol = giant.OrderedList.create(['foo', 'bar', 'ban', 'bee']);
              * ol.getRange('bar', 'foo') // ['bar', 'bee', 'foo']
              * ol.getRange('a', 'bee') // ['ban', 'bar', 'bee']
              * ol.getRange('foo', 'fun') // ['foo']
@@ -210,12 +210,12 @@ troop.postpone(sntls, 'OrderedList', function () {
              * @param {string|number} endValue Value marking end of the range.
              * @param {number} [offset=0] Number of items to skip at start.
              * @param {number} [limit=Infinity] Number of items to fetch at most.
-             * @returns {sntls.Hash} Hash with a shallow copy of the array's affected segment.
-             * @see sntls.OrderedList#getRange
+             * @returns {giant.Hash} Hash with a shallow copy of the array's affected segment.
+             * @see giant.OrderedList#getRange
              */
             getRangeAsHash: function (startValue, endValue, offset, limit) {
                 var range = this.getRange.apply(this, arguments);
-                return sntls.Hash.create(range);
+                return giant.Hash.create(range);
             },
 
             //////////////////////////////
@@ -224,7 +224,7 @@ troop.postpone(sntls, 'OrderedList', function () {
             /**
              * Adds a single value to the list and returns the position where the value was inserted.
              * @example
-             * var ol = sntls.OrderedList.create(['b', 'c']);
+             * var ol = giant.OrderedList.create(['b', 'c']);
              * var pos = ol.addItem('a');
              * pos // 0
              * ol.items // ['a', 'b', 'c']
@@ -240,10 +240,10 @@ troop.postpone(sntls, 'OrderedList', function () {
             /**
              * Adds multiple values to the list.
              * @param {string[]|number[]} values Array of values to be inserted.
-             * @returns {sntls.OrderedList}
+             * @returns {giant.OrderedList}
              */
             addItems: function (values) {
-                dessert.isArray(values, "Invalid item values");
+                giant.isArray(values, "Invalid item values");
                 var i;
                 for (i = 0; i < values.length; i++) {
                     this.addItem(values[i]);
@@ -255,7 +255,7 @@ troop.postpone(sntls, 'OrderedList', function () {
              * Removes the first available item matching the value and returns the affected position.
              * Returns -1 when the value is not present in the list.
              * @example
-             * var ol = sntls.OrderedList.create(['b', 'c', 'a']);
+             * var ol = giant.OrderedList.create(['b', 'c', 'a']);
              * var pos = ol.removeItem('b');
              * pos // 1
              * ol.items // ['a', 'c']
@@ -279,10 +279,10 @@ troop.postpone(sntls, 'OrderedList', function () {
             /**
              * Removes all items specified in `values`.
              * @param {string[]|number[]} values Array of values to be removed.
-             * @returns {sntls.OrderedList}
+             * @returns {giant.OrderedList}
              */
             removeItems: function (values) {
-                dessert.isArray(values, "Invalid item values");
+                giant.isArray(values, "Invalid item values");
                 var i;
                 for (i = 0; i < values.length; i++) {
                     this.removeItem(values[i]);
@@ -313,7 +313,7 @@ troop.postpone(sntls, 'OrderedList', function () {
 
             /**
              * Clones OrderedList instance, setting the correct orderType property.
-             * @returns {sntls.OrderedList}
+             * @returns {giant.OrderedList}
              */
             clone: function () {
                 var result = base.clone.call(this);
@@ -326,24 +326,24 @@ troop.postpone(sntls, 'OrderedList', function () {
 
             /**
              * Clears the list.
-             * @name sntls.OrderedList#clear
+             * @name giant.OrderedList#clear
              * @function
-             * @returns {sntls.OrderedList}
+             * @returns {giant.OrderedList}
              */
         });
 });
 
-troop.amendPostponed(sntls, 'Hash', function () {
+giant.amendPostponed(giant, 'Hash', function () {
     "use strict";
 
-    sntls.Hash.addMethods(/** @lends sntls.Hash# */{
+    giant.Hash.addMethods(/** @lends giant.Hash# */{
         /**
          * Converts Hash to OrderedList instance.
          * @param {string} [orderType='ascending']
-         * @returns {sntls.OrderedList}
+         * @returns {giant.OrderedList}
          */
         toOrderedList: function (orderType) {
-            return sntls.OrderedList.create(this.items, orderType);
+            return giant.OrderedList.create(this.items, orderType);
         }
     });
 });
@@ -351,28 +351,28 @@ troop.amendPostponed(sntls, 'Hash', function () {
 (function () {
     "use strict";
 
-    dessert.addTypes(/** @lends dessert */{
+    giant.addTypes(/** @lends giant */{
         /** @param {string} expr */
         isOrderType: function (expr) {
-            return expr && sntls.OrderedList.orderTypes[expr] === expr;
+            return expr && giant.OrderedList.orderTypes[expr] === expr;
         },
 
         /** @param {string} [expr] */
         isOrderTypeOptional: function (expr) {
-            return sntls.OrderedList.orderTypes[expr] === expr;
+            return giant.OrderedList.orderTypes[expr] === expr;
         }
     });
 
-    troop.Properties.addProperties.call(
+    giant.Properties.addProperties.call(
         Array.prototype,
         /** @lends Array# */{
             /**
              * Creates a new OrderedList instance based on the current array.
              * @param {string} [orderType='ascending']
-             * @returns {sntls.OrderedList}
+             * @returns {giant.OrderedList}
              */
             toOrderedList: function (orderType) {
-                return sntls.OrderedList.create(this, orderType);
+                return giant.OrderedList.create(this, orderType);
             }
         },
         false, false, false);

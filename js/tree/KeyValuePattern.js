@@ -1,30 +1,30 @@
-/*global dessert, troop, sntls */
-troop.postpone(sntls, 'KeyValuePattern', function () {
+/*global giant, giant, giant */
+giant.postpone(giant, 'KeyValuePattern', function () {
     "use strict";
 
     var hOP = Object.prototype.hasOwnProperty,
-        validators = dessert.validators;
+        validators = giant.validators;
 
     /**
      * Instantiates class
-     * @name sntls.KeyValuePattern.create
+     * @name giant.KeyValuePattern.create
      * @function
      * @param {string|object} pattern
      * @example
-     * sntls.KeyValuePattern.create('|') // matches any key
-     * sntls.KeyValuePattern.create(['foo', 'bar']) // matches keys 'foo' and 'bar'
-     * sntls.KeyValuePattern.create('foo<bar^hello') // matches KV pairs 'foo'-'hello' & 'bar'-'hello'
-     * @returns {sntls.KeyValuePattern}
+     * giant.KeyValuePattern.create('|') // matches any key
+     * giant.KeyValuePattern.create(['foo', 'bar']) // matches keys 'foo' and 'bar'
+     * giant.KeyValuePattern.create('foo<bar^hello') // matches KV pairs 'foo'-'hello' & 'bar'-'hello'
+     * @returns {giant.KeyValuePattern}
      */
 
     /**
      * Matches a key-value pair. A series of key-value patterns make
      * up a query, which then can be used to traverse tree structures with.
-     * @class sntls.KeyValuePattern
-     * @extends troop.Base
+     * @class giant.KeyValuePattern
+     * @extends giant.Base
      */
-    sntls.KeyValuePattern = troop.Base.extend()
-        .addConstants(/** @lends sntls.KeyValuePattern */{
+    giant.KeyValuePattern = giant.Base.extend()
+        .addConstants(/** @lends giant.KeyValuePattern */{
             /**
              * Separates keys from values in string pattern
              * @type {string}
@@ -76,7 +76,7 @@ troop.postpone(sntls, 'KeyValuePattern', function () {
              */
             RE_MARKER_EXTRACTOR: /\[([^\[\]]*)\]|{([^{}]*)}|.*/
         })
-        .addPrivateMethods(/** @lends sntls.KeyValuePattern */{
+        .addPrivateMethods(/** @lends giant.KeyValuePattern */{
             /**
              * URI decodes all items of an array.
              * @param {string[]} strings Array of strings
@@ -182,7 +182,7 @@ troop.postpone(sntls, 'KeyValuePattern', function () {
                 return result;
             }
         })
-        .addMethods(/** @lends sntls.KeyValuePattern# */{
+        .addMethods(/** @lends giant.KeyValuePattern# */{
             /**
              * @param {string|object} pattern
              * @ignore
@@ -203,7 +203,7 @@ troop.postpone(sntls, 'KeyValuePattern', function () {
                 } else if (pattern instanceof Object) {
                     this.descriptor = pattern;
                 } else {
-                    dessert.assert(false, "Invalid pattern");
+                    giant.assert(false, "Invalid pattern");
                 }
             },
 
@@ -211,7 +211,7 @@ troop.postpone(sntls, 'KeyValuePattern', function () {
              * Sets value on query pattern. Pattern with a value will only
              * match nodes with the specified value.
              * @param {*} value
-             * @returns {sntls.KeyValuePattern}
+             * @returns {giant.KeyValuePattern}
              */
             setValue: function (value) {
                 // making sure descriptor is object
@@ -242,10 +242,10 @@ troop.postpone(sntls, 'KeyValuePattern', function () {
             /**
              * Sets pattern marker.
              * @param {string} marker Left marker boundary. Either '[' or '{'.
-             * @returns {sntls.KeyValuePattern}
+             * @returns {giant.KeyValuePattern}
              */
             setMarker: function (marker) {
-                dessert.assert(
+                giant.assert(
                     marker === this.MARKER_BRACKET || marker === this.MARKER_CURLY,
                     "Invalid marker"
                 );
@@ -344,83 +344,83 @@ troop.postpone(sntls, 'KeyValuePattern', function () {
         });
 });
 
-troop.postpone(sntls, 'KeyValuePatternCollection', function () {
+giant.postpone(giant, 'KeyValuePatternCollection', function () {
     "use strict";
 
     /**
      * Instantiates class
-     * @name sntls.KeyValuePatternCollection.create
+     * @name giant.KeyValuePatternCollection.create
      * @function
-     * @returns {sntls.KeyValuePatternCollection}
+     * @returns {giant.KeyValuePatternCollection}
      */
 
     /**
-     * @name sntls.KeyValuePatternCollection#descriptor
+     * @name giant.KeyValuePatternCollection#descriptor
      * @ignore
      */
 
     /**
-     * @class sntls.KeyValuePatternCollection
-     * @extends sntls.Collection
-     * @extends sntls.KeyValuePattern
+     * @class giant.KeyValuePatternCollection
+     * @extends giant.Collection
+     * @extends giant.KeyValuePattern
      */
-    sntls.KeyValuePatternCollection = sntls.Collection.of(sntls.KeyValuePattern);
+    giant.KeyValuePatternCollection = giant.Collection.of(giant.KeyValuePattern);
 });
 
 (function () {
     "use strict";
 
-    dessert.addTypes(/** @lends dessert */{
+    giant.addTypes(/** @lends giant */{
         isKeyValuePattern: function (expr) {
-            return sntls.KeyValuePattern.isBaseOf(expr);
+            return giant.KeyValuePattern.isBaseOf(expr);
         },
 
         isKeyValuePatternOptional: function (expr) {
             return typeof expr === 'undefined' ||
-                   sntls.KeyValuePattern.isBaseOf(expr);
+                   giant.KeyValuePattern.isBaseOf(expr);
         }
     });
 
-    troop.Properties.addProperties.call(
+    giant.Properties.addProperties.call(
         String.prototype,
         /** @lends String# */{
             /**
              * Creates a new KeyValuePattern instance based on the current string.
-             * @returns {sntls.KeyValuePattern}
+             * @returns {giant.KeyValuePattern}
              */
             toKeyValuePattern: function () {
-                return /** @type {sntls.KeyValuePattern} */ sntls.KeyValuePattern.create(this);
+                return /** @type {giant.KeyValuePattern} */ giant.KeyValuePattern.create(this);
             },
 
             /**
              * Shorthand to String.prototype.toKeyValuePattern().
              * Creates a new KeyValuePattern instance based on the current string.
-             * @returns {sntls.KeyValuePattern}
+             * @returns {giant.KeyValuePattern}
              */
             toKVP: function () {
-                return /** @type {sntls.KeyValuePattern} */ sntls.KeyValuePattern.create(this);
+                return /** @type {giant.KeyValuePattern} */ giant.KeyValuePattern.create(this);
             }
         },
         false, false, false);
 
-    troop.Properties.addProperties.call(
+    giant.Properties.addProperties.call(
         Array.prototype,
         /** @lends Array# */{
             /**
              * Creates a new KeyValuePattern instance based on the current array.
-             * @returns {sntls.KeyValuePattern}
+             * @returns {giant.KeyValuePattern}
              */
             toKeyValuePattern: function () {
-                return /** @type {sntls.KeyValuePattern} */ sntls.KeyValuePattern.create(this);
+                return /** @type {giant.KeyValuePattern} */ giant.KeyValuePattern.create(this);
             },
 
             /**
              * Shorthand to Array.prototype.toKeyValuePattern().
              * Creates a new KeyValuePattern instance based on the current array.
-             * @returns {sntls.KeyValuePattern}
+             * @returns {giant.KeyValuePattern}
              */
             toKVP: function () {
-                return /** @type {sntls.KeyValuePattern} */ sntls.KeyValuePattern.create(this);
+                return /** @type {giant.KeyValuePattern} */ giant.KeyValuePattern.create(this);
             }
         },
         false, false, false);

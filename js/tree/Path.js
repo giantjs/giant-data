@@ -1,36 +1,36 @@
-/*global dessert, troop, sntls */
-troop.postpone(sntls, 'Path', function () {
+/*global giant, giant, giant */
+giant.postpone(giant, 'Path', function () {
     "use strict";
 
-    var base = troop.Base,
+    var base = giant.Base,
         self = base.extend();
 
     /**
      * Instantiates class.
      * Constructs path instance and populates it with path information. Keys are assumed to be URI-encoded.
-     * @name sntls.Path.create
+     * @name giant.Path.create
      * @function
      * @param {string[]} path Path in array representation (eg. ['this', 'is', 'a', 'path']).
-     * @returns {sntls.Path}
+     * @returns {giant.Path}
      */
 
     /**
      * Unambiguously identifies a node in a tree-like structure. Paths break down to a series of keys, each
      * subsequent key corresponding to a property in the next child node.
-     * @class sntls.Path
-     * @extends troop.Base
+     * @class giant.Path
+     * @extends giant.Base
      */
-    sntls.Path = self
-        .addConstants(/** @lends sntls.Path */{
+    giant.Path = self
+        .addConstants(/** @lends giant.Path */{
             PATH_SEPARATOR: '>'
         })
-        .addMethods(/** @lends sntls.Path# */{
+        .addMethods(/** @lends giant.Path# */{
             /**
              * @param {string[]} asArray Path in string or array representation
              * @ignore
              */
             init: function (asArray) {
-                dessert.isArray(asArray, "Invalid path array");
+                giant.isArray(asArray, "Invalid path array");
 
                 /**
                  * Path in array representation. Keys are unencoded. Not to be modified externally.
@@ -50,10 +50,10 @@ troop.postpone(sntls, 'Path', function () {
 
             /**
              * Creates a new instance of the same path subclass, initialized with identical path information.
-             * @returns {sntls.Path}
+             * @returns {giant.Path}
              */
             clone: function () {
-                return /** @type sntls.Path */ this.getBase().create(this.asArray.concat());
+                return /** @type giant.Path */ this.getBase().create(this.asArray.concat());
             },
 
             /**
@@ -62,7 +62,7 @@ troop.postpone(sntls, 'Path', function () {
              * var p = 'test>path>it>is'.toPath();
              * p.trimLeft().asArray // ['path', 'it', 'is']
              * @param {number} [count=1] Number of keys to remove from path.
-             * @returns {sntls.Path}
+             * @returns {giant.Path}
              */
             trimLeft: function (count) {
                 if (typeof count === 'undefined' || count === 1) {
@@ -79,7 +79,7 @@ troop.postpone(sntls, 'Path', function () {
              * var p = 'test>path>it>is'.toPath();
              * p.trimRight().asArray // ['test', 'path', 'it']
              * @param {number} [count=1] Number of keys to remove from path.
-             * @returns {sntls.Path}
+             * @returns {giant.Path}
              */
             trimRight: function (count) {
                 if (typeof count === 'undefined' || count === 1) {
@@ -92,8 +92,8 @@ troop.postpone(sntls, 'Path', function () {
 
             /**
              * Appends the specified path to the current path. Alters path buffer!
-             * @param {sntls.Path} path Path to be appended to the current path.
-             * @returns {sntls.Path}
+             * @param {giant.Path} path Path to be appended to the current path.
+             * @returns {giant.Path}
              */
             append: function (path) {
                 this.asArray = this.asArray.concat(path.asArray);
@@ -103,7 +103,7 @@ troop.postpone(sntls, 'Path', function () {
             /**
              * Appends a single key to the current path. Alters path buffer!
              * @param {string} key Key to be appended to the current path.
-             * @returns {sntls.Path}
+             * @returns {giant.Path}
              */
             appendKey: function (key) {
                 this.asArray.push(key);
@@ -115,8 +115,8 @@ troop.postpone(sntls, 'Path', function () {
              * @example
              * var p = 'test>path'.toPath();
              * p.prepend('foo.bar').asArray // ['foo', 'bar', 'test', 'path']
-             * @param {sntls.Path} path Path to be prepended to the current path.
-             * @returns {sntls.Path}
+             * @param {giant.Path} path Path to be prepended to the current path.
+             * @returns {giant.Path}
              */
             prepend: function (path) {
                 this.asArray = path.asArray.concat(this.asArray);
@@ -126,7 +126,7 @@ troop.postpone(sntls, 'Path', function () {
             /**
              * Prepends a single key to the current path. Alters path buffer!
              * @param {string} key Key to be prepended to the current path.
-             * @returns {sntls.Path}
+             * @returns {giant.Path}
              */
             prependKey: function (key) {
                 this.asArray.unshift(key);
@@ -139,7 +139,7 @@ troop.postpone(sntls, 'Path', function () {
              * var p = 'foo>bar'.toPath();
              * p.equal('foo.bar') // true
              * p.equal('hello.world') // false
-             * @param {sntls.Path} remotePath Remote path
+             * @param {giant.Path} remotePath Remote path
              * @returns {boolean}
              */
             equals: function (remotePath) {
@@ -171,11 +171,11 @@ troop.postpone(sntls, 'Path', function () {
              * var p = 'foo>bar'.toPath();
              * p.isRelativeTo('foo') // true
              * p.isRelativeTo('foo.bar.hello') // false
-             * @param {sntls.Path} rootPath
+             * @param {giant.Path} rootPath
              * @returns {boolean}
              */
             isRelativeTo: function (rootPath) {
-                dessert.isPath(rootPath, "Invalid path");
+                giant.isPath(rootPath, "Invalid path");
 
                 var currentArray = this.asArray,
                     rootArray = rootPath.asArray,
@@ -196,11 +196,11 @@ troop.postpone(sntls, 'Path', function () {
 
             /**
              * Determines whether current path is root of specified path.
-             * @param {sntls.Path} relativePath
+             * @param {giant.Path} relativePath
              * @returns {boolean}
              */
             isRootOf: function (relativePath) {
-                dessert.isPath(relativePath, "Invalid path");
+                giant.isPath(relativePath, "Invalid path");
                 return relativePath.isRelativeTo(this);
             },
 
@@ -219,41 +219,41 @@ troop.postpone(sntls, 'Path', function () {
 (function () {
     "use strict";
 
-    dessert.addTypes(/** @lends dessert */{
+    giant.addTypes(/** @lends giant */{
         isPath: function (expr) {
-            return sntls.Path.isBaseOf(expr);
+            return giant.Path.isBaseOf(expr);
         },
 
         isPathOptional: function (expr) {
             return typeof expr === 'undefined' ||
-                   sntls.Path.isBaseOf(expr);
+                   giant.Path.isBaseOf(expr);
         }
     });
 
-    troop.Properties.addProperties.call(
+    giant.Properties.addProperties.call(
         String.prototype,
         /** @lends String# */{
             /**
              * Creates a new Path instance based on the current string.
              * Individual keys will be URI decoded.
-             * @returns {sntls.Path}
+             * @returns {giant.Path}
              */
             toPath: function () {
-                var Path = sntls.Path;
+                var Path = giant.Path;
                 return Path.create(this.split(Path.PATH_SEPARATOR).toUriDecoded());
             }
         },
         false, false, false);
 
-    troop.Properties.addProperties.call(
+    giant.Properties.addProperties.call(
         Array.prototype,
         /** @lends Array# */{
             /**
              * Creates a new Path instance based on the current array.
-             * @returns {sntls.Path}
+             * @returns {giant.Path}
              */
             toPath: function () {
-                return sntls.Path.create(this);
+                return giant.Path.create(this);
             }
         },
         false, false, false);

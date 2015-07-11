@@ -1,27 +1,27 @@
-/*global dessert, troop, sntls */
-troop.postpone(sntls, 'Dictionary', function () {
+/*global giant, giant, giant */
+giant.postpone(giant, 'Dictionary', function () {
     "use strict";
 
-    var base = sntls.Hash;
+    var base = giant.Hash;
 
     /**
      * Instantiates class.
      * Constructs a dictionary, initialized with the items passed in the optional argument.
-     * @name sntls.Dictionary.create
+     * @name giant.Dictionary.create
      * @function
      * @param {object} [items]
-     * @returns {sntls.Dictionary}
+     * @returns {giant.Dictionary}
      */
 
     /**
      * Manages key-value pairs. In a dictionary, one item is equivalent to a key-value pair.
      * Internally, `Dictionary` stores key-value pairs in an object hash, its keys being dictionary keys,
      * associated with values or arrays of values.
-     * @class sntls.Dictionary
-     * @extends sntls.Hash
+     * @class giant.Dictionary
+     * @extends giant.Hash
      */
-    sntls.Dictionary = base.extend()
-        .addPrivateMethods(/** @lends sntls.Dictionary# */{
+    giant.Dictionary = base.extend()
+        .addPrivateMethods(/** @lends giant.Dictionary# */{
             /**
              * Counts key-value pairs in dictionary.
              * Since one item may hold multiple values, value count =/= key count.
@@ -44,7 +44,7 @@ troop.postpone(sntls, 'Dictionary', function () {
                 return result;
             }
         })
-        .addMethods(/** @lends sntls.Dictionary# */{
+        .addMethods(/** @lends giant.Dictionary# */{
             /**
              * @param {object} [items]
              * @ignore
@@ -64,12 +64,12 @@ troop.postpone(sntls, 'Dictionary', function () {
             /**
              * Adds key-value pairs to dictionary, where one key, and multiple values may be specified.
              * @example
-             * var d = sntls.Dictionary.create({foo: "bar"});
+             * var d = giant.Dictionary.create({foo: "bar"});
              * d.addItem('hello', 'world').items // {foo: "bar", hello: "world"}
              * d.addItem('foo', 'boo').items // {foo: ["bar", "boo"], hello: "world"}
              * @param {string} key Single dictionary key.
              * @param {*|Array} value Value or values to be assigned to the specified key.
-             * @returns {sntls.Dictionary}
+             * @returns {giant.Dictionary}
              */
             addItem: function (key, value) {
                 var items = this.items,
@@ -117,15 +117,15 @@ troop.postpone(sntls, 'Dictionary', function () {
              * Adds key-value pairs to the dictionary, where multiple keys and values may be specified.
              * All specified keys will be assigned each value listed in `value`.
              * @example
-             * var d = sntls.Dictionary.create();
+             * var d = giant.Dictionary.create();
              * d.addItems(['hello', 'greetings'], 'world').items // {hello: "world", greetings: "world"}
              * d.addItem(['foo', 'hello'], 'bar').items // {hello: ["world", "bar"], greetings: "world", foo: "bar"}
              * @param {string[]} keys Array of keys.
              * @param {*|Array} value Value or values to be assigned to the specified keys.
-             * @returns {sntls.Dictionary}
+             * @returns {giant.Dictionary}
              */
             addItems: function (keys, value) {
-                dessert.isArray(keys, "Invalid keys");
+                giant.isArray(keys, "Invalid keys");
 
                 var i;
                 for (i = 0; i < keys.length; i++) {
@@ -138,14 +138,14 @@ troop.postpone(sntls, 'Dictionary', function () {
              * Removes single key-value pair from dictionary. When `value` is omitted all items matched by `key`
              * will be removed from the dictionary.
              * @example
-             * var d = sntls.Dictionary.create({
+             * var d = giant.Dictionary.create({
              *     foo: 'bar',
              *     hello: ['world', 'all', 'bar']
              * });
              * d.removeItem('hello', 'bar').items // {foo: 'bar', hello: ['world', 'all']}
              * @param {string} key Key identifying a dictionary item.
              * @param {*} [value] Value (by reference if object) to be removed from the item.
-             * @returns {sntls.Dictionary}
+             * @returns {giant.Dictionary}
              */
             removeItem: function (key, value) {
                 var items = this.items,
@@ -193,10 +193,10 @@ troop.postpone(sntls, 'Dictionary', function () {
              * When `value` is omitted, all items matching any of `keys` will be removed.
              * @param {string[]} keys Array of keys.
              * @param {*} [value] Value (by reference if object).
-             * @returns {sntls.Dictionary}
+             * @returns {giant.Dictionary}
              */
             removeItems: function (keys, value) {
-                dessert.isArray(keys, "Invalid keys");
+                giant.isArray(keys, "Invalid keys");
 
                 var i;
                 for (i = 0; i < keys.length; i++) {
@@ -232,7 +232,7 @@ troop.postpone(sntls, 'Dictionary', function () {
                         result = undefined;
                     }
                 } else {
-                    dessert.assert(false, "Invalid key");
+                    giant.assert(false, "Invalid key");
                 }
 
                 return result;
@@ -241,7 +241,7 @@ troop.postpone(sntls, 'Dictionary', function () {
             /**
              * Retrieves the number of items (key-value pairs) in the dictionary.
              * @example
-             * var d = sntls.Dictionary.create({
+             * var d = giant.Dictionary.create({
              *     foo: 'bar',
              *     hello: ['world', 'all', 'bar']
              * }).getItemCount() // 4
@@ -256,10 +256,10 @@ troop.postpone(sntls, 'Dictionary', function () {
 
             /**
              * Clones dictionary.
-             * @returns {sntls.Dictionary}
+             * @returns {giant.Dictionary}
              */
             clone: function () {
-                var result = /** @type {sntls.Dictionary} */base.clone.call(this);
+                var result = /** @type {giant.Dictionary} */base.clone.call(this);
 
                 result.itemCount = this.itemCount;
 
@@ -268,7 +268,7 @@ troop.postpone(sntls, 'Dictionary', function () {
 
             /**
              * Clears dictionary and resets counters.
-             * @returns {sntls.Dictionary}
+             * @returns {giant.Dictionary}
              */
             clear: function () {
                 // clearing items buffer
@@ -282,16 +282,16 @@ troop.postpone(sntls, 'Dictionary', function () {
         });
 });
 
-troop.amendPostponed(sntls, 'Hash', function () {
+giant.amendPostponed(giant, 'Hash', function () {
     "use strict";
 
-    sntls.Hash.addMethods(/** @lends sntls.Hash# */{
+    giant.Hash.addMethods(/** @lends giant.Hash# */{
         /**
          * Reinterprets hash as a dictionary.
-         * @returns {sntls.Dictionary}
+         * @returns {giant.Dictionary}
          */
         toDictionary: function () {
-            return sntls.Dictionary.create(this.items);
+            return giant.Dictionary.create(this.items);
         }
     });
 });
@@ -299,26 +299,26 @@ troop.amendPostponed(sntls, 'Hash', function () {
 (function () {
     "use strict";
 
-    dessert.addTypes(/** @lends dessert */{
+    giant.addTypes(/** @lends giant */{
         isDictionary: function (expr) {
-            return sntls.Dictionary.isBaseOf(expr);
+            return giant.Dictionary.isBaseOf(expr);
         },
 
         isDictionaryOptional: function (expr) {
             return typeof expr === 'undefined' ||
-                   sntls.Dictionary.isBaseOf(expr);
+                   giant.Dictionary.isBaseOf(expr);
         }
     });
 
-    troop.Properties.addProperties.call(
+    giant.Properties.addProperties.call(
         Array.prototype,
         /** @lends Array# */{
             /**
              * Creates a new Dictionary instance based on the current array.
-             * @returns {sntls.Dictionary}
+             * @returns {giant.Dictionary}
              */
             toDictionary: function () {
-                return sntls.Dictionary.create(this);
+                return giant.Dictionary.create(this);
             }
         },
         false, false, false);

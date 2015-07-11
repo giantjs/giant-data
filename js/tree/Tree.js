@@ -1,28 +1,28 @@
-/*global dessert, troop, sntls */
-troop.postpone(sntls, 'Tree', function () {
+/*global giant, giant, giant */
+giant.postpone(giant, 'Tree', function () {
     "use strict";
 
     var hop = Object.prototype.hasOwnProperty,
-        Hash = sntls.Hash;
+        Hash = giant.Hash;
 
     /**
      * Instantiates class
-     * @name sntls.Tree.create
+     * @name giant.Tree.create
      * @function
      * @param {object} [items]
-     * @returns {sntls.Tree}
+     * @returns {giant.Tree}
      */
 
     /**
      * Accesses, traverses, and modifies tree-like object structures.
-     * @class sntls.Tree
-     * @extends sntls.Hash
+     * @class giant.Tree
+     * @extends giant.Hash
      */
-    sntls.Tree = Hash.extend()
-        .addMethods(/** @lends sntls.Tree# */{
+    giant.Tree = Hash.extend()
+        .addMethods(/** @lends giant.Tree# */{
             /**
              * Retrieves the value at the specified path.
-             * @param {sntls.Path} path Path to node
+             * @param {giant.Path} path Path to node
              * @returns {*} Whatever value is found at path
              */
             getNode: function (path) {
@@ -42,8 +42,8 @@ troop.postpone(sntls, 'Tree', function () {
 
             /**
              * Retrieves object at the specified path wrapped in a Hash object.
-             * @param {sntls.Path} path Path to node
-             * @returns {sntls.Hash}
+             * @param {giant.Path} path Path to node
+             * @returns {giant.Hash}
              */
             getNodeAsHash: function (path) {
                 return Hash.create(this.getNode(path));
@@ -53,7 +53,7 @@ troop.postpone(sntls, 'Tree', function () {
              * Retrieves the value at the specified path, or
              * when the path does not exist, creates path and
              * assigns an empty object.
-             * @param {sntls.Path} path
+             * @param {giant.Path} path
              * @param {function} [handler] Callback receiving the path and value affected by change.
              * @returns {object}
              */
@@ -81,9 +81,9 @@ troop.postpone(sntls, 'Tree', function () {
 
             /**
              * Retrieves safe value at path, wrapped in a hash.
-             * @param {sntls.Path} path
+             * @param {giant.Path} path
              * @param {function} [handler] Callback receiving the path and value affected by change.
-             * @returns {sntls.Hash}
+             * @returns {giant.Hash}
              */
             getSafeNodeAsHash: function (path, handler) {
                 return Hash.create(this.getSafeNode(path, handler));
@@ -91,10 +91,10 @@ troop.postpone(sntls, 'Tree', function () {
 
             /**
              * Sets the node at the specified path to the given value.
-             * @param {sntls.Path} path Path to node
+             * @param {giant.Path} path Path to node
              * @param {*} value Node value to set
              * @param {function} [handler] Called on change
-             * @returns {sntls.Tree}
+             * @returns {giant.Tree}
              */
             setNode: function (path, value, handler) {
                 var parentPath = path.clone().trimRight(),
@@ -122,10 +122,10 @@ troop.postpone(sntls, 'Tree', function () {
             /**
              * Appends the node with the specified value.
              * In case of conflict the new value wins.
-             * @param {sntls.Path} path Path to node
+             * @param {giant.Path} path Path to node
              * @param {Object|Array} value Value to append to node
              * @param {function} [handler] Called on change
-             * @returns {sntls.Tree}
+             * @returns {giant.Tree}
              */
             appendNode: function (path, value, handler) {
                 var node = this.getNode(path),
@@ -180,7 +180,7 @@ troop.postpone(sntls, 'Tree', function () {
              * Retrieves the value at the specified path, or
              * when the path does not exist, creates path and
              * assigns the return value of the generator.
-             * @param {sntls.Path} path Path to node
+             * @param {giant.Path} path Path to node
              * @param {function} generator Generator function returning value to be set.
              * @param {function} [handler] Callback receiving the path and value affected by change.
              * @returns {*}
@@ -206,8 +206,8 @@ troop.postpone(sntls, 'Tree', function () {
             /**
              * Removes node from the specified path, ie.
              * the node will be overwritten with an undefined value.
-             * @param {sntls.Path} path
-             * @returns {sntls.Tree}
+             * @param {giant.Path} path
+             * @returns {giant.Tree}
              */
             unsetNode: function (path) {
                 if (!path.asArray.length) {
@@ -228,10 +228,10 @@ troop.postpone(sntls, 'Tree', function () {
 
             /**
              * Removes key from the specified path.
-             * @param {sntls.Path} path Path to node
+             * @param {giant.Path} path Path to node
              * @param {boolean} [splice=false] Whether to use splice when removing key from array.
              * @param {function} [handler] Callback receiving the path affected by change.
-             * @returns {sntls.Tree}
+             * @returns {giant.Tree}
              */
             unsetKey: function (path, splice, handler) {
                 if (!path.asArray.length) {
@@ -272,10 +272,10 @@ troop.postpone(sntls, 'Tree', function () {
             /**
              * Removes nodes from tree that have no children
              * other than the one specified by the path.
-             * @param {sntls.Path} path Datastore path
+             * @param {giant.Path} path Datastore path
              * @param {boolean} [splice=false] Whether to use splice when removing key from array.
              * @param {function} [handler] Callback receiving the path affected by change.
-             * @returns {sntls.Tree}
+             * @returns {giant.Tree}
              */
             unsetPath: function (path, splice, handler) {
                 if (!path.asArray.length) {
@@ -307,7 +307,7 @@ troop.postpone(sntls, 'Tree', function () {
                         break;
                     }
 
-                    currentNodeSingle = sntls.Utils.isSingularObject(currentNode);
+                    currentNodeSingle = giant.Utils.isSingularObject(currentNode);
                     if (currentNodeSingle && parentNode !== null) {
                         // current node has exactly one child
                         // and is not root node
@@ -355,10 +355,10 @@ troop.postpone(sntls, 'Tree', function () {
 
             /**
              * Moves node from one path to another.
-             * @param {sntls.Path} fromPath
-             * @param {sntls.Path} toPath
+             * @param {giant.Path} fromPath
+             * @param {giant.Path} toPath
              * @param {function} [handler]
-             * @returns {sntls.Tree}
+             * @returns {giant.Tree}
              */
             moveNode: function (fromPath, toPath, handler) {
                 var node = this.getNode(fromPath);
@@ -372,13 +372,13 @@ troop.postpone(sntls, 'Tree', function () {
 
             /**
              * Traverses tree recursively, guided by the specified query array
-             * @param {sntls.Query} query
+             * @param {giant.Query} query
              * @param {function} handler
-             * @returns {sntls.Tree}
+             * @returns {giant.Tree}
              */
             traverseByQuery: function (query, handler) {
                 // recursive tree walker may be guided by query expression
-                sntls.RecursiveTreeWalker.create(handler, query)
+                giant.RecursiveTreeWalker.create(handler, query)
                     .walk(this.items);
 
                 return this;
@@ -388,12 +388,12 @@ troop.postpone(sntls, 'Tree', function () {
              * Traverses tree iteratively, calling handler on every node
              * unless interrupted by returning false from handler.
              * @param {function} handler
-             * @returns {sntls.Tree}
+             * @returns {giant.Tree}
              */
             traverseAllNodes: function (handler) {
                 // iterative walker operates unguided,
                 // touching all nodes along traversal
-                sntls.IterativeTreeWalker.create(handler)
+                giant.IterativeTreeWalker.create(handler)
                     .walk(this.items);
 
                 return this;
@@ -401,7 +401,7 @@ troop.postpone(sntls, 'Tree', function () {
 
             /**
              * Queries node values from tree
-             * @param {sntls.Query} query
+             * @param {giant.Query} query
              * @returns {Array}
              */
             queryValues: function (query) {
@@ -412,7 +412,7 @@ troop.postpone(sntls, 'Tree', function () {
                 }
 
                 // creating tree walker and walking tree buffer
-                sntls.RecursiveTreeWalker.create(handler, query)
+                giant.RecursiveTreeWalker.create(handler, query)
                     .walk(this.items);
 
                 return result;
@@ -420,8 +420,8 @@ troop.postpone(sntls, 'Tree', function () {
 
             /**
              * Queries node values from tree wrapped in a hash
-             * @param {sntls.Query} query
-             * @returns {sntls.Hash}
+             * @param {giant.Query} query
+             * @returns {giant.Hash}
              */
             queryValuesAsHash: function (query) {
                 return Hash.create(this.queryValues(query));
@@ -429,7 +429,7 @@ troop.postpone(sntls, 'Tree', function () {
 
             /**
              * Queries node keys from tree
-             * @param {sntls.Query} query
+             * @param {giant.Query} query
              * @returns {Array}
              */
             queryKeys: function (query) {
@@ -441,7 +441,7 @@ troop.postpone(sntls, 'Tree', function () {
                 }
 
                 // creating tree walker and walking tree buffer
-                sntls.RecursiveTreeWalker.create(handler, query)
+                giant.RecursiveTreeWalker.create(handler, query)
                     .walk(this.items);
 
                 return result;
@@ -449,8 +449,8 @@ troop.postpone(sntls, 'Tree', function () {
 
             /**
              * Queries node keys from tree wrapped in a hash
-             * @param {sntls.Query} query
-             * @returns {sntls.Hash}
+             * @param {giant.Query} query
+             * @returns {giant.Hash}
              */
             queryKeysAsHash: function (query) {
                 return Hash.create(this.queryKeys(query));
@@ -458,7 +458,7 @@ troop.postpone(sntls, 'Tree', function () {
 
             /**
              * Queries paths from tree
-             * @param {sntls.Query} query
+             * @param {giant.Query} query
              * @returns {Array}
              */
             queryPaths: function (query) {
@@ -470,7 +470,7 @@ troop.postpone(sntls, 'Tree', function () {
                 }
 
                 // creating tree walker and walking tree buffer
-                sntls.RecursiveTreeWalker.create(handler, query)
+                giant.RecursiveTreeWalker.create(handler, query)
                     .walk(this.items);
 
                 return result;
@@ -478,8 +478,8 @@ troop.postpone(sntls, 'Tree', function () {
 
             /**
              * Queries paths from tree wrapped in a hash
-             * @param {sntls.Query} query
-             * @returns {sntls.Hash}
+             * @param {giant.Query} query
+             * @returns {giant.Hash}
              */
             queryPathsAsHash: function (query) {
                 return Hash.create(this.queryPaths(query));
@@ -487,7 +487,7 @@ troop.postpone(sntls, 'Tree', function () {
 
             /**
              * Queries key-value associations from tree as an object
-             * @param {sntls.Query} query
+             * @param {giant.Query} query
              * @returns {object}
              */
             queryKeyValuePairs: function (query) {
@@ -499,7 +499,7 @@ troop.postpone(sntls, 'Tree', function () {
                 }
 
                 // creating tree walker and walking tree buffer
-                sntls.RecursiveTreeWalker.create(handler, query)
+                giant.RecursiveTreeWalker.create(handler, query)
                     .walk(this.items);
 
                 return result;
@@ -507,8 +507,8 @@ troop.postpone(sntls, 'Tree', function () {
 
             /**
              * Queries key-value associations from tree as an object wrapped in a hash
-             * @param {sntls.Query} query
-             * @returns {sntls.Hash}
+             * @param {giant.Query} query
+             * @returns {giant.Hash}
              */
             queryKeyValuePairsAsHash: function (query) {
                 return Hash.create(this.queryKeyValuePairs(query));
@@ -516,7 +516,7 @@ troop.postpone(sntls, 'Tree', function () {
 
             /**
              * Queries pat-value associations from tree as object
-             * @param {sntls.Query} query
+             * @param {giant.Query} query
              * @returns {object}
              */
             queryPathValuePairs: function (query) {
@@ -528,7 +528,7 @@ troop.postpone(sntls, 'Tree', function () {
                 }
 
                 // creating tree walker and walking tree buffer
-                sntls.RecursiveTreeWalker.create(handler, query)
+                giant.RecursiveTreeWalker.create(handler, query)
                     .walk(this.items);
 
                 return result;
@@ -536,8 +536,8 @@ troop.postpone(sntls, 'Tree', function () {
 
             /**
              * Queries pat-value associations from tree as object wrapped in a hash
-             * @param {sntls.Query} query
-             * @returns {sntls.Hash}
+             * @param {giant.Query} query
+             * @returns {giant.Hash}
              */
             queryPathValuePairsAsHash: function (query) {
                 return Hash.create(this.queryPathValuePairs(query));
@@ -545,16 +545,16 @@ troop.postpone(sntls, 'Tree', function () {
         });
 });
 
-troop.amendPostponed(sntls, 'Hash', function () {
+giant.amendPostponed(giant, 'Hash', function () {
     "use strict";
 
-    sntls.Hash.addMethods(/** @lends sntls.Hash# */{
+    giant.Hash.addMethods(/** @lends giant.Hash# */{
         /**
          * Reinterprets hash as a tree.
-         * @returns {sntls.Tree}
+         * @returns {giant.Tree}
          */
         toTree: function () {
-            return sntls.Tree.create(this.items);
+            return giant.Tree.create(this.items);
         }
     });
 });
@@ -562,26 +562,26 @@ troop.amendPostponed(sntls, 'Hash', function () {
 (function () {
     "use strict";
 
-    dessert.addTypes(/** @lends dessert */{
+    giant.addTypes(/** @lends giant */{
         isTree: function (expr) {
-            return sntls.Tree.isBaseOf(expr);
+            return giant.Tree.isBaseOf(expr);
         },
 
         isTreeOptional: function (expr) {
             return typeof expr === 'undefined' ||
-                sntls.Tree.isBaseOf(expr);
+                giant.Tree.isBaseOf(expr);
         }
     });
 
-    troop.Properties.addProperties.call(
+    giant.Properties.addProperties.call(
         Array.prototype,
         /** @lends Array# */{
             /**
              * Creates a new Tree instance based on the current array.
-             * @returns {sntls.Tree}
+             * @returns {giant.Tree}
              */
             toTree: function () {
-                return sntls.Tree.create(this);
+                return giant.Tree.create(this);
             }
         },
         false, false, false);

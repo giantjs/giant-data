@@ -1,4 +1,4 @@
-/*global troop, sntls, module, test, expect, ok, equal, strictEqual, notStrictEqual, deepEqual, raises */
+/*global giant, giant, module, test, expect, ok, equal, strictEqual, notStrictEqual, deepEqual, raises */
 (function () {
     "use strict";
 
@@ -6,13 +6,13 @@
 
     test("Pattern parsing", function () {
         equal(
-            sntls.KeyValuePattern._parseString('foo%5E'),
+            giant.KeyValuePattern._parseString('foo%5E'),
             'foo^',
             "String literal pattern"
         );
 
         deepEqual(
-            sntls.KeyValuePattern._parseString('{foo%5E}'),
+            giant.KeyValuePattern._parseString('{foo%5E}'),
             {
                 key   : 'foo^',
                 marker: '{'
@@ -21,7 +21,7 @@
         );
 
         deepEqual(
-            sntls.KeyValuePattern._parseString('foo%5E<bar%5E'),
+            giant.KeyValuePattern._parseString('foo%5E<bar%5E'),
             {
                 options: ['foo^', 'bar^']
             },
@@ -29,7 +29,7 @@
         );
 
         deepEqual(
-            sntls.KeyValuePattern._parseString('[foo%5E<bar%5E]'),
+            giant.KeyValuePattern._parseString('[foo%5E<bar%5E]'),
             {
                 options: ['foo^', 'bar^'],
                 marker : '['
@@ -38,7 +38,7 @@
         );
 
         deepEqual(
-            sntls.KeyValuePattern._parseString('|'),
+            giant.KeyValuePattern._parseString('|'),
             {
                 symbol: '|'
             },
@@ -46,7 +46,7 @@
         );
 
         deepEqual(
-            sntls.KeyValuePattern._parseString('[|]'),
+            giant.KeyValuePattern._parseString('[|]'),
             {
                 symbol: '|',
                 marker: '['
@@ -55,7 +55,7 @@
         );
 
         deepEqual(
-            sntls.KeyValuePattern._parseString('\\'),
+            giant.KeyValuePattern._parseString('\\'),
             {
                 symbol: '\\'
             },
@@ -63,7 +63,7 @@
         );
 
         deepEqual(
-            sntls.KeyValuePattern._parseString('{\\}'),
+            giant.KeyValuePattern._parseString('{\\}'),
             {
                 symbol: '\\'
             },
@@ -71,7 +71,7 @@
         );
 
         deepEqual(
-            sntls.KeyValuePattern._parseString('foo%5E^bar%5E'),
+            giant.KeyValuePattern._parseString('foo%5E^bar%5E'),
             {
                 key  : 'foo^',
                 value: 'bar^'
@@ -80,7 +80,7 @@
         );
 
         deepEqual(
-            sntls.KeyValuePattern._parseString('foo%5E<bar%5E^baz%5E'),
+            giant.KeyValuePattern._parseString('foo%5E<bar%5E^baz%5E'),
             {
                 options: ['foo^', 'bar^'],
                 value  : 'baz^'
@@ -89,7 +89,7 @@
         );
 
         deepEqual(
-            sntls.KeyValuePattern._parseString('|^bar%5E'),
+            giant.KeyValuePattern._parseString('|^bar%5E'),
             {
                 symbol: '|',
                 value : 'bar^'
@@ -98,7 +98,7 @@
         );
 
         deepEqual(
-            sntls.KeyValuePattern._parseString('\\^bar%5E'),
+            giant.KeyValuePattern._parseString('\\^bar%5E'),
             {
                 symbol: '\\'
             },
@@ -111,21 +111,21 @@
             pattern;
 
         raises(function () {
-            sntls.KeyValuePattern.create(4);
+            giant.KeyValuePattern.create(4);
         }, "Key-value pattern initialized w/ other than string, array, or object");
 
-        pattern = sntls.KeyValuePattern.create('|^foo');
+        pattern = giant.KeyValuePattern.create('|^foo');
         deepEqual(
             pattern.descriptor,
-            sntls.KeyValuePattern._parseString('|^foo'),
+            giant.KeyValuePattern._parseString('|^foo'),
             "Descriptor parsed from string"
         );
 
         descriptor = {symbol: '|', value: 'foo'};
-        pattern = sntls.KeyValuePattern.create(descriptor);
+        pattern = giant.KeyValuePattern.create(descriptor);
         deepEqual(
             pattern.descriptor,
-            sntls.KeyValuePattern._parseString('|^foo'),
+            giant.KeyValuePattern._parseString('|^foo'),
             "Descriptor supplied as object"
         );
         strictEqual(
@@ -134,15 +134,15 @@
             "Descriptor supplied as object"
         );
 
-        pattern = sntls.KeyValuePattern.create(['foo', 'bar']);
+        pattern = giant.KeyValuePattern.create(['foo', 'bar']);
         deepEqual(
             pattern.descriptor,
-            sntls.KeyValuePattern._parseString('foo<bar'),
+            giant.KeyValuePattern._parseString('foo<bar'),
             "Descriptor created from array"
         );
 
         deepEqual(
-            sntls.KeyValuePattern._parseString('"'),
+            giant.KeyValuePattern._parseString('"'),
             {symbol: '"'},
             "Descriptor created from array"
         );
@@ -151,7 +151,7 @@
     test("Type conversion", function () {
         var pattern;
 
-        if (troop.Feature.hasPropertyAttributes()) {
+        if (giant.Feature.hasPropertyAttributes()) {
             ok(!Array.prototype.propertyIsEnumerable('toKeyValuePattern'), "Array type converter is not enumerable");
             ok(!Array.prototype.propertyIsEnumerable('toKVP'), "Array type converter is not enumerable");
             ok(!String.prototype.propertyIsEnumerable('toKeyValuePattern'), "String type converter is not enumerable");
@@ -159,34 +159,34 @@
         }
 
         pattern = '|'.toKeyValuePattern();
-        ok(pattern.isA(sntls.KeyValuePattern), "Type of converted value");
+        ok(pattern.isA(giant.KeyValuePattern), "Type of converted value");
         deepEqual(
             pattern.descriptor,
-            sntls.KeyValuePattern.create('|').descriptor,
+            giant.KeyValuePattern.create('|').descriptor,
             "Pattern contents"
         );
 
         pattern = ['foo', 'bar'].toKeyValuePattern();
-        ok(pattern.isA(sntls.KeyValuePattern), "Type of converted value");
+        ok(pattern.isA(giant.KeyValuePattern), "Type of converted value");
         deepEqual(
             pattern.descriptor,
-            sntls.KeyValuePattern.create('foo<bar').descriptor,
+            giant.KeyValuePattern.create('foo<bar').descriptor,
             "Pattern contents"
         );
 
         pattern = '|'.toKVP();
-        ok(pattern.isA(sntls.KeyValuePattern), "Type of converted value");
+        ok(pattern.isA(giant.KeyValuePattern), "Type of converted value");
         deepEqual(
             pattern.descriptor,
-            sntls.KeyValuePattern.create('|').descriptor,
+            giant.KeyValuePattern.create('|').descriptor,
             "Pattern contents"
         );
 
         pattern = ['foo', 'bar'].toKVP();
-        ok(pattern.isA(sntls.KeyValuePattern), "Type of converted value");
+        ok(pattern.isA(giant.KeyValuePattern), "Type of converted value");
         deepEqual(
             pattern.descriptor,
-            sntls.KeyValuePattern.create('foo<bar').descriptor,
+            giant.KeyValuePattern.create('foo<bar').descriptor,
             "Pattern contents"
         );
     });
@@ -217,8 +217,8 @@
     });
 
     test("Skipper detection", function () {
-        ok(!sntls.KeyValuePattern.create('hello').isSkipper(), "Literal not skipper");
-        ok(sntls.KeyValuePattern.create('\\').isSkipper(), "Skipper");
+        ok(!giant.KeyValuePattern.create('hello').isSkipper(), "Literal not skipper");
+        ok(giant.KeyValuePattern.create('\\').isSkipper(), "Skipper");
     });
 
     test("Marker retrieval", function () {
@@ -256,7 +256,7 @@
 
         ok('|'.toKVP().matchesKey('hello'), "should pass on normal string key on a wildcard");
         ok('|'.toKVP().matchesKey(''), "should pass on empty string key on a wildcard");
-        ok(!sntls.KeyValuePattern.create({}).matchesKey('hello'), "should fail on any value for custom empty descriptor");
+        ok(!giant.KeyValuePattern.create({}).matchesKey('hello'), "should fail on any value for custom empty descriptor");
 
         ok('|^foo'.toKVP().matchesKey('hello'), "should pass when key part of KVP is wildcard");
 
@@ -280,25 +280,25 @@
 
     test("String representation", function () {
         equal(
-            sntls.KeyValuePattern.create({symbol: '|', value: 'foo^'}).toString(),
+            giant.KeyValuePattern.create({symbol: '|', value: 'foo^'}).toString(),
             '|^foo%5E',
             "Wildcard with value"
         );
 
         equal(
-            sntls.KeyValuePattern.create({symbol: '\\'}).toString(),
+            giant.KeyValuePattern.create({symbol: '\\'}).toString(),
             '\\',
             "Skipper"
         );
 
         equal(
-            sntls.KeyValuePattern.create({options: ['foo^', 'bar^']}).toString(),
+            giant.KeyValuePattern.create({options: ['foo^', 'bar^']}).toString(),
             'foo%5E<bar%5E',
             "Options"
         );
 
         equal(
-            sntls.KeyValuePattern.create({options: ['foo^', 'bar^'], value: 'baz^'}).toString(),
+            giant.KeyValuePattern.create({options: ['foo^', 'bar^'], value: 'baz^'}).toString(),
             'foo%5E<bar%5E^baz%5E',
             "Options with value"
         );

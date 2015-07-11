@@ -1,17 +1,17 @@
-/*global dessert, troop, sntls */
-troop.postpone(sntls, 'Hash', function () {
+/*global giant, giant, giant */
+giant.postpone(giant, 'Hash', function () {
     "use strict";
 
     var hOP = Object.prototype.hasOwnProperty,
         slice = Array.prototype.slice,
-        isEmptyObject = sntls.Utils.isEmptyObject;
+        isEmptyObject = giant.Utils.isEmptyObject;
 
     /**
      * Instantiates class.
-     * @name sntls.Hash.create
+     * @name giant.Hash.create
      * @function
      * @param {object|Array} items Container for hash items.
-     * @returns {sntls.Hash}
+     * @returns {giant.Hash}
      */
 
     /**
@@ -19,17 +19,17 @@ troop.postpone(sntls, 'Hash', function () {
      * Calling `Object.prototype` methods on hash objects is not safe as they may be
      * shadowed by user data, and such cases certainly lead the application to break.
      * Other `Hash`-based classes may delegate conversion methods to this class.
-     * @class sntls.Hash
-     * @extends troop.Base
+     * @class giant.Hash
+     * @extends giant.Base
      */
-    sntls.Hash = troop.Base.extend()
-        .addMethods(/** @lends sntls.Hash# */{
+    giant.Hash = giant.Base.extend()
+        .addMethods(/** @lends giant.Hash# */{
             /**
              * @param {object|Array} items Container for hash items.
              * @ignore
              */
             init: function (items) {
-                dessert.isObjectOptional(items, "Invalid items");
+                giant.isObjectOptional(items, "Invalid items");
 
                 /**
                  * Object buffer that stores items. Technically writable and public for performance
@@ -60,17 +60,17 @@ troop.postpone(sntls, 'Hash', function () {
             /**
              * Clones hash. Creates an instance of the same class (for subclasses of `Hash`)
              * and initializes it with a shallow copy of the current items buffer and item count.
-             * @returns {sntls.Hash} New hash with identical contents.
+             * @returns {giant.Hash} New hash with identical contents.
              */
             clone: function () {
-                var result = /** @type sntls.Hash */ this.getBase().create();
+                var result = /** @type giant.Hash */ this.getBase().create();
 
                 /**
                  * Copying items and count
                  * Other properties added by descendants
                  * must be cloned in override methods
                  */
-                result.items = sntls.Utils.shallowCopy(this.items);
+                result.items = giant.Utils.shallowCopy(this.items);
                 result.keyCount = this.keyCount;
 
                 return result;
@@ -81,7 +81,7 @@ troop.postpone(sntls, 'Hash', function () {
              * any of the hash's keys may be returned. Result does not necessarily match up with the return value
              * of `.getFirstValue()`.
              * @returns {string}
-             * @see sntls.Hash#getFirstValue
+             * @see giant.Hash#getFirstValue
              */
             getFirstKey: function () {
                 var items = this.items,
@@ -109,17 +109,17 @@ troop.postpone(sntls, 'Hash', function () {
 
             /**
              * Retrieves item keys wrapped in a hash.
-             * @returns {sntls.Hash}
-             * @see sntls.Hash#getKeys
+             * @returns {giant.Hash}
+             * @see giant.Hash#getKeys
              */
             getKeysAsHash: function () {
-                return sntls.Hash.create(this.getKeys());
+                return giant.Hash.create(this.getKeys());
             },
 
             /**
              * Retrieves the number of keys in hash.
              * @example
-             * var c = sntls.Hash.create({foo: 1, bar: 2});
+             * var c = giant.Hash.create({foo: 1, bar: 2});
              * c.getKeyCount() // 2
              * @returns {number}
              */
@@ -135,7 +135,7 @@ troop.postpone(sntls, 'Hash', function () {
              * any value from the hash may be returned. Result does not necessarily match up with the return value
              * of `.getFirstKey()`.
              * @returns {*}
-             * @see sntls.Hash#getFirstKey
+             * @see giant.Hash#getFirstKey
              */
             getFirstValue: function () {
                 var items = this.items,
@@ -168,11 +168,11 @@ troop.postpone(sntls, 'Hash', function () {
 
             /**
              * Retrieves item values wrapped in a hash.
-             * @returns {sntls.Hash}
-             * @see sntls.Hash#getValues
+             * @returns {giant.Hash}
+             * @see giant.Hash#getValues
              */
             getValuesAsHash: function () {
-                return sntls.Hash.create(this.getValues());
+                return giant.Hash.create(this.getValues());
             },
 
             /**
@@ -180,8 +180,8 @@ troop.postpone(sntls, 'Hash', function () {
              * Changes the current hash instance!
              * @param {function} bufferType=Object `Array` or `Object`, specifying new buffer type.
              * @example
-             * sntls.Hash.create({0: 'foo', 1: 'bar'}).changeBufferTypeTo(Array).items // ['foo', 'bar']
-             * @returns {sntls.Hash}
+             * giant.Hash.create({0: 'foo', 1: 'bar'}).changeBufferTypeTo(Array).items // ['foo', 'bar']
+             * @returns {giant.Hash}
              */
             changeBufferTypeTo: function (bufferType) {
                 var items = this.items;
@@ -213,7 +213,7 @@ troop.postpone(sntls, 'Hash', function () {
              * Clears hash by replacing items buffer with an empty one.
              * Observes current buffer type, ie. if hash was array based, the new buffer will be also array.
              * @param {function} handler Change handler callback. Receives the new `items` buffer.
-             * @returns {sntls.Hash}
+             * @returns {giant.Hash}
              */
             clear: function (handler) {
                 if (!isEmptyObject(this.items)) {
@@ -238,7 +238,7 @@ troop.postpone(sntls, 'Hash', function () {
             passItemsTo: function (handler, context, argIndex) {
                 argIndex = argIndex || 0;
                 var args = slice.call(arguments, 3);
-                dessert.assert(args.length >= argIndex, "Invalid argument index", argIndex);
+                giant.assert(args.length >= argIndex, "Invalid argument index", argIndex);
                 args.splice(argIndex, 0, this.items);
                 return handler.apply(context || this, args);
             },
@@ -254,7 +254,7 @@ troop.postpone(sntls, 'Hash', function () {
             passSelfTo: function (handler, context, argIndex) {
                 argIndex = argIndex || 0;
                 var args = slice.call(arguments, 3);
-                dessert.assert(args.length >= argIndex, "Invalid argument index", argIndex);
+                giant.assert(args.length >= argIndex, "Invalid argument index", argIndex);
                 args.splice(argIndex, 0, this);
                 return handler.apply(context || this, args);
             }
@@ -264,26 +264,26 @@ troop.postpone(sntls, 'Hash', function () {
 (function () {
     "use strict";
 
-    dessert.addTypes(/** @lends dessert */{
+    giant.addTypes(/** @lends giant */{
         isHash: function (expr) {
-            return sntls.Hash.isBaseOf(expr);
+            return giant.Hash.isBaseOf(expr);
         },
 
         isHashOptional: function (expr) {
             return typeof expr === 'undefined' ||
-                sntls.Hash.isBaseOf(expr);
+                giant.Hash.isBaseOf(expr);
         }
     });
 
-    troop.Properties.addProperties.call(
+    giant.Properties.addProperties.call(
         Array.prototype,
         /** @lends Array# */{
             /**
              * Creates a new Hash instance based on the current array.
-             * @returns {sntls.Hash}
+             * @returns {giant.Hash}
              */
             toHash: function () {
-                return sntls.Hash.create(this);
+                return giant.Hash.create(this);
             }
         },
         false, false, false);

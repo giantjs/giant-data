@@ -1,23 +1,23 @@
-/*global dessert, troop, sntls */
-troop.postpone(sntls, 'OrderedStringList', function () {
+/*global giant, giant, giant */
+giant.postpone(giant, 'OrderedStringList', function () {
     "use strict";
 
     /**
      * Instantiates class.
-     * @name sntls.OrderedStringList.create
+     * @name giant.OrderedStringList.create
      * @function
      * @param {string[]} [items] Initial values. Array of strings.
      * @param {string} [orderType='ascending'] Order type. Either 'ascending' or 'descending'.
-     * @returns {sntls.OrderedStringList}
+     * @returns {giant.OrderedStringList}
      */
 
     /**
      * Ordered list extended with string-specific fast, prefix-based search.
-     * @class sntls.OrderedStringList
-     * @extends sntls.OrderedList
+     * @class giant.OrderedStringList
+     * @extends giant.OrderedList
      */
-    sntls.OrderedStringList = sntls.OrderedList.extend()
-        .addPrivateMethods(/** @lends sntls.OrderedStringList */{
+    giant.OrderedStringList = giant.OrderedList.extend()
+        .addPrivateMethods(/** @lends giant.OrderedStringList */{
             /**
              * Calculates range search end value for prefix search based on start value.
              * Increments char code on the string's last character.
@@ -39,11 +39,11 @@ troop.postpone(sntls, 'OrderedStringList', function () {
                 return startValue + String.fromCharCode(0);
             }
         })
-        .addMethods(/** @lends sntls.OrderedStringList# */{
+        .addMethods(/** @lends giant.OrderedStringList# */{
             /**
              * Retrieves items from the list matching the specified prefix.
              * @example
-             * var osl = sntls.OrderedStringList(['hi', 'hello', 'hire', 'foo']);
+             * var osl = giant.OrderedStringList(['hi', 'hello', 'hire', 'foo']);
              * osl.getRangeByPrefix('hi') // ['hi', 'hire']
              * osl.getRangeByPrefix('h') // ['hello', 'hi', 'hire']
              * @param {string} prefix Prefix to be matched by list items.
@@ -53,7 +53,7 @@ troop.postpone(sntls, 'OrderedStringList', function () {
              * @returns {string[]} Sorted array of matches.
              */
             getRangeByPrefix: function (prefix, excludeOriginal, offset, limit) {
-                dessert
+                giant
                     .assert(typeof prefix === 'string' && prefix.length > 0, "Empty prefix")
                     .isBooleanOptional(excludeOriginal);
 
@@ -71,41 +71,41 @@ troop.postpone(sntls, 'OrderedStringList', function () {
              * @param {boolean} [excludeOriginal=false] Whether to exclude `prefix` from the results
              * @param {number} [offset=0] Number of items to skip at start.
              * @param {number} [limit=Infinity] Number of items to fetch at most.
-             * @returns {sntls.Hash}
-             * @see sntls.OrderedList#getRange
+             * @returns {giant.Hash}
+             * @see giant.OrderedList#getRange
              */
             getRangeByPrefixAsHash: function (prefix, excludeOriginal, offset, limit) {
                 var range = this.getRangeByPrefix.apply(this, arguments);
-                return sntls.Hash.create(range);
+                return giant.Hash.create(range);
             },
 
             /**
              * Removes all occurrences of a specific string from the list.
              * @example
-             * var osl = sntls.OrderedStringList(['hi', 'hello', 'hire', 'hi', 'foo']);
+             * var osl = giant.OrderedStringList(['hi', 'hello', 'hire', 'hi', 'foo']);
              * osl.removeAll('hi').items // ['hello', 'hire', 'foo']
              * @param {string} value String value to be removed from list.
-             * @returns {sntls.OrderedStringList}
+             * @returns {giant.OrderedStringList}
              */
             removeEvery: function (value) {
-                dessert.isString(value);
+                giant.isString(value);
                 this.removeRange(value, this._getNextValue(value));
                 return this;
             }
         });
 });
 
-troop.amendPostponed(sntls, 'Hash', function () {
+giant.amendPostponed(giant, 'Hash', function () {
     "use strict";
 
-    sntls.Hash.addMethods(/** @lends sntls.Hash# */{
+    giant.Hash.addMethods(/** @lends giant.Hash# */{
         /**
          * Converts Hash to OrderedStringList instance.
          * @param {string} [orderType='ascending']
-         * @returns {sntls.OrderedStringList}
+         * @returns {giant.OrderedStringList}
          */
         toOrderedStringList: function (orderType) {
-            return sntls.OrderedStringList.create(this.items, orderType);
+            return giant.OrderedStringList.create(this.items, orderType);
         }
     });
 });
@@ -113,16 +113,16 @@ troop.amendPostponed(sntls, 'Hash', function () {
 (function () {
     "use strict";
 
-    troop.Properties.addProperties.call(
+    giant.Properties.addProperties.call(
         Array.prototype,
         /** @lends Array# */{
             /**
              * Creates a new OrderedStringList instance based on the current array.
              * @param {string} [orderType='ascending']
-             * @returns {sntls.OrderedStringList}
+             * @returns {giant.OrderedStringList}
              */
             toOrderedStringList: function (orderType) {
-                return sntls.OrderedStringList.create(this, orderType);
+                return giant.OrderedStringList.create(this, orderType);
             }
         },
         false, false, false);

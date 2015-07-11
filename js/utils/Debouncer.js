@@ -1,17 +1,17 @@
-/*global dessert, troop, Q, sntls */
+/*global giant, giant, Q, giant */
 /*jshint browser:true, node:true */
-troop.postpone(sntls, 'Debouncer', function () {
+giant.postpone(giant, 'Debouncer', function () {
     "use strict";
 
-    var base = troop.Base,
+    var base = giant.Base,
         self = base.extend(),
         slice = Array.prototype.slice;
 
     /**
-     * @name sntls.Debouncer.create
+     * @name giant.Debouncer.create
      * @function
      * @param {function} originalFunction Function to debounce
-     * @returns {sntls.Debouncer}
+     * @returns {giant.Debouncer}
      */
 
     /**
@@ -19,10 +19,10 @@ troop.postpone(sntls, 'Debouncer', function () {
      * and replaced by subsequent calls being made within the specified time frame.
      * When no new calls were made in the specified time frame, the last call will go through.
      * @class
-     * @extends troop.Base
+     * @extends giant.Base
      */
-    sntls.Debouncer = self
-        .addPrivateMethods(/** @lends sntls.Debouncer# */{
+    giant.Debouncer = self
+        .addPrivateMethods(/** @lends giant.Debouncer# */{
             /**
              * @param {function} func
              * @param {number} delay
@@ -41,13 +41,13 @@ troop.postpone(sntls, 'Debouncer', function () {
                 return clearTimeout(timer);
             }
         })
-        .addMethods(/** @lends sntls.Debouncer# */{
+        .addMethods(/** @lends giant.Debouncer# */{
             /**
              * @param {function} originalFunction Function to debounce
              * @ignore
              */
             init: function (originalFunction) {
-                dessert.isFunction(originalFunction, "Invalid original function");
+                giant.isFunction(originalFunction, "Invalid original function");
 
                 /**
                  * Function to be de-bounced.
@@ -110,15 +110,15 @@ troop.postpone(sntls, 'Debouncer', function () {
 (function () {
     "use strict";
 
-    troop.Properties.addProperties.call(
+    giant.Properties.addProperties.call(
         Function.prototype,
         /** @lends Function# */{
             /**
              * Converts `Function` to `Debouncer` instance.
-             * @returns {sntls.Debouncer}
+             * @returns {giant.Debouncer}
              */
             toDebouncer: function () {
-                return sntls.Debouncer.create(this);
+                return giant.Debouncer.create(this);
             }
         },
         false, false, false);

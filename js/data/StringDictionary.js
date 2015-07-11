@@ -1,14 +1,14 @@
-/*global dessert, troop, sntls */
-troop.postpone(sntls, 'StringDictionary', function () {
+/*global giant, giant, giant */
+giant.postpone(giant, 'StringDictionary', function () {
     "use strict";
 
     /**
      * Instantiates class.
      * Constructs a dictionary, initialized with the items passed in the optional argument.
-     * @name sntls.StringDictionary.create
+     * @name giant.StringDictionary.create
      * @function
      * @param {object|Array} items
-     * @returns {sntls.StringDictionary}
+     * @returns {giant.StringDictionary}
      */
 
     /**
@@ -16,31 +16,31 @@ troop.postpone(sntls, 'StringDictionary', function () {
      * or other primitives that can be converted to string implicitly (numbers, booleans, etc.).
      * @example
      * {foo: 'bar', 'hello': ['all', 'the', 'world']}
-     * @class sntls.StringDictionary
-     * @extends sntls.Dictionary
+     * @class giant.StringDictionary
+     * @extends giant.Dictionary
      */
-    sntls.StringDictionary = sntls.Dictionary.extend()
-        .addMethods(/** @lends sntls.StringDictionary# */{
+    giant.StringDictionary = giant.Dictionary.extend()
+        .addMethods(/** @lends giant.StringDictionary# */{
             /**
              * Combines current dictionary with another dictionary and returns the combined dictionary
              * in a new instance. The result will contain values from key-value pairs in the remote dictionary
              * where keys match the current dictionary's values.
              * @example
-             * var left = sntls.StringDictionary.create({foo: 'bar', hello: ['world', 'all']}),
-             *     right = sntls.StringDictionary.create({bar: 'BAR', all: 'ALL'});
+             * var left = giant.StringDictionary.create({foo: 'bar', hello: ['world', 'all']}),
+             *     right = giant.StringDictionary.create({bar: 'BAR', all: 'ALL'});
              * left.combineWith(right).items // {foo: "BAR", hello: "ALL"}
-             * @param {sntls.Dictionary} remoteDict Remote dictionary (doesn't have to be string dictionary)
-             * @returns {sntls.Dictionary} Dictionary instance with the combined items. When the two dictionaries
+             * @param {giant.Dictionary} remoteDict Remote dictionary (doesn't have to be string dictionary)
+             * @returns {giant.Dictionary} Dictionary instance with the combined items. When the two dictionaries
              * (current and remote) are of different (sub)classes, the return value will match the class of the
              * remote dictionary. This way, a `StringDictionary` may be combined with a regular dictionary,
              * resulting in a regular dictionary, but not the other way around.
              */
             combineWith: function (remoteDict) {
-                dessert.isDictionary(remoteDict, "Invalid dictionary");
+                giant.isDictionary(remoteDict, "Invalid dictionary");
 
                 var items = this.items,
                     resultBuffer = items instanceof Array ? [] : {},
-                    result = /** @type {sntls.Dictionary} */ remoteDict.getBase().create(resultBuffer),
+                    result = /** @type {giant.Dictionary} */ remoteDict.getBase().create(resultBuffer),
                     currentKeys = this.getKeys(),
                     i, currentKey, currentValue, remoteValue;
 
@@ -60,22 +60,22 @@ troop.postpone(sntls, 'StringDictionary', function () {
             /**
              * Combines current dictionary itself.
              * Equivalent to: `stringDictionary.combineWith(stringDictionary)`.
-             * @returns {sntls.StringDictionary} New dictionary instance with combined items.
+             * @returns {giant.StringDictionary} New dictionary instance with combined items.
              */
             combineWithSelf: function () {
-                return /** @type sntls.StringDictionary */ this.combineWith(this);
+                return /** @type giant.StringDictionary */ this.combineWith(this);
             },
 
             /**
              * Flips keys and values in the dictionary and returns the results in a new instance. In the reversed
              * dictionary, keys will be the current dictionary's values and vice versa.
              * @example
-             * var d = sntls.StringDictionary.create({
+             * var d = giant.StringDictionary.create({
              *  foo: 'bar',
              *  hello: ['world', 'all', 'bar']
              * });
              * d.reverse().items // {bar: ["foo", "hello"], world: "hello", all: "hello"}
-             * @returns {sntls.StringDictionary} New dictionary instance with reversed key-value pairs.
+             * @returns {giant.StringDictionary} New dictionary instance with reversed key-value pairs.
              */
             reverse: function () {
                 var resultBuffer = {},
@@ -110,7 +110,7 @@ troop.postpone(sntls, 'StringDictionary', function () {
 
             /**
              * Retrieves unique values from dictionary wrapped in a hash.
-             * @returns {sntls.Hash}
+             * @returns {giant.Hash}
              */
             getUniqueValuesAsHash: function () {
                 return this
@@ -120,23 +120,23 @@ troop.postpone(sntls, 'StringDictionary', function () {
 
             /**
              * Clears dictionary and resets counters.
-             * @name sntls.StringDictionary#clear
+             * @name giant.StringDictionary#clear
              * @function
-             * @returns {sntls.StringDictionary}
+             * @returns {giant.StringDictionary}
              */
         });
 });
 
-troop.amendPostponed(sntls, 'Hash', function () {
+giant.amendPostponed(giant, 'Hash', function () {
     "use strict";
 
-    sntls.Hash.addMethods(/** @lends sntls.Hash# */{
+    giant.Hash.addMethods(/** @lends giant.Hash# */{
         /**
          * Reinterprets hash as a string dictionary.
-         * @returns {sntls.StringDictionary}
+         * @returns {giant.StringDictionary}
          */
         toStringDictionary: function () {
-            return sntls.StringDictionary.create(this.items);
+            return giant.StringDictionary.create(this.items);
         }
     });
 });
@@ -144,26 +144,26 @@ troop.amendPostponed(sntls, 'Hash', function () {
 (function () {
     "use strict";
 
-    dessert.addTypes(/** @lends dessert */{
+    giant.addTypes(/** @lends giant */{
         isStringDictionary: function (expr) {
-            return sntls.StringDictionary.isBaseOf(expr);
+            return giant.StringDictionary.isBaseOf(expr);
         },
 
         isStringDictionaryOptional: function (expr) {
             return typeof expr === 'undefined' ||
-                   sntls.StringDictionary.isBaseOf(expr);
+                   giant.StringDictionary.isBaseOf(expr);
         }
     });
 
-    troop.Properties.addProperties.call(
+    giant.Properties.addProperties.call(
         Array.prototype,
         /** @lends Array# */{
             /**
              * Creates a new StringDictionary instance based on the current array.
-             * @returns {sntls.StringDictionary}
+             * @returns {giant.StringDictionary}
              */
             toStringDictionary: function () {
-                return sntls.StringDictionary.create(this);
+                return giant.StringDictionary.create(this);
             }
         },
         false, false, false);

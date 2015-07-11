@@ -1,19 +1,19 @@
 /*global module, test, expect, raises, ok, equal, notStrictEqual, strictEqual, deepEqual */
-/*global sntls */
+/*global giant */
 (function () {
     "use strict";
 
     module("Dictionary");
 
     test("Type conversion", function () {
-        var hash = sntls.Hash.create(),
+        var hash = giant.Hash.create(),
             dict = hash.toDictionary();
 
-        ok(dict.isA(sntls.Dictionary), "Hash converted to dictionary");
+        ok(dict.isA(giant.Dictionary), "Hash converted to dictionary");
     });
 
     test("Value count", function () {
-        var dictionary = sntls.Dictionary.create({
+        var dictionary = giant.Dictionary.create({
             foo  : ['bar', 'moo'],
             hello: 'world'
         });
@@ -24,12 +24,12 @@
     test("Instantiation", function () {
         var dict;
 
-        dict = sntls.Dictionary.create();
+        dict = giant.Dictionary.create();
 
         equal(dict.keyCount, 0, "Item count in empty buffer");
         equal(dict.itemCount, 0, "Value count in empty buffer");
 
-        dict = sntls.Dictionary.create({
+        dict = giant.Dictionary.create({
             foo  : ['bar', 'moo'],
             hello: 'world'
         });
@@ -42,15 +42,15 @@
         var buffer = [1, 2, 3, 4],
             hash = buffer.toDictionary();
 
-        ok(hash.isA(sntls.Dictionary), "Is dictionary");
+        ok(hash.isA(giant.Dictionary), "Is dictionary");
         strictEqual(hash.items, buffer, "Same buffer");
     });
 
     test("Single item addition", function () {
         /**
-         * @type {sntls.Dictionary}
+         * @type {giant.Dictionary}
          */
-        var dict = sntls.Dictionary.create();
+        var dict = giant.Dictionary.create();
 
         dict.addItem('foo', 'bar');
         equal(dict.keyCount, 1, "Item count");
@@ -86,9 +86,9 @@
 
     test("Array item addition", function () {
         /**
-         * @type {sntls.Dictionary}
+         * @type {giant.Dictionary}
          */
-        var dict = sntls.Dictionary.create();
+        var dict = giant.Dictionary.create();
 
         dict.addItem('foo', ['bar']);
         deepEqual(dict.items, {
@@ -116,9 +116,9 @@
 
     test("Item addition to multiple keys", function () {
         /**
-         * @type {sntls.Dictionary}
+         * @type {giant.Dictionary}
          */
-        var dict = sntls.Dictionary.create();
+        var dict = giant.Dictionary.create();
 
         raises(function () {
             dict.addItems('foo', 'bar');
@@ -139,7 +139,7 @@
     });
 
     test("Item removal", function () {
-        var dict = sntls.Dictionary.create({
+        var dict = giant.Dictionary.create({
             foo  : ['bar', 'BAR', 'woot'],
             hello: 'world'
         });
@@ -195,7 +195,7 @@
     });
 
     test("Multiple items removal", function () {
-        var dict = sntls.Dictionary.create({
+        var dict = giant.Dictionary.create({
             foo: ['bar', 'hello'],
             boo: 'bar',
             moo: 'hello'
@@ -217,7 +217,7 @@
     });
 
     test("Multiple values removal", function () {
-        var dict = sntls.Dictionary.create({
+        var dict = giant.Dictionary.create({
             foo: ['bar', 'hello'],
             boo: 'bar',
             moo: 'hello'
@@ -237,9 +237,9 @@
 
     test("Item retrieval", function () {
         /**
-         * @type {sntls.Dictionary}
+         * @type {giant.Dictionary}
          */
-        var dict = sntls.Dictionary.create({
+        var dict = giant.Dictionary.create({
             foo  : ['bar', 'moo', 'boo'],
             hello: 'world',
             1    : 'howdy'
@@ -283,7 +283,7 @@
     });
 
     test("Item counter", function () {
-        var dictionary = sntls.Dictionary.create({
+        var dictionary = giant.Dictionary.create({
             foo  : 'bar',
             hello: ['world', 'all']
         });
@@ -294,7 +294,7 @@
     });
 
     test("Cloning", function () {
-        var dictionary = sntls.Dictionary.create()
+        var dictionary = giant.Dictionary.create()
                 .addItem('foo', ["hello", "world"])
                 .addItem('bar', "baz"),
             clone = dictionary.clone();
@@ -306,7 +306,7 @@
     });
 
     test("Clearing", function () {
-        var dict = sntls.Dictionary.create({
+        var dict = giant.Dictionary.create({
             foo  : 'bar',
             hello: ['world', 'all']
         });

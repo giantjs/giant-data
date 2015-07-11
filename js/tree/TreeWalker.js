@@ -1,21 +1,21 @@
-/*global dessert, troop, sntls */
-troop.postpone(sntls, 'TreeWalker', function () {
+/*global giant, giant, giant */
+giant.postpone(giant, 'TreeWalker', function () {
     "use strict";
 
     /**
      * Base class for tree walker classes.
      * Holds basic properties and state of the tree walker.
-     * @class sntls.TreeWalker
-     * @extends troop.Base
+     * @class giant.TreeWalker
+     * @extends giant.Base
      */
-    sntls.TreeWalker = troop.Base.extend()
-        .addMethods(/** @lends sntls.TreeWalker# */{
+    giant.TreeWalker = giant.Base.extend()
+        .addMethods(/** @lends giant.TreeWalker# */{
             /**
              * @param {function} handler
              * @ignore
              */
             init: function (handler) {
-                dessert.isFunction(handler, "Invalid walker handler");
+                giant.isFunction(handler, "Invalid walker handler");
 
                 /**
                  * Handler to be called on each relevant node. Receives TreeWalker instance as context
@@ -39,7 +39,7 @@ troop.postpone(sntls, 'TreeWalker', function () {
 
                 /**
                  * Path currently being traversed
-                 * @type {sntls.Path}
+                 * @type {giant.Path}
                  */
                 this.currentPath = undefined;
 
@@ -52,7 +52,7 @@ troop.postpone(sntls, 'TreeWalker', function () {
 
             /**
              * Sets termination flag.
-             * @returns {sntls.TreeWalker}
+             * @returns {giant.TreeWalker}
              */
             terminateTraversal: function () {
                 this.isTerminated = true;
@@ -61,7 +61,7 @@ troop.postpone(sntls, 'TreeWalker', function () {
 
             /**
              * Resets walker state
-             * @returns {sntls.TreeWalker}
+             * @returns {giant.TreeWalker}
              */
             reset: function () {
                 this.currentKey = undefined;

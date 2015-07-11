@@ -1,42 +1,42 @@
-/*global dessert, troop, sntls */
-troop.postpone(sntls, 'Documented', function () {
+/*global giant, giant, giant */
+giant.postpone(giant, 'Documented', function () {
     "use strict";
 
-    var base = troop.Base,
+    var base = giant.Base,
         self = base.extend();
 
     /**
-     * @name sntls.Documented.create
+     * @name giant.Documented.create
      * @function
-     * @returns {sntls.Documented}
+     * @returns {giant.Documented}
      */
 
     /**
      * Documented trait. Adds meta information to the class, including class name, namespace, and instance ID.
      * @class
-     * @extends troop.Base
+     * @extends giant.Base
      */
-    sntls.Documented = self
-        .addPublic(/** @lends sntls.Documented */{
+    giant.Documented = self
+        .addPublic(/** @lends giant.Documented */{
             /**
              * Next instance ID.
              * @type {number}
              */
             nextInstanceId: 0
         })
-        .addMethods(/** @lends sntls.Documented# */{
+        .addMethods(/** @lends giant.Documented# */{
             /**
              * Extends class adding meta information.
              * @param {string} className Class name
-             * @returns {sntls.Documented}
-             * @memberOf sntls.Documented
+             * @returns {giant.Documented}
+             * @memberOf giant.Documented
              */
             extend: function (className) {
-                dessert.isString(className, "Invalid class name");
+                giant.isString(className, "Invalid class name");
 
-                var result = /** @type {sntls.Documented} */ base.extend.call(this);
+                var result = /** @type {giant.Documented} */ base.extend.call(this);
 
-                result.addConstants(/** @lends sntls.Documented */{
+                result.addConstants(/** @lends giant.Documented */{
                     /**
                      * @type {string}
                      */

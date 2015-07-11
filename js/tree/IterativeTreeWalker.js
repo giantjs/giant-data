@@ -1,31 +1,31 @@
-/*global dessert, troop, sntls */
-troop.postpone(sntls, 'IterativeTreeWalker', function () {
+/*global giant, giant, giant */
+giant.postpone(giant, 'IterativeTreeWalker', function () {
     "use strict";
 
     /**
      * Instantiates class
-     * @name sntls.IterativeTreeWalker.create
+     * @name giant.IterativeTreeWalker.create
      * @function
      * @param {function} handler
-     * @returns {sntls.IterativeTreeWalker}
+     * @returns {giant.IterativeTreeWalker}
      */
 
     /**
      * Traverses tree iteratively, touching all nodes within.
-     * @class sntls.IterativeTreeWalker
-     * @extends sntls.TreeWalker
+     * @class giant.IterativeTreeWalker
+     * @extends giant.TreeWalker
      */
-    sntls.IterativeTreeWalker = sntls.TreeWalker.extend()
-        .addMethods(/** @lends sntls.IterativeTreeWalker# */{
+    giant.IterativeTreeWalker = giant.TreeWalker.extend()
+        .addMethods(/** @lends giant.IterativeTreeWalker# */{
             /**
              * Traverses all enumerable nodes in object.
              * Iterative implementation.
              * @param node {object} Object to be traversed.
-             * @returns {sntls.IterativeTreeWalker}
+             * @returns {giant.IterativeTreeWalker}
              */
             walk: function (node) {
                 // reference to path
-                this.currentPath = sntls.Path.create([]);
+                this.currentPath = giant.Path.create([]);
 
                 var keysStack = [Object.keys(node)], // stack of keys associated with each node on current path
                     indexStack = [0], // stack of key indexes on current path

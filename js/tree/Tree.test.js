@@ -1,4 +1,4 @@
-/*global sntls, module, test, expect, ok, equal, strictEqual, notStrictEqual, deepEqual, raises */
+/*global giant, module, test, expect, ok, equal, strictEqual, notStrictEqual, deepEqual, raises */
 (function () {
     "use strict";
 
@@ -8,30 +8,30 @@
         var tree,
             json = {foo: 'bar'};
 
-        tree = sntls.Tree.create();
+        tree = giant.Tree.create();
         deepEqual(tree.items, {}, "Empty root");
 
-        tree = sntls.Tree.create(json);
+        tree = giant.Tree.create(json);
         strictEqual(tree.items, json, "root initialized with custom value");
     });
 
     test("Type conversion", function () {
-        var hash = sntls.Hash.create(),
+        var hash = giant.Hash.create(),
             tree = hash.toTree();
 
-        ok(tree.isA(sntls.Tree), "Hash converted to Tree");
+        ok(tree.isA(giant.Tree), "Hash converted to Tree");
     });
 
     test("Array conversion", function () {
         var buffer = [1, 2, 3, 4],
             hash = buffer.toTree();
 
-        ok(hash.isA(sntls.Tree), "Is tree");
+        ok(hash.isA(giant.Tree), "Is tree");
         strictEqual(hash.items, buffer, "Same buffer");
     });
 
     test("Node retrieval", function () {
-        var tree = sntls.Tree.create({
+        var tree = giant.Tree.create({
             foo: {
                 bar: "Hello world!"
             }
@@ -42,7 +42,7 @@
     });
 
     test("Node retrieval as Hash", function () {
-        var tree = sntls.Tree.create({
+        var tree = giant.Tree.create({
                 foo: {
                     bar: "Hello world!"
                 }
@@ -54,7 +54,7 @@
         }, "Primitive can't be hashed");
 
         result = tree.getNodeAsHash('foo'.toPath());
-        ok(result.isA(sntls.Hash), "Result is a hash");
+        ok(result.isA(giant.Hash), "Result is a hash");
         deepEqual(
             result.items,
             {
@@ -67,7 +67,7 @@
     test("Safe node retrieval", function () {
         expect(5);
 
-        var tree = sntls.Tree.create({
+        var tree = giant.Tree.create({
                 hello: "world"
             }),
             path = 'foo>bar'.toPath(),
@@ -102,7 +102,7 @@
     test("Node setter", function () {
         expect(6);
 
-        var tree = sntls.Tree.create({});
+        var tree = giant.Tree.create({});
 
         strictEqual(tree.setNode('foo>bar'.toPath(), "Hello world!", function (path, node) {
             ok(path.equals('foo'.toPath()),
@@ -133,7 +133,7 @@
     test("Appending object to object", function () {
         expect(4);
 
-        var tree = sntls.Tree.create();
+        var tree = giant.Tree.create();
 
         tree.setNode('foo>bar'.toPath(), {
             hello: 'world'
@@ -168,7 +168,7 @@
     test("Appending array to array", function () {
         expect(3);
 
-        var tree = sntls.Tree.create()
+        var tree = giant.Tree.create()
             .setNode('foo>bar'.toPath(), [ 'hello', 'world' ])
             .appendNode('foo>bar'.toPath(), [ 'hi', 'all' ], function (path, afterNode) {
                 ok(path.equals('foo>bar'.toPath()), "should pass affected path to handler");
@@ -190,7 +190,7 @@
     test("Appending object to array", function () {
         expect(3);
 
-        var tree = sntls.Tree.create()
+        var tree = giant.Tree.create()
             .setNode('foo>bar'.toPath(), [ 'hello', 'world' ])
             .appendNode('foo>bar'.toPath(), {
                 'hi': 'all'
@@ -210,7 +210,7 @@
     test("Appending value to primitive", function () {
         expect(3);
 
-        var tree = sntls.Tree.create()
+        var tree = giant.Tree.create()
             .setNode('foo>bar'.toPath(), 'hello')
             .appendNode('foo>bar'.toPath(), 'hi', function (path, afterNode) {
                 ok(path.equals('foo>bar'.toPath()), "should pass affected path to handler");
@@ -236,7 +236,7 @@
                     bar: "Hello world!"
                 }
             },
-            tree = sntls.Tree.create(json),
+            tree = giant.Tree.create(json),
             result;
 
         result = tree.getOrSetNode('foo>bar'.toPath(), function () {
@@ -268,7 +268,7 @@
     });
 
     test("Node annulment", function () {
-        var tree = sntls.Tree.create({
+        var tree = giant.Tree.create({
                 foo: {
                     bar: "Hello world!"
                 }
@@ -288,7 +288,7 @@
     test("Key deletion from object", function () {
         expect(4);
 
-        var tree = sntls.Tree.create({
+        var tree = giant.Tree.create({
             foo: {
                 bar: "Hello world!"
             }
@@ -308,7 +308,7 @@
     test("Key-deleting entire tree", function () {
         expect(3);
 
-        var tree = sntls.Tree.create({
+        var tree = giant.Tree.create({
             foo: {
                 bar: "Hello world!"
             }
@@ -327,7 +327,7 @@
     });
 
     test("Key deletion from array", function () {
-        var tree = sntls.Tree.create({
+        var tree = giant.Tree.create({
             foo: {
                 bar: ['hello', 'all', 'the', 'world']
             }
@@ -351,7 +351,7 @@
     test("Path deletion in objects", function () {
         expect(12);
 
-        var tree = sntls.Tree.create({
+        var tree = giant.Tree.create({
             a: {d: {}, e: {}, f: {
                 g: {}, h: {
                     i: {j: {k: {l: {
@@ -447,7 +447,7 @@
     test("Path deletion w/ empty path", function () {
         expect(2);
 
-        var tree = sntls.Tree.create({
+        var tree = giant.Tree.create({
             foo: {
                 bar: "Hello world!"
             }
@@ -463,7 +463,7 @@
     test("Path deletion in arrays", function () {
         expect(12);
 
-        var tree = sntls.Tree.create([
+        var tree = giant.Tree.create([
             [1, 2, 3],
             [4, 5],
             [
@@ -489,7 +489,7 @@
             "Path deleted from array"
         );
 
-        tree.unsetPath([1, 0].toPath(), true, function (/**sntls.Path*/path, value) {
+        tree.unsetPath([1, 0].toPath(), true, function (/**giant.Path*/path, value) {
             equal(path.asArray.length, 0, "Affected path");
             deepEqual(value, [
                 [1, 2, 3],
@@ -562,7 +562,7 @@
         var tree;
 
         function getTree() {
-            return sntls.Tree.create({
+            return giant.Tree.create({
                 foo: {
                     bar: "Hello world!"
                 }
@@ -604,11 +604,11 @@
     test("Recursive traversal", function () {
         expect(3);
 
-        var tree = sntls.Tree.create({}),
+        var tree = giant.Tree.create({}),
             handler = function () {
             };
 
-        sntls.RecursiveTreeWalker.addMocks({
+        giant.RecursiveTreeWalker.addMocks({
             init: function (h, query) {
                 equal(query.toString(), 'foo>|>2', "Query being traversed");
                 strictEqual(h, handler, "Handler to be called");
@@ -621,17 +621,17 @@
 
         tree.traverseByQuery('foo>|>2'.toQuery(), handler);
 
-        sntls.RecursiveTreeWalker.removeMocks();
+        giant.RecursiveTreeWalker.removeMocks();
     });
 
     test("Iterative traversal", function () {
         expect(2);
 
-        var tree = sntls.Tree.create({}),
+        var tree = giant.Tree.create({}),
             handler = function () {
             };
 
-        sntls.IterativeTreeWalker.addMocks({
+        giant.IterativeTreeWalker.addMocks({
             init: function (h) {
                 strictEqual(h, handler, "Handler to be called");
             },
@@ -643,11 +643,11 @@
 
         tree.traverseAllNodes(handler);
 
-        sntls.IterativeTreeWalker.removeMocks();
+        giant.IterativeTreeWalker.removeMocks();
     });
 
     test("Querying", function () {
-        var tree = sntls.Tree.create({
+        var tree = giant.Tree.create({
             hello: "world",
             foo  : {
                 bar: {

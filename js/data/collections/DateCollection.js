@@ -1,34 +1,34 @@
-/*global dessert, troop, sntls */
-troop.postpone(sntls, 'DateCollection', function () {
+/*global giant, giant, giant */
+giant.postpone(giant, 'DateCollection', function () {
     "use strict";
 
     /**
-     * @name sntls.DateCollection.create
+     * @name giant.DateCollection.create
      * @function
      * @param {object} [items] Initial contents.
-     * @returns {sntls.DateCollection}
+     * @returns {giant.DateCollection}
      */
 
     /**
      * General collection for managing multiple date objects.
-     * @class sntls.DateCollection
-     * @extends sntls.Collection
+     * @class giant.DateCollection
+     * @extends giant.Collection
      * @extends Date
      * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
      */
-    sntls.DateCollection = sntls.Collection.of(Date);
+    giant.DateCollection = giant.Collection.of(Date);
 });
 
-troop.amendPostponed(sntls, 'Hash', function () {
+giant.amendPostponed(giant, 'Hash', function () {
     "use strict";
 
-    sntls.Hash.addMethods(/** @lends sntls.Hash# */{
+    giant.Hash.addMethods(/** @lends giant.Hash# */{
         /**
          * Reinterprets hash as date collection.
-         * @returns {sntls.DateCollection}
+         * @returns {giant.DateCollection}
          */
         toDateCollection: function () {
-            return sntls.DateCollection.create(this.items);
+            return giant.DateCollection.create(this.items);
         }
     });
 });
@@ -36,15 +36,15 @@ troop.amendPostponed(sntls, 'Hash', function () {
 (function () {
     "use strict";
 
-    troop.Properties.addProperties.call(
+    giant.Properties.addProperties.call(
         Array.prototype,
         /** @lends Array# */{
             /**
              * Creates a new DateCollection instance based on the current array.
-             * @returns {sntls.DateCollection}
+             * @returns {giant.DateCollection}
              */
             toDateCollection: function () {
-                return sntls.DateCollection.create(this);
+                return giant.DateCollection.create(this);
             }
         },
         false, false, false);
