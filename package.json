@@ -1,6 +1,6 @@
 {
-    "name"           : "sntls",
-    "version"        : "0.21.0",
+    "name"           : "giant-data",
+    "version"        : "0.0.3",
     "description"    : "Essential data structures, and behaviors",
     "keywords"       : [
         "tools",
@@ -20,7 +20,7 @@
     "license"        : "MIT",
     "repository"     : {
         "type": "git",
-        "url" : "git://github.com/danstocker/sntls.git"
+        "url" : "git@github.com:giantjs/giant-data.git"
     },
     "dependencies"   : {
         "dessert": "~0.3.2",
