@@ -275,16 +275,13 @@ giant.postpone(giant, 'Hash', function () {
         }
     });
 
-    giant.Properties.addProperties.call(
-        Array.prototype,
-        /** @lends Array# */{
-            /**
-             * Creates a new Hash instance based on the current array.
-             * @returns {giant.Hash}
-             */
-            toHash: function () {
-                return giant.Hash.create(this);
-            }
-        },
-        false, false, false);
+    giant.extendBuiltIn(Array.prototype, /** @lends Array# */{
+        /**
+         * Creates a new Hash instance based on the current array.
+         * @returns {giant.Hash}
+         */
+        toHash: function () {
+            return giant.Hash.create(this);
+        }
+    });
 }());

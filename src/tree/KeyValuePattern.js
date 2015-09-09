@@ -148,7 +148,7 @@ giant.postpone(giant, 'KeyValuePattern', function () {
                         symbol: key
                     };
                 } else if (key === this.WILDCARD_SYMBOL ||
-                           key === this.PRIMITIVE_SYMBOL) {
+                    key === this.PRIMITIVE_SYMBOL) {
                     // key is a wildcard symbol, matching any key
                     result = {
                         symbol: key
@@ -275,7 +275,7 @@ giant.postpone(giant, 'KeyValuePattern', function () {
                     if (hOP.call(descriptor, 'symbol')) {
                         // descriptor is wildcard object
                         return descriptor.symbol === this.WILDCARD_SYMBOL ||
-                               descriptor.symbol === this.PRIMITIVE_SYMBOL;
+                            descriptor.symbol === this.PRIMITIVE_SYMBOL;
                     } else if (hOP.call(descriptor, 'options')) {
                         // descriptor is list of options
                         return descriptor.options.indexOf(key) > -1;
@@ -377,51 +377,45 @@ giant.postpone(giant, 'KeyValuePatternCollection', function () {
 
         isKeyValuePatternOptional: function (expr) {
             return typeof expr === 'undefined' ||
-                   giant.KeyValuePattern.isBaseOf(expr);
+                giant.KeyValuePattern.isBaseOf(expr);
         }
     });
 
-    giant.Properties.addProperties.call(
-        String.prototype,
-        /** @lends String# */{
-            /**
-             * Creates a new KeyValuePattern instance based on the current string.
-             * @returns {giant.KeyValuePattern}
-             */
-            toKeyValuePattern: function () {
-                return /** @type {giant.KeyValuePattern} */ giant.KeyValuePattern.create(this);
-            },
-
-            /**
-             * Shorthand to String.prototype.toKeyValuePattern().
-             * Creates a new KeyValuePattern instance based on the current string.
-             * @returns {giant.KeyValuePattern}
-             */
-            toKVP: function () {
-                return /** @type {giant.KeyValuePattern} */ giant.KeyValuePattern.create(this);
-            }
+    giant.extendBuiltIn(String.prototype, /** @lends String# */{
+        /**
+         * Creates a new KeyValuePattern instance based on the current string.
+         * @returns {giant.KeyValuePattern}
+         */
+        toKeyValuePattern: function () {
+            return /** @type {giant.KeyValuePattern} */ giant.KeyValuePattern.create(this);
         },
-        false, false, false);
 
-    giant.Properties.addProperties.call(
-        Array.prototype,
-        /** @lends Array# */{
-            /**
-             * Creates a new KeyValuePattern instance based on the current array.
-             * @returns {giant.KeyValuePattern}
-             */
-            toKeyValuePattern: function () {
-                return /** @type {giant.KeyValuePattern} */ giant.KeyValuePattern.create(this);
-            },
+        /**
+         * Shorthand to String.prototype.toKeyValuePattern().
+         * Creates a new KeyValuePattern instance based on the current string.
+         * @returns {giant.KeyValuePattern}
+         */
+        toKVP: function () {
+            return /** @type {giant.KeyValuePattern} */ giant.KeyValuePattern.create(this);
+        }
+    });
 
-            /**
-             * Shorthand to Array.prototype.toKeyValuePattern().
-             * Creates a new KeyValuePattern instance based on the current array.
-             * @returns {giant.KeyValuePattern}
-             */
-            toKVP: function () {
-                return /** @type {giant.KeyValuePattern} */ giant.KeyValuePattern.create(this);
-            }
+    giant.extendBuiltIn(Array.prototype, /** @lends Array# */{
+        /**
+         * Creates a new KeyValuePattern instance based on the current array.
+         * @returns {giant.KeyValuePattern}
+         */
+        toKeyValuePattern: function () {
+            return /** @type {giant.KeyValuePattern} */ giant.KeyValuePattern.create(this);
         },
-        false, false, false);
+
+        /**
+         * Shorthand to Array.prototype.toKeyValuePattern().
+         * Creates a new KeyValuePattern instance based on the current array.
+         * @returns {giant.KeyValuePattern}
+         */
+        toKVP: function () {
+            return /** @type {giant.KeyValuePattern} */ giant.KeyValuePattern.create(this);
+        }
+    });
 }());

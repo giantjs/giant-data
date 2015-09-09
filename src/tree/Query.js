@@ -202,7 +202,7 @@ giant.postpone(giant, 'Query', function () {
                 // matching was successful when query was fully processed
                 // and path was either fully processed or last pattern was continuation
                 return j === queryAsArray.length &&
-                       (i === pathAsArray.length || currentPattern === this.PATTERN_SKIP);
+                    (i === pathAsArray.length || currentPattern === this.PATTERN_SKIP);
             },
 
             /**
@@ -251,7 +251,7 @@ giant.postpone(giant, 'Query', function () {
 
         isQueryOptional: function (expr) {
             return typeof expr === 'undefined' ||
-                   giant.Query.isBaseOf(expr);
+                giant.Query.isBaseOf(expr);
         },
 
         /**
@@ -274,55 +274,49 @@ giant.postpone(giant, 'Query', function () {
         }
     });
 
-    giant.Properties.addProperties.call(
-        String.prototype,
-        /** @lends String# */{
-            /**
-             * Creates a new Query instance based on the current string.
-             * Keys are URI decoded or translated to the corresponding pattern object before being added to the internal buffer.
-             * @returns {giant.Query}
-             */
-            toQuery: function () {
-                var Query = giant.Query;
-                return /** @type {giant.Query} */ Query.create(Query.stringToQueryArray(this));
-            },
-
-            /**
-             * Creates a new Path or Query instance based on the current string, depending on the
-             * actual string contents.
-             * @returns {giant.Path}
-             */
-            toPathOrQuery: function () {
-                var Query = giant.Query;
-                return /** @type {giant.Path} */ validators.isQueryExpression(this) ?
-                    this.toQuery() :
-                    this.toPath();
-            }
+    giant.extendBuiltIn(String.prototype, /** @lends String# */{
+        /**
+         * Creates a new Query instance based on the current string.
+         * Keys are URI decoded or translated to the corresponding pattern object before being added to the internal buffer.
+         * @returns {giant.Query}
+         */
+        toQuery: function () {
+            var Query = giant.Query;
+            return /** @type {giant.Query} */ Query.create(Query.stringToQueryArray(this));
         },
-        false, false, false);
 
-    giant.Properties.addProperties.call(
-        Array.prototype,
-        /** @lends Array# */{
-            /**
-             * Creates a new Query instance based on the current array.
-             * @returns {giant.Query}
-             */
-            toQuery: function () {
-                var Query = giant.Query;
-                return /** @type {giant.Query} */ Query.create(Query.arrayToQueryArray(this));
-            },
+        /**
+         * Creates a new Path or Query instance based on the current string, depending on the
+         * actual string contents.
+         * @returns {giant.Path}
+         */
+        toPathOrQuery: function () {
+            var Query = giant.Query;
+            return /** @type {giant.Path} */ validators.isQueryExpression(this) ?
+                this.toQuery() :
+                this.toPath();
+        }
+    });
 
-            /**
-             * Creates a new Path or Query instance based on the current array, depending on the
-             * actual contents of the array.
-             * @returns {giant.Path}
-             */
-            toPathOrQuery: function () {
-                return /** @type {giant.Path} */ validators.isQueryExpression(this) ?
-                    this.toQuery() :
-                    this.toPath();
-            }
+    giant.extendBuiltIn(Array.prototype, /** @lends Array# */{
+        /**
+         * Creates a new Query instance based on the current array.
+         * @returns {giant.Query}
+         */
+        toQuery: function () {
+            var Query = giant.Query;
+            return /** @type {giant.Query} */ Query.create(Query.arrayToQueryArray(this));
         },
-        false, false, false);
+
+        /**
+         * Creates a new Path or Query instance based on the current array, depending on the
+         * actual contents of the array.
+         * @returns {giant.Path}
+         */
+        toPathOrQuery: function () {
+            return /** @type {giant.Path} */ validators.isQueryExpression(this) ?
+                this.toQuery() :
+                this.toPath();
+        }
+    });
 }());

@@ -113,17 +113,14 @@ giant.amendPostponed(giant, 'Hash', function () {
 (function () {
     "use strict";
 
-    giant.Properties.addProperties.call(
-        Array.prototype,
-        /** @lends Array# */{
-            /**
-             * Creates a new OrderedStringList instance based on the current array.
-             * @param {string} [orderType='ascending']
-             * @returns {giant.OrderedStringList}
-             */
-            toOrderedStringList: function (orderType) {
-                return giant.OrderedStringList.create(this, orderType);
-            }
-        },
-        false, false, false);
+    giant.extendBuiltIn(Array.prototype, /** @lends Array# */{
+        /**
+         * Creates a new OrderedStringList instance based on the current array.
+         * @param {string} [orderType='ascending']
+         * @returns {giant.OrderedStringList}
+         */
+        toOrderedStringList: function (orderType) {
+            return giant.OrderedStringList.create(this, orderType);
+        }
+    });
 }());

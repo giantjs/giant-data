@@ -363,17 +363,14 @@ giant.amendPostponed(giant, 'Hash', function () {
         }
     });
 
-    giant.Properties.addProperties.call(
-        Array.prototype,
-        /** @lends Array# */{
-            /**
-             * Creates a new OrderedList instance based on the current array.
-             * @param {string} [orderType='ascending']
-             * @returns {giant.OrderedList}
-             */
-            toOrderedList: function (orderType) {
-                return giant.OrderedList.create(this, orderType);
-            }
-        },
-        false, false, false);
+    giant.extendBuiltIn(Array.prototype, /** @lends Array# */{
+        /**
+         * Creates a new OrderedList instance based on the current array.
+         * @param {string} [orderType='ascending']
+         * @returns {giant.OrderedList}
+         */
+        toOrderedList: function (orderType) {
+            return giant.OrderedList.create(this, orderType);
+        }
+    });
 }());

@@ -151,20 +151,17 @@ giant.amendPostponed(giant, 'Hash', function () {
 
         isStringDictionaryOptional: function (expr) {
             return typeof expr === 'undefined' ||
-                   giant.StringDictionary.isBaseOf(expr);
+                giant.StringDictionary.isBaseOf(expr);
         }
     });
 
-    giant.Properties.addProperties.call(
-        Array.prototype,
-        /** @lends Array# */{
-            /**
-             * Creates a new StringDictionary instance based on the current array.
-             * @returns {giant.StringDictionary}
-             */
-            toStringDictionary: function () {
-                return giant.StringDictionary.create(this);
-            }
-        },
-        false, false, false);
+    giant.extendBuiltIn(Array.prototype, /** @lends Array# */{
+        /**
+         * Creates a new StringDictionary instance based on the current array.
+         * @returns {giant.StringDictionary}
+         */
+        toStringDictionary: function () {
+            return giant.StringDictionary.create(this);
+        }
+    });
 }());

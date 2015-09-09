@@ -36,16 +36,13 @@ giant.amendPostponed(giant, 'Hash', function () {
 (function () {
     "use strict";
 
-    giant.Properties.addProperties.call(
-        Array.prototype,
-        /** @lends Array# */{
-            /**
-             * Creates a new ArrayCollection instance based on the current array.
-             * @returns {giant.ArrayCollection}
-             */
-            toArrayCollection: function () {
-                return giant.ArrayCollection.create(this);
-            }
-        },
-        false, false, false);
+    giant.extendBuiltIn(Array.prototype, /** @lends Array# */{
+        /**
+         * Creates a new ArrayCollection instance based on the current array.
+         * @returns {giant.ArrayCollection}
+         */
+        toArrayCollection: function () {
+            return giant.ArrayCollection.create(this);
+        }
+    });
 }());

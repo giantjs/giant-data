@@ -573,16 +573,13 @@ giant.amendPostponed(giant, 'Hash', function () {
         }
     });
 
-    giant.Properties.addProperties.call(
-        Array.prototype,
-        /** @lends Array# */{
-            /**
-             * Creates a new Tree instance based on the current array.
-             * @returns {giant.Tree}
-             */
-            toTree: function () {
-                return giant.Tree.create(this);
-            }
-        },
-        false, false, false);
+    giant.extendBuiltIn(Array.prototype, /** @lends Array# */{
+        /**
+         * Creates a new Tree instance based on the current array.
+         * @returns {giant.Tree}
+         */
+        toTree: function () {
+            return giant.Tree.create(this);
+        }
+    });
 }());

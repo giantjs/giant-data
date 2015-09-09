@@ -92,8 +92,7 @@ giant.postpone(giant, 'Set', function () {
                     itemKey;
 
                 for (itemKey in currentItems) {
-                    if (hOP.call(currentItems, itemKey) &&
-                        !hOP.call(remoteItems, itemKey)) {
+                    if (hOP.call(currentItems, itemKey) && !hOP.call(remoteItems, itemKey)) {
                         resultItems[itemKey] = currentItems[itemKey];
                     }
                 }
@@ -116,8 +115,7 @@ giant.postpone(giant, 'Set', function () {
                     itemKey;
 
                 for (itemKey in remoteItems) {
-                    if (hOP.call(remoteItems, itemKey) &&
-                        !hOP.call(currentItems, itemKey)) {
+                    if (hOP.call(remoteItems, itemKey) && !hOP.call(currentItems, itemKey)) {
                         resultItems[itemKey] = remoteItems[itemKey];
                     }
                 }
@@ -151,20 +149,17 @@ giant.amendPostponed(giant, 'Hash', function () {
 
         isSetOptional: function (expr) {
             return typeof expr === 'undefined' ||
-                   giant.Set.isBaseOf(expr);
+                giant.Set.isBaseOf(expr);
         }
     });
 
-    giant.Properties.addProperties.call(
-        Array.prototype,
-        /** @lends Array# */{
-            /**
-             * Creates a new Set instance based on the current array.
-             * @returns {giant.Set}
-             */
-            toSet: function () {
-                return giant.Set.create(this);
-            }
-        },
-        false, false, false);
+    giant.extendBuiltIn(Array.prototype, /** @lends Array# */{
+        /**
+         * Creates a new Set instance based on the current array.
+         * @returns {giant.Set}
+         */
+        toSet: function () {
+            return giant.Set.create(this);
+        }
+    });
 }());

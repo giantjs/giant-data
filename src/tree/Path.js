@@ -226,35 +226,29 @@ giant.postpone(giant, 'Path', function () {
 
         isPathOptional: function (expr) {
             return typeof expr === 'undefined' ||
-                   giant.Path.isBaseOf(expr);
+                giant.Path.isBaseOf(expr);
         }
     });
 
-    giant.Properties.addProperties.call(
-        String.prototype,
-        /** @lends String# */{
-            /**
-             * Creates a new Path instance based on the current string.
-             * Individual keys will be URI decoded.
-             * @returns {giant.Path}
-             */
-            toPath: function () {
-                var Path = giant.Path;
-                return Path.create(this.split(Path.PATH_SEPARATOR).toUriDecoded());
-            }
-        },
-        false, false, false);
+    giant.extendBuiltIn(String.prototype, /** @lends String# */{
+        /**
+         * Creates a new Path instance based on the current string.
+         * Individual keys will be URI decoded.
+         * @returns {giant.Path}
+         */
+        toPath: function () {
+            var Path = giant.Path;
+            return Path.create(this.split(Path.PATH_SEPARATOR).toUriDecoded());
+        }
+    });
 
-    giant.Properties.addProperties.call(
-        Array.prototype,
-        /** @lends Array# */{
-            /**
-             * Creates a new Path instance based on the current array.
-             * @returns {giant.Path}
-             */
-            toPath: function () {
-                return giant.Path.create(this);
-            }
-        },
-        false, false, false);
+    giant.extendBuiltIn(Array.prototype, /** @lends Array# */{
+        /**
+         * Creates a new Path instance based on the current array.
+         * @returns {giant.Path}
+         */
+        toPath: function () {
+            return giant.Path.create(this);
+        }
+    });
 }());

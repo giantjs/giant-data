@@ -306,20 +306,17 @@ giant.amendPostponed(giant, 'Hash', function () {
 
         isDictionaryOptional: function (expr) {
             return typeof expr === 'undefined' ||
-                   giant.Dictionary.isBaseOf(expr);
+                giant.Dictionary.isBaseOf(expr);
         }
     });
 
-    giant.Properties.addProperties.call(
-        Array.prototype,
-        /** @lends Array# */{
-            /**
-             * Creates a new Dictionary instance based on the current array.
-             * @returns {giant.Dictionary}
-             */
-            toDictionary: function () {
-                return giant.Dictionary.create(this);
-            }
-        },
-        false, false, false);
+    giant.extendBuiltIn(Array.prototype, /** @lends Array# */{
+        /**
+         * Creates a new Dictionary instance based on the current array.
+         * @returns {giant.Dictionary}
+         */
+        toDictionary: function () {
+            return giant.Dictionary.create(this);
+        }
+    });
 }());

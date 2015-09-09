@@ -795,20 +795,17 @@ giant.amendPostponed(giant, 'Hash', function () {
 
         isCollectionOptional: function (expr) {
             return typeof expr === 'undefined' ||
-                   giant.Collection.isPrototypeOf(expr);
+                giant.Collection.isPrototypeOf(expr);
         }
     });
 
-    giant.Properties.addProperties.call(
-        Array.prototype,
-        /** @lends Array# */{
-            /**
-             * Creates a new Collection instance based on the current array.
-             * @returns {giant.Collection}
-             */
-            toCollection: function () {
-                return giant.Collection.create(this);
-            }
-        },
-        false, false, false);
+    giant.extendBuiltIn(Array.prototype, /** @lends Array# */{
+        /**
+         * Creates a new Collection instance based on the current array.
+         * @returns {giant.Collection}
+         */
+        toCollection: function () {
+            return giant.Collection.create(this);
+        }
+    });
 }());

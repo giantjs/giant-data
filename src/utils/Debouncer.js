@@ -110,16 +110,13 @@ giant.postpone(giant, 'Debouncer', function () {
 (function () {
     "use strict";
 
-    giant.Properties.addProperties.call(
-        Function.prototype,
-        /** @lends Function# */{
-            /**
-             * Converts `Function` to `Debouncer` instance.
-             * @returns {giant.Debouncer}
-             */
-            toDebouncer: function () {
-                return giant.Debouncer.create(this);
-            }
-        },
-        false, false, false);
+    giant.extendBuiltIn(Function.prototype, /** @lends Function# */{
+        /**
+         * Converts `Function` to `Debouncer` instance.
+         * @returns {giant.Debouncer}
+         */
+        toDebouncer: function () {
+            return giant.Debouncer.create(this);
+        }
+    });
 }());
