@@ -307,7 +307,7 @@ giant.postpone(giant, 'Tree', function () {
                         break;
                     }
 
-                    currentNodeSingle = giant.Utils.isSingularObject(currentNode);
+                    currentNodeSingle = giant.DataUtils.isSingularObject(currentNode);
                     if (currentNodeSingle && parentNode !== null) {
                         // current node has exactly one child
                         // and is not root node

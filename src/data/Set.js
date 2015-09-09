@@ -63,7 +63,7 @@ giant.postpone(giant, 'Set', function () {
             unionWith: function (remoteSet) {
                 giant.isSet(remoteSet, "Invalid set");
 
-                var resultItems = giant.Utils.shallowCopy(this.items),
+                var resultItems = giant.DataUtils.shallowCopy(this.items),
                     currentItems = this.items,
                     remoteItems = remoteSet.items,
                     itemKey;

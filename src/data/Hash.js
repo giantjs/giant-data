@@ -4,7 +4,7 @@ giant.postpone(giant, 'Hash', function () {
 
     var hOP = Object.prototype.hasOwnProperty,
         slice = Array.prototype.slice,
-        isEmptyObject = giant.Utils.isEmptyObject;
+        isEmptyObject = giant.DataUtils.isEmptyObject;
 
     /**
      * Instantiates class.
@@ -70,7 +70,7 @@ giant.postpone(giant, 'Hash', function () {
                  * Other properties added by descendants
                  * must be cloned in override methods
                  */
-                result.items = giant.Utils.shallowCopy(this.items);
+                result.items = giant.DataUtils.shallowCopy(this.items);
                 result.keyCount = this.keyCount;
 
                 return result;
