@@ -4,13 +4,6 @@
 
     module("Array");
 
-    test("Path array conversion", function () {
-        deepEqual(
-            ['foo', 5, true, {}, undefined].toPathArray(),
-            ['foo', '5', 'true', {}, undefined],
-            "should convert numbers to string");
-    });
-
     test("URI encoding", function () {
         deepEqual(
             ['f|o', 'b<r'].toUriEncoded(),
