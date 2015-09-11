@@ -23,7 +23,7 @@
         strictEqual(link.parentChain, chain, "should set parentChain on link");
         strictEqual(previousLink.nextLink, link, "should set nextLink on previous link");
 
-        raises(function () {
+        throws(function () {
             link.addAfter(giant.Link.create());
         }, "should raise exception on attempting to add already connected link");
     });
@@ -53,7 +53,7 @@
         strictEqual(link.parentChain, chain, "should set parentChain on link");
         strictEqual(nextLink.previousLink, link, "should set previousLink on after link");
 
-        raises(function () {
+        throws(function () {
             link.addBefore(giant.Link.create());
         }, "should raise exception on attempting to add already connected link");
     });
@@ -101,7 +101,7 @@
         strictEqual(link.setParentChain(chain), link, "should be chainable");
         strictEqual(link.parentChain, chain, "should set parentChain property");
 
-        raises(function () {
+        throws(function () {
             giant.Link.create()
                 .addAfter(link)
                 .setParentChain(chain);

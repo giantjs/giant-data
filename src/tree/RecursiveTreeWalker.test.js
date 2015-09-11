@@ -34,7 +34,7 @@
         var query = 'foo>\\>bar'.toQuery(),
             walker;
 
-        raises(function () {
+        throws(function () {
             giant.RecursiveTreeWalker.create(handler, 'foo');
         }, "should raise exception on invalid query");
 

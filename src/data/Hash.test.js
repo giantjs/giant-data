@@ -7,7 +7,7 @@
     test("Instantiation", function () {
         var hash;
 
-        raises(function () {
+        throws(function () {
             hash = giant.Hash.create('foo');
         }, "Invalid items object");
 
@@ -244,7 +244,7 @@
 
         equal(result, 'foo', "Passer returns handler result");
 
-        raises(function () {
+        throws(function () {
             hash.passItemsTo(handler1, hash, 3);
         }, "Invalid argument index");
 
@@ -277,7 +277,7 @@
 
         equal(result, 'foo', "Passer returns handler result");
 
-        raises(function () {
+        throws(function () {
             hash.passSelfTo(handler1, hash, 3);
         }, "Invalid argument index");
 

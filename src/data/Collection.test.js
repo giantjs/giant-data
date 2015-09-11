@@ -331,7 +331,7 @@
         var original = giant.Collection.create({foo: 'bar'}),
             rebased;
 
-        raises(function () {
+        throws(function () {
             rebased = original.asType('notCollection');
         }, "Invalid collection type");
 
@@ -443,7 +443,7 @@
             }),
             merged;
 
-        raises(function () {
+        throws(function () {
             specified.mergeWith(invalidColl);
         }, "Specified collections don't match");
 
@@ -494,7 +494,7 @@
 
         init(collection);
 
-        raises(function () {
+        throws(function () {
             collection.filterByKeys('foo', 'bar');
         }, "Invalid item names");
 
@@ -532,7 +532,7 @@
 
         init(collection);
 
-        raises(function () {
+        throws(function () {
             collection.getKeysByRegExp('foo');
         }, "Invalid prefix");
 
@@ -549,7 +549,7 @@
             'hello'      : 'all'
         });
 
-        raises(function () {
+        throws(function () {
             collection.getKeysByPrefix(true);
         }, "Invalid prefix");
 

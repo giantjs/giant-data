@@ -71,7 +71,7 @@
                 .pushLink(giant.ValueLink.create().setValue(4)),
             results = [];
 
-        raises(function () {
+        throws(function () {
             chain.forEachLink();
         }, "should raise exception on missing arguments");
 

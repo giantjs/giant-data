@@ -7,7 +7,7 @@
     test("Instantiation", function () {
         function handler() {}
 
-        raises(function () {
+        throws(function () {
             giant.TreeWalker.create();
         }, "Invalid walker handler");
 

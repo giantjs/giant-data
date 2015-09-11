@@ -7,11 +7,11 @@
     test("Instantiation", function () {
         var query;
 
-        raises(function () {
+        throws(function () {
             giant.Query.create(5);
         }, "should raise exception on invalid arguments");
 
-        raises(function () {
+        throws(function () {
             giant.Query.create('foo');
         }, "should raise exception on invalid arguments");
 

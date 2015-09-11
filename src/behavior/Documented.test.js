@@ -5,7 +5,7 @@
     module("Documented");
 
     test("Instantiation", function () {
-        raises(function () {
+        throws(function () {
             giant.Base.extend()
                 .addTrait(giant.Documented)
                 .extend();

@@ -49,7 +49,7 @@
             }),
             result;
 
-        raises(function () {
+        throws(function () {
             tree.getNodeAsHash('foo>bar'.toPath());
         }, "Primitive can't be hashed");
 
