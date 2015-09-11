@@ -28,8 +28,7 @@ giant.postpone(giant, 'Documented', function () {
             /**
              * Extends class adding meta information.
              * @param {string} className Class name
-             * @returns {giant.Documented}
-             * @memberOf giant.Documented
+             * @returns {giant.Base}
              */
             extend: function (className) {
                 giant.isString(className, "Invalid class name");
