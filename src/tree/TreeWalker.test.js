@@ -1,4 +1,4 @@
-/*global giant, module, test, expect, ok, equal, strictEqual, notStrictEqual, deepEqual, raises */
+/*global giant */
 (function () {
     "use strict";
 
@@ -7,7 +7,7 @@
     test("Instantiation", function () {
         function handler() {}
 
-        raises(function () {
+        throws(function () {
             giant.TreeWalker.create();
         }, "Invalid walker handler");
 

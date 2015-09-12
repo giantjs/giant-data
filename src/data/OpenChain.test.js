@@ -1,4 +1,4 @@
-/*global giant, Event, module, test, expect, ok, equal, strictEqual, notStrictEqual, deepEqual, raises */
+/*global giant */
 (function () {
     "use strict";
 
@@ -71,7 +71,7 @@
                 .pushLink(giant.ValueLink.create().setValue(4)),
             results = [];
 
-        raises(function () {
+        throws(function () {
             chain.forEachLink();
         }, "should raise exception on missing arguments");
 

@@ -1,15 +1,15 @@
-/*global giant, module, test, ok, equal, strictEqual, notEqual, deepEqual, raises */
+/*global giant */
 (function () {
     "use strict";
 
     module("Ordered List");
 
     test("Instantiation w/o items", function () {
-        raises(function () {
+        throws(function () {
             giant.OrderedList.create('foo');
         }, "should raise exception on invalid arguments");
 
-        raises(function () {
+        throws(function () {
             giant.OrderedList.create([], 'foo');
         }, "should raise exception on invalid arguments");
 
@@ -40,7 +40,7 @@
 
         hash = giant.Hash.create();
 
-        raises(function () {
+        throws(function () {
             hash.toOrderedList();
         }, "Hash buffer is not array");
 

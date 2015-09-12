@@ -1,15 +1,15 @@
-/*global giant, module, test, expect, ok, equal, strictEqual, notStrictEqual, deepEqual, raises */
+/*global giant */
 (function () {
     "use strict";
 
     module("Path");
 
     test("Instantiation", function () {
-        raises(function () {
+        throws(function () {
             giant.Path.create();
         }, "should raise exception on missing argument");
 
-        raises(function () {
+        throws(function () {
             giant.Path.create('foo');
         }, "should raise exception on invalid argument");
 

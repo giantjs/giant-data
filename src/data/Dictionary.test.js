@@ -1,4 +1,3 @@
-/*global module, test, expect, raises, ok, equal, notStrictEqual, strictEqual, deepEqual */
 /*global giant */
 (function () {
     "use strict";
@@ -120,7 +119,7 @@
          */
         var dict = giant.Dictionary.create();
 
-        raises(function () {
+        throws(function () {
             dict.addItems('foo', 'bar');
         }, "Invalid keys");
 
@@ -201,7 +200,7 @@
             moo: 'hello'
         });
 
-        raises(function () {
+        throws(function () {
             dict.removeItems('foo');
         }, "Invalid keys");
 
@@ -245,7 +244,7 @@
             1    : 'howdy'
         });
 
-        raises(function () {
+        throws(function () {
             dict.getItem(true);
         }, "Invalid key");
 

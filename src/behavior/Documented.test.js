@@ -1,11 +1,11 @@
-/*global giant, module, test, expect, ok, equal, notEqual, strictEqual, deepEqual, raises */
+/*global giant */
 (function () {
     "use strict";
 
     module("Documented");
 
     test("Instantiation", function () {
-        raises(function () {
+        throws(function () {
             giant.Base.extend()
                 .addTrait(giant.Documented)
                 .extend();

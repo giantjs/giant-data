@@ -1,4 +1,4 @@
-/*global giant, module, test, expect, ok, equal, strictEqual, notStrictEqual, deepEqual, raises */
+/*global giant */
 (function () {
     "use strict";
 
@@ -110,7 +110,7 @@
         var descriptor,
             pattern;
 
-        raises(function () {
+        throws(function () {
             giant.KeyValuePattern.create(4);
         }, "Key-value pattern initialized w/ other than string, array, or object");
 
@@ -233,11 +233,11 @@
 
         equal(kvp.descriptor, 'hello', "String descriptor");
 
-        raises(function () {
+        throws(function () {
             kvp.setMarker();
         }, "Invalid marker");
 
-        raises(function () {
+        throws(function () {
             kvp.setMarker('foo');
         }, "Invalid marker");
 

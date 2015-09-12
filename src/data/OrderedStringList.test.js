@@ -1,4 +1,4 @@
-/*global giant, module, test, ok, equal, strictEqual, notEqual, deepEqual, raises */
+/*global giant */
 (function () {
     "use strict";
 
@@ -42,7 +42,7 @@
             "animal", "apple", "ant", "bar", "insect", "insert", "item"
         ]);
 
-        raises(function () {
+        throws(function () {
             orderedStringList.getRangeByPrefix("");
         }, "should raise exception on empty string argument");
 
