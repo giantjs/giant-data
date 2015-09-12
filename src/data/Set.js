@@ -24,7 +24,7 @@ giant.postpone(giant, 'Set', function () {
             /**
              * Retrieves intersection of two sets.
              * @param {giant.Set} remoteSet
-             * @return {giant.Set} New set instance with items present in both current and remote set.
+             * @returns {giant.Set} New set instance with items present in both current and remote set.
              */
             intersectWith: function (remoteSet) {
                 giant.isSet(remoteSet, "Invalid set");

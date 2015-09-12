@@ -577,7 +577,7 @@ giant.postpone(giant, 'Collection', function () {
              * @param {function} [conflictResolver] Optional callback that resolves key conflicts.
              * Takes conflicting values and the mapped key associated with them.
              * @param {giant.Collection} [subClass] Optional collection subclass for the output.
-             * @return {giant.Collection} New collection with mapped keys.
+             * @returns {giant.Collection} New collection with mapped keys.
              */
             mapKeys: function (mapper, context, conflictResolver, subClass) {
                 giant

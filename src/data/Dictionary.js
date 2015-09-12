@@ -245,7 +245,7 @@ giant.postpone(giant, 'Dictionary', function () {
              *     foo: 'bar',
              *     hello: ['world', 'all', 'bar']
              * }).getItemCount() // 4
-             * @return {number}
+             * @returns {number}
              */
             getItemCount: function () {
                 if (typeof this.itemCount !== 'number') {
