@@ -3,6 +3,7 @@ giant.postpone(giant, 'RecursiveTreeWalker', function () {
     "use strict";
 
     var base = giant.TreeWalker,
+        self = base.extend(),
         hOP = Object.prototype.hasOwnProperty;
 
     /**
@@ -19,7 +20,7 @@ giant.postpone(giant, 'RecursiveTreeWalker', function () {
      * @class giant.RecursiveTreeWalker
      * @extends giant.TreeWalker
      */
-    giant.RecursiveTreeWalker = base.extend()
+    giant.RecursiveTreeWalker = self
         .addConstants(/** @lends giant.RecursiveTreeWalker */{
             /**
              * Key-value pair marker character for marking return value.
@@ -272,7 +273,7 @@ giant.postpone(giant, 'RecursiveTreeWalker', function () {
                 var matchingKeySet = giant.Set.create(this._getKeysByPattern(currentNode, currentKvp)),
                     parentKvp = queryAsArray[queryPos - 1],
                     hasMarkedParent = giant.KeyValuePattern.isBaseOf(parentKvp) &&
-                                      parentKvp.getMarker() === this.RETURN_MARKER;
+                                      parentKvp.getMarker() === self.RETURN_MARKER;
 
                 if (matchingKeySet.getKeyCount()) {
                     // there is at leas one matching key in the current node

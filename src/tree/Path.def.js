@@ -211,7 +211,7 @@ giant.postpone(giant, 'Path', function () {
              * @returns {string}
              */
             toString: function () {
-                return this.asArray.toUriEncoded().join(this.PATH_SEPARATOR);
+                return this.asArray.toUriEncoded().join(self.PATH_SEPARATOR);
             }
         });
 });

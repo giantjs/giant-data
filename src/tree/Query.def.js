@@ -3,7 +3,8 @@ giant.postpone(giant, 'Query', function () {
     "use strict";
 
     var KeyValuePattern = giant.KeyValuePattern,
-        base = giant.Path;
+        base = giant.Path,
+        self = base.extend();
 
     /**
      * Instantiates class.
@@ -33,7 +34,7 @@ giant.postpone(giant, 'Query', function () {
      * @class giant.Query
      * @extends giant.Path
      */
-    giant.Query = base.extend()
+    giant.Query = self
         .addConstants(/** @lends giant.Query */{
             /**
              * Regular expression that tests whether string contains query patterns.
@@ -66,7 +67,7 @@ giant.postpone(giant, 'Query', function () {
              * @memberOf giant.Query
              */
             stringToQueryArray: function (asString) {
-                var asArray = asString.split(this.PATH_SEPARATOR),
+                var asArray = asString.split(self.PATH_SEPARATOR),
                     result = [],
                     i, pattern;
 
@@ -74,8 +75,8 @@ giant.postpone(giant, 'Query', function () {
                     pattern = asArray[i];
                     if (pattern.indexOf(KeyValuePattern.SKIP_SYMBOL) === 0) {
                         // special skipper case
-                        result.push(this.PATTERN_SKIP);
-                    } else if (this.RE_QUERY_TESTER.test(pattern)) {
+                        result.push(self.PATTERN_SKIP);
+                    } else if (self.RE_QUERY_TESTER.test(pattern)) {
                         // pattern is query expression (as in not key literal)
                         // creating pattern instance
                         result.push(KeyValuePattern.create(pattern));
@@ -111,7 +112,7 @@ giant.postpone(giant, 'Query', function () {
                     } else if (KeyValuePattern.isBaseOf(pattern)) {
                         if (pattern.isSkipper()) {
                             // skipper patterns are substituted with constant
-                            result.push(this.PATTERN_SKIP);
+                            result.push(self.PATTERN_SKIP);
                         } else {
                             // other patterns are copied 1:1
                             result.push(pattern);
@@ -167,7 +168,7 @@ giant.postpone(giant, 'Query', function () {
                     currentKey = pathAsArray[i];
                     currentPattern = queryAsArray[j];
 
-                    if (currentPattern === this.PATTERN_SKIP) {
+                    if (currentPattern === self.PATTERN_SKIP) {
                         // current pattern indicates skip mode 'on'
                         inSkipMode = true;
                         j++;
@@ -193,7 +194,7 @@ giant.postpone(giant, 'Query', function () {
                 if (j < queryAsArray.length) {
                     // if path reached its end but the query hasn't
                     // seeing if remaining key-value patterns are just skippers
-                    while (queryAsArray[j] === this.PATTERN_SKIP) {
+                    while (queryAsArray[j] === self.PATTERN_SKIP) {
                         // skippers at end are allowed
                         j++;
                     }
@@ -202,7 +203,7 @@ giant.postpone(giant, 'Query', function () {
                 // matching was successful when query was fully processed
                 // and path was either fully processed or last pattern was continuation
                 return j === queryAsArray.length &&
-                    (i === pathAsArray.length || currentPattern === this.PATTERN_SKIP);
+                    (i === pathAsArray.length || currentPattern === self.PATTERN_SKIP);
             },
 
             /**
@@ -214,7 +215,7 @@ giant.postpone(giant, 'Query', function () {
              */
             isRootOf: function (relativePath) {
                 return this.clone()
-                    .appendKey(this.PATTERN_SKIP)
+                    .appendKey(self.PATTERN_SKIP)
                     .matchesPath(relativePath);
             },
 
@@ -234,7 +235,7 @@ giant.postpone(giant, 'Query', function () {
                     result.push(asArray[i].toString());
                 }
 
-                return result.join(this.PATH_SEPARATOR);
+                return result.join(self.PATH_SEPARATOR);
             }
         });
 });

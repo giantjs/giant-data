@@ -2,7 +2,9 @@
 giant.postpone(giant, 'KeyValuePattern', function () {
     "use strict";
 
-    var hOP = Object.prototype.hasOwnProperty,
+    var base = giant.Base,
+        self = base.extend(),
+        hOP = Object.prototype.hasOwnProperty,
         validators = giant.validators;
 
     /**
@@ -23,7 +25,7 @@ giant.postpone(giant, 'KeyValuePattern', function () {
      * @class giant.KeyValuePattern
      * @extends giant.Base
      */
-    giant.KeyValuePattern = giant.Base.extend()
+    giant.KeyValuePattern = self
         .addConstants(/** @lends giant.KeyValuePattern */{
             /**
              * Separates keys from values in string pattern
@@ -130,33 +132,33 @@ giant.postpone(giant, 'KeyValuePattern', function () {
              * @private
              */
             _parseString: function (pattern) {
-                var markerDescriptor = pattern.match(this.RE_MARKER_EXTRACTOR),
+                var markerDescriptor = pattern.match(self.RE_MARKER_EXTRACTOR),
                     content = markerDescriptor[2] || markerDescriptor[1] || markerDescriptor[0],
                     marker = markerDescriptor[2] || markerDescriptor[1] ?
                         // pattern is marked, taking first character as marker
                         pattern[0] :
                         // pattern is unmarked
                         undefined,
-                    keyValue = content.split(this.KEY_VALUE_SEPARATOR),
+                    keyValue = content.split(self.KEY_VALUE_SEPARATOR),
                     key = keyValue[0],
                     result;
 
                 // processing key part of pattern
-                if (key === this.SKIP_SYMBOL) {
+                if (key === self.SKIP_SYMBOL) {
                     // skip pattern can't have other attributes
                     return {
                         symbol: key
                     };
-                } else if (key === this.WILDCARD_SYMBOL ||
-                    key === this.PRIMITIVE_SYMBOL) {
+                } else if (key === self.WILDCARD_SYMBOL ||
+                    key === self.PRIMITIVE_SYMBOL) {
                     // key is a wildcard symbol, matching any key
                     result = {
                         symbol: key
                     };
-                } else if (key.indexOf(this.OPTION_SEPARATOR) > -1) {
+                } else if (key.indexOf(self.OPTION_SEPARATOR) > -1) {
                     // optional keys matching those keys only
                     result = {
-                        options: this._decodeURI(key.split(this.OPTION_SEPARATOR))
+                        options: this._decodeURI(key.split(self.OPTION_SEPARATOR))
                     };
                 } else if (keyValue.length === 1 && !marker) {
                     // string literal key, no value
@@ -228,7 +230,7 @@ giant.postpone(giant, 'KeyValuePattern', function () {
              * @returns {boolean}
              */
             isSkipper: function () {
-                return this.descriptor.symbol === this.SKIP_SYMBOL;
+                return this.descriptor.symbol === self.SKIP_SYMBOL;
             },
 
             /**
@@ -246,7 +248,7 @@ giant.postpone(giant, 'KeyValuePattern', function () {
              */
             setMarker: function (marker) {
                 giant.assert(
-                    marker === this.MARKER_BRACKET || marker === this.MARKER_CURLY,
+                    marker === self.MARKER_BRACKET || marker === self.MARKER_CURLY,
                     "Invalid marker"
                 );
 
@@ -274,8 +276,8 @@ giant.postpone(giant, 'KeyValuePattern', function () {
                     // descriptor is object, properties tell about match
                     if (hOP.call(descriptor, 'symbol')) {
                         // descriptor is wildcard object
-                        return descriptor.symbol === this.WILDCARD_SYMBOL ||
-                            descriptor.symbol === this.PRIMITIVE_SYMBOL;
+                        return descriptor.symbol === self.WILDCARD_SYMBOL ||
+                            descriptor.symbol === self.PRIMITIVE_SYMBOL;
                     } else if (hOP.call(descriptor, 'options')) {
                         // descriptor is list of options
                         return descriptor.options.indexOf(key) > -1;
@@ -295,7 +297,7 @@ giant.postpone(giant, 'KeyValuePattern', function () {
             matchesValue: function (value) {
                 var descriptor = this.descriptor;
 
-                if (descriptor.symbol === this.PRIMITIVE_SYMBOL) {
+                if (descriptor.symbol === self.PRIMITIVE_SYMBOL) {
                     // descriptor expects a primitive type value
                     return typeof value !== 'object';
                 } else if (typeof descriptor.value !== 'undefined') {
@@ -326,8 +328,8 @@ giant.postpone(giant, 'KeyValuePattern', function () {
                         result = descriptor.symbol;
                     } else if (hOP.call(descriptor, 'options')) {
                         // descriptor contains key options
-                        result = this._encodeURI(descriptor.options)
-                            .join(this.OPTION_SEPARATOR);
+                        result = self._encodeURI(descriptor.options)
+                            .join(self.OPTION_SEPARATOR);
                     } else if (hOP.call(descriptor, 'key')) {
                         // descriptor contains single key
                         result = encodeURI(descriptor.key);
@@ -335,7 +337,7 @@ giant.postpone(giant, 'KeyValuePattern', function () {
 
                     // adding value
                     if (hOP.call(descriptor, 'value')) {
-                        result += this.KEY_VALUE_SEPARATOR + encodeURI(descriptor.value);
+                        result += self.KEY_VALUE_SEPARATOR + encodeURI(descriptor.value);
                     }
                 }
 
