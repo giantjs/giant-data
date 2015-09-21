@@ -98,7 +98,7 @@ giant.postpone(giant, 'Collection', function () {
                 /*jshint forin:false */
                 var methodNames = [],
                     propertyName;
-                // iterating over all accessible properties, event inherited ones
+                // iterating over all accessible properties, even inherited ones
                 for (propertyName in obj) {
                     if (typeof obj[propertyName] === 'function') {
                         methodNames.push(propertyName);
@@ -279,6 +279,43 @@ giant.postpone(giant, 'Collection', function () {
                 });
 
                 return result;
+            },
+
+            /**
+             * Merges another collection into current collection. Item key conflicts are resolved
+             * by a suitable callback, or, when there is none specified, the value from the remote
+             * collection will be used.
+             * @param {giant.Collection} collection Collection to be merged into current. Must share
+             * a common base with the current collection.
+             * @param {function} [conflictResolver] Callback for resolving merge conflicts.
+             * Callback receives as arguments: current collection, remote collection, and key of
+             * the conflicting item, and is expected to return a collection item.
+             * @returns {giant.Collection} Current collection instance.
+             * @example
+             * var merged = stringCollection
+             *  .mergeIn(otherStringCollection, function (a, b, conflictingKey) {
+             *      return b.getItem(conflictingKey);
+             *  });
+             */
+            mergeIn: function (collection, conflictResolver) {
+                giant
+                    .isCollection(collection, "Invalid collection")
+                    .isFunctionOptional(conflictResolver, "Invalid conflict resolver callback")
+                    .assert(collection.isA(this.getBase()), "Collection types do not match");
+
+                var that = this,
+                    items = this.items;
+
+                collection.forEachItem(function (item, itemKey) {
+                    if (!hOP.call(items, itemKey)) {
+                        that.setItem(itemKey, item);
+                    } else if (conflictResolver) {
+                        // resolving conflict with supplied function
+                        that.setItem(itemKey, conflictResolver(that, collection, itemKey));
+                    }
+                });
+
+                return this;
             },
 
             /**

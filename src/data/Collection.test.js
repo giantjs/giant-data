@@ -6,8 +6,10 @@
 
     test("Object method names", function () {
         deepEqual(
-            giant.Collection._getObjectMethodNames({foo: function () {
-            }, bar                                     : "hello"}),
+            giant.Collection._getObjectMethodNames({
+                foo   : function () {
+                }, bar: "hello"
+            }),
             ['foo'],
             "Gets method names from object (ES5)"
         );
@@ -460,6 +462,25 @@
             },
             "Merged items"
         );
+    });
+
+    test("Merging into collection", function () {
+        var collection1 = giant.Collection.create({
+                foo  : 'bar',
+                hello: 'world'
+            }),
+            collection2 = giant.Collection.create({
+                first : 1,
+                second: 2
+            });
+
+        strictEqual(collection1.mergeIn(collection2), collection1, "should be chainable");
+        deepEqual(collection1.items, {
+            foo  : 'bar',
+            hello: 'world',
+            first : 1,
+            second: 2
+        }, "should merge remote collection into current collection");
     });
 
     /**
