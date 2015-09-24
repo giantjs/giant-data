@@ -1,5 +1,5 @@
 /*global giant */
-giant.postpone(giant, 'Collection', function () {
+$oop.postpone(giant, 'Collection', function () {
     "use strict";
 
     var hOP = Object.prototype.hasOwnProperty,
@@ -120,7 +120,7 @@ giant.postpone(giant, 'Collection', function () {
              * @example
              * var specified;
              * specified = giant.Collection.of(Array);
-             * specified = giant.Collection.of(giant.Base);
+             * specified = giant.Collection.of($oop.Base);
              * specified = giant.Collection.of(['foo', 'bar']);
              * specified = giant.Collection.of({
              *  foo: function () {},
@@ -130,7 +130,7 @@ giant.postpone(giant, 'Collection', function () {
              *  foo: "hello",
              *  bar: "world"
              * }).split().items; // {foo: ['h', 'e', 'l', 'l', 'o'], bar: ['w', 'o', 'r', 'l', 'd']}
-             * @param {string[]|object|giant.Base|function} template
+             * @param {string[]|object|$oop.Base|function} template
              * Object containing method names either in the form of an array, or as indexes of an object.
              * From `Troop` classes only those methods will be considered that were added by the topmost extension.
              * Functions are treated as constructors, and `.of()` works with their `.prototype` the same way as
@@ -155,7 +155,7 @@ giant.postpone(giant, 'Collection', function () {
                 }
 
                 // must work on classes derived from Collection, too
-                var specifiedCollection = /** @type {giant.Collection} */ giant.Base.extend.call(this),
+                var specifiedCollection = /** @type {giant.Collection} */ $oop.Base.extend.call(this),
                     shortcutMethods = {},
                     i, methodName;
 
@@ -445,7 +445,7 @@ giant.postpone(giant, 'Collection', function () {
              * checked against.
              * @example
              * c.filterByType('string') // fetches string items only
-             * c.filterByType(giant.Base) // fetches classes and instances only
+             * c.filterByType($oop.Base) // fetches classes and instances only
              * @returns {giant.Collection}
              */
             filterByType: function (type) {
@@ -747,7 +747,7 @@ giant.postpone(giant, 'Collection', function () {
 
             /**
              * Creates a new instance of the specified class passing each item to its constructor.
-             * @param {giant.Base} template
+             * @param {$oop.Base} template
              * @param {number} [argIndex=0]
              * @returns {giant.Collection}
              */
@@ -801,7 +801,7 @@ giant.postpone(giant, 'Collection', function () {
         });
 });
 
-giant.amendPostponed(giant, 'Hash', function () {
+$oop.amendPostponed(giant, 'Hash', function () {
     "use strict";
 
     giant.Hash.addMethods(/** @lends giant.Hash# */{
@@ -836,7 +836,7 @@ giant.amendPostponed(giant, 'Hash', function () {
         }
     });
 
-    giant.extendBuiltIn(Array.prototype, /** @lends Array# */{
+    $oop.extendBuiltIn(Array.prototype, /** @lends Array# */{
         /**
          * Creates a new Collection instance based on the current array.
          * @returns {giant.Collection}

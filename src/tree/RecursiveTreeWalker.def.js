@@ -1,5 +1,5 @@
 /*global giant */
-giant.postpone(giant, 'RecursiveTreeWalker', function () {
+$oop.postpone(giant, 'RecursiveTreeWalker', function () {
     "use strict";
 
     var base = giant.TreeWalker,

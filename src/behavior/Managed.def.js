@@ -1,5 +1,5 @@
 /*global giant */
-giant.postpone(giant, 'Managed', function (ns, className) {
+$oop.postpone(giant, 'Managed', function (ns, className) {
     "use strict";
 
     var base = giant.Documented,
@@ -51,7 +51,7 @@ giant.postpone(giant, 'Managed', function (ns, className) {
              * Prepares instance for garbage collection. Call it before disposing of instance in order to avoid
              * memory leaks.
              * @example
-             * MyManaged = giant.Base.extend()
+             * MyManaged = $oop.Base.extend()
              *   .addTrait(giant.Managed)
              *   .addMethods({
              *       init: function () {giant.Managed.init.call(this);}

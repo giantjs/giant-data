@@ -1,8 +1,8 @@
 /*global giant */
-giant.postpone(giant, 'Documented', function () {
+$oop.postpone(giant, 'Documented', function () {
     "use strict";
 
-    var base = giant.Base,
+    var base = $oop.Base,
         self = base.extend();
 
     /**
@@ -14,7 +14,7 @@ giant.postpone(giant, 'Documented', function () {
     /**
      * Documented trait. Adds meta information to the class, including class name, namespace, and instance ID.
      * @class
-     * @extends giant.Base
+     * @extends $oop.Base
      */
     giant.Documented = self
         .addPublic(/** @lends giant.Documented */{
@@ -28,7 +28,7 @@ giant.postpone(giant, 'Documented', function () {
             /**
              * Extends class adding meta information.
              * @param {string} className Class name
-             * @returns {giant.Base}
+             * @returns {$oop.Base}
              */
             extend: function (className) {
                 $assertion.isString(className, "Invalid class name");

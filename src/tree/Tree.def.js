@@ -1,5 +1,5 @@
 /*global giant */
-giant.postpone(giant, 'Tree', function () {
+$oop.postpone(giant, 'Tree', function () {
     "use strict";
 
     var hop = Object.prototype.hasOwnProperty,
@@ -545,7 +545,7 @@ giant.postpone(giant, 'Tree', function () {
         });
 });
 
-giant.amendPostponed(giant, 'Hash', function () {
+$oop.amendPostponed(giant, 'Hash', function () {
     "use strict";
 
     giant.Hash.addMethods(/** @lends giant.Hash# */{
@@ -573,7 +573,7 @@ giant.amendPostponed(giant, 'Hash', function () {
         }
     });
 
-    giant.extendBuiltIn(Array.prototype, /** @lends Array# */{
+    $oop.extendBuiltIn(Array.prototype, /** @lends Array# */{
         /**
          * Creates a new Tree instance based on the current array.
          * @returns {giant.Tree}

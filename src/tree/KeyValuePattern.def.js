@@ -1,8 +1,8 @@
 /*global giant */
-giant.postpone(giant, 'KeyValuePattern', function () {
+$oop.postpone(giant, 'KeyValuePattern', function () {
     "use strict";
 
-    var base = giant.Base,
+    var base = $oop.Base,
         self = base.extend(),
         hOP = Object.prototype.hasOwnProperty,
         validators = $assertion.validators;
@@ -23,7 +23,7 @@ giant.postpone(giant, 'KeyValuePattern', function () {
      * Matches a key-value pair. A series of key-value patterns make
      * up a query, which then can be used to traverse tree structures with.
      * @class giant.KeyValuePattern
-     * @extends giant.Base
+     * @extends $oop.Base
      */
     giant.KeyValuePattern = self
         .addConstants(/** @lends giant.KeyValuePattern */{
@@ -346,7 +346,7 @@ giant.postpone(giant, 'KeyValuePattern', function () {
         });
 });
 
-giant.postpone(giant, 'KeyValuePatternCollection', function () {
+$oop.postpone(giant, 'KeyValuePatternCollection', function () {
     "use strict";
 
     /**
@@ -383,7 +383,7 @@ giant.postpone(giant, 'KeyValuePatternCollection', function () {
         }
     });
 
-    giant.extendBuiltIn(String.prototype, /** @lends String# */{
+    $oop.extendBuiltIn(String.prototype, /** @lends String# */{
         /**
          * Creates a new KeyValuePattern instance based on the current string.
          * @returns {giant.KeyValuePattern}
@@ -402,7 +402,7 @@ giant.postpone(giant, 'KeyValuePatternCollection', function () {
         }
     });
 
-    giant.extendBuiltIn(Array.prototype, /** @lends Array# */{
+    $oop.extendBuiltIn(Array.prototype, /** @lends Array# */{
         /**
          * Creates a new KeyValuePattern instance based on the current array.
          * @returns {giant.KeyValuePattern}

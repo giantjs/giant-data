@@ -151,7 +151,7 @@
     test("Type conversion", function () {
         var pattern;
 
-        if (giant.Feature.hasPropertyAttributes()) {
+        if ($oop.Feature.hasPropertyAttributes()) {
             ok(!Array.prototype.propertyIsEnumerable('toKeyValuePattern'), "Array type converter is not enumerable");
             ok(!Array.prototype.propertyIsEnumerable('toKVP'), "Array type converter is not enumerable");
             ok(!String.prototype.propertyIsEnumerable('toKeyValuePattern'), "String type converter is not enumerable");

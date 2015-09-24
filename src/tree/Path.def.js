@@ -1,8 +1,8 @@
 /*global giant */
-giant.postpone(giant, 'Path', function () {
+$oop.postpone(giant, 'Path', function () {
     "use strict";
 
-    var base = giant.Base,
+    var base = $oop.Base,
         self = base.extend();
 
     /**
@@ -18,7 +18,7 @@ giant.postpone(giant, 'Path', function () {
      * Unambiguously identifies a node in a tree-like structure. Paths break down to a series of keys, each
      * subsequent key corresponding to a property in the next child node.
      * @class giant.Path
-     * @extends giant.Base
+     * @extends $oop.Base
      */
     giant.Path = self
         .addConstants(/** @lends giant.Path */{
@@ -230,7 +230,7 @@ giant.postpone(giant, 'Path', function () {
         }
     });
 
-    giant.extendBuiltIn(String.prototype, /** @lends String# */{
+    $oop.extendBuiltIn(String.prototype, /** @lends String# */{
         /**
          * Creates a new Path instance based on the current string.
          * Individual keys will be URI decoded.
@@ -242,7 +242,7 @@ giant.postpone(giant, 'Path', function () {
         }
     });
 
-    giant.extendBuiltIn(Array.prototype, /** @lends Array# */{
+    $oop.extendBuiltIn(Array.prototype, /** @lends Array# */{
         /**
          * Creates a new Path instance based on the current array.
          * @returns {giant.Path}

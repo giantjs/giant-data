@@ -1,8 +1,8 @@
 /*global giant */
-giant.postpone(giant, 'OpenChain', function () {
+$oop.postpone(giant, 'OpenChain', function () {
     "use strict";
 
-    var base = giant.Base,
+    var base = $oop.Base,
         self = base.extend();
 
     /**
@@ -17,7 +17,7 @@ giant.postpone(giant, 'OpenChain', function () {
      * OpenChain behaves like a stack in that you may append and prepend the chain
      * using a stack-like API. (push, pop, etc.)
      * @class
-     * @extends giant.Base
+     * @extends $oop.Base
      */
     giant.OpenChain = self
         .addMethods(/** @lends giant.OpenChain# */{

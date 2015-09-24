@@ -1,5 +1,5 @@
 /*global giant */
-giant.postpone(giant, 'Hash', function () {
+$oop.postpone(giant, 'Hash', function () {
     "use strict";
 
     var hOP = Object.prototype.hasOwnProperty,
@@ -20,9 +20,9 @@ giant.postpone(giant, 'Hash', function () {
      * shadowed by user data, and such cases certainly lead the application to break.
      * Other `Hash`-based classes may delegate conversion methods to this class.
      * @class giant.Hash
-     * @extends giant.Base
+     * @extends $oop.Base
      */
-    giant.Hash = giant.Base.extend()
+    giant.Hash = $oop.Base.extend()
         .addMethods(/** @lends giant.Hash# */{
             /**
              * @param {object|Array} items Container for hash items.
@@ -275,7 +275,7 @@ giant.postpone(giant, 'Hash', function () {
         }
     });
 
-    giant.extendBuiltIn(Array.prototype, /** @lends Array# */{
+    $oop.extendBuiltIn(Array.prototype, /** @lends Array# */{
         /**
          * Creates a new Hash instance based on the current array.
          * @returns {giant.Hash}

@@ -4,7 +4,7 @@
 
     module("Managed");
 
-    var base = giant.Base.extend()
+    var base = $oop.Base.extend()
             .addTrait(giant.Managed)
             .addMethods({
                 init: function () {giant.Managed.init.call(this);}

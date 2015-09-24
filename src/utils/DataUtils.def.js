@@ -1,14 +1,14 @@
 /*global giant */
-giant.postpone(giant, 'DataUtils', function () {
+$oop.postpone(giant, 'DataUtils', function () {
     "use strict";
 
     var hOP = Object.prototype.hasOwnProperty;
 
     /**
      * @class
-     * @extends giant.Base
+     * @extends $oop.Base
      */
-    giant.DataUtils = giant.Base.extend()
+    giant.DataUtils = $oop.Base.extend()
         .addMethods(/** @lends giant.DataUtils */{
             /**
              * Determines whether an object has any enumerable

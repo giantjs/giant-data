@@ -19,7 +19,7 @@
         Boolean.prototype.sntlsTest = function () {
         };
 
-        if (!giant.Feature.hasPropertyAttributes()) {
+        if (!$oop.Feature.hasPropertyAttributes()) {
             deepEqual(
                 giant.Collection._getObjectMethodNames(Boolean.prototype).sort(), // boolean is used b/c of the brevity of its method list
                 ["sntlsTest", "toString", "valueOf"],
@@ -31,7 +31,7 @@
     });
 
     test("Class method names", function () {
-        var MyClass = giant.Base.extend()
+        var MyClass = $oop.Base.extend()
             .addMethods({
                 foo: function () {
                 }
@@ -44,7 +44,7 @@
 
         deepEqual(
             giant.Collection._getClassMethodNames(MyClass).sort(),
-            ['foo', 'bar'].concat(Object.getOwnPropertyNames(giant.Base)).sort(),
+            ['foo', 'bar'].concat(Object.getOwnPropertyNames($oop.Base)).sort(),
             "Gets method names from class"
         );
     });
@@ -79,7 +79,7 @@
         var StringCollection = giant.Collection.of(String.prototype),
             FatStringCollection = giant.Collection.of(String),
             ArrayCollection = giant.Collection.of(Array.prototype),
-            Class = giant.Base.extend()
+            Class = $oop.Base.extend()
                 .addMethods({
                     init: function (a) {
                         this.a = a;
@@ -148,7 +148,7 @@
 
     test("Sp. collection of extended class", function () {
         var result = [],
-            MyClass = giant.Base.extend()
+            MyClass = $oop.Base.extend()
                 .addMethods({
                     init: function () {
                     },
@@ -180,7 +180,7 @@
                 customFilter  : 0
             },
 
-            MyClass = giant.Base.extend()
+            MyClass = $oop.Base.extend()
                 .addMethods({
                     init: function () {
                         this.foo = 'bar';

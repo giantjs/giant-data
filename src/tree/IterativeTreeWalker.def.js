@@ -1,5 +1,5 @@
 /*global giant */
-giant.postpone(giant, 'IterativeTreeWalker', function () {
+$oop.postpone(giant, 'IterativeTreeWalker', function () {
     "use strict";
 
     /**

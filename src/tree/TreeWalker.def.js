@@ -1,14 +1,14 @@
 /*global giant */
-giant.postpone(giant, 'TreeWalker', function () {
+$oop.postpone(giant, 'TreeWalker', function () {
     "use strict";
 
     /**
      * Base class for tree walker classes.
      * Holds basic properties and state of the tree walker.
      * @class giant.TreeWalker
-     * @extends giant.Base
+     * @extends $oop.Base
      */
-    giant.TreeWalker = giant.Base.extend()
+    giant.TreeWalker = $oop.Base.extend()
         .addMethods(/** @lends giant.TreeWalker# */{
             /**
              * @param {function} handler

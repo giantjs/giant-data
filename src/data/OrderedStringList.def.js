@@ -1,5 +1,5 @@
 /*global giant */
-giant.postpone(giant, 'OrderedStringList', function () {
+$oop.postpone(giant, 'OrderedStringList', function () {
     "use strict";
 
     /**
@@ -95,7 +95,7 @@ giant.postpone(giant, 'OrderedStringList', function () {
         });
 });
 
-giant.amendPostponed(giant, 'Hash', function () {
+$oop.amendPostponed(giant, 'Hash', function () {
     "use strict";
 
     giant.Hash.addMethods(/** @lends giant.Hash# */{
@@ -113,7 +113,7 @@ giant.amendPostponed(giant, 'Hash', function () {
 (function () {
     "use strict";
 
-    giant.extendBuiltIn(Array.prototype, /** @lends Array# */{
+    $oop.extendBuiltIn(Array.prototype, /** @lends Array# */{
         /**
          * Creates a new OrderedStringList instance based on the current array.
          * @param {string} [orderType='ascending']

@@ -6,12 +6,12 @@
 
     test("Instantiation", function () {
         throws(function () {
-            giant.Base.extend()
+            $oop.Base.extend()
                 .addTrait(giant.Documented)
                 .extend();
         }, "Invalid class name");
 
-        var MyDocumented = giant.Base.extend()
+        var MyDocumented = $oop.Base.extend()
                 .addTrait(giant.Documented)
                 .extend('MyDocumented')
                 .addMethods({

@@ -1,5 +1,5 @@
 /*global giant */
-giant.postpone(giant, 'StringCollection', function () {
+$oop.postpone(giant, 'StringCollection', function () {
     "use strict";
 
     /**
@@ -19,7 +19,7 @@ giant.postpone(giant, 'StringCollection', function () {
     giant.StringCollection = giant.Collection.of(String);
 });
 
-giant.amendPostponed(giant, 'Hash', function () {
+$oop.amendPostponed(giant, 'Hash', function () {
     "use strict";
 
     giant.Hash.addMethods(/** @lends giant.Hash# */{
@@ -36,7 +36,7 @@ giant.amendPostponed(giant, 'Hash', function () {
 (function () {
     "use strict";
 
-    giant.extendBuiltIn(Array.prototype, /** @lends Array# */{
+    $oop.extendBuiltIn(Array.prototype, /** @lends Array# */{
         /**
          * Creates a new StringCollection instance based on the current array.
          * @returns {giant.StringCollection}

@@ -1,5 +1,5 @@
 /*global giant */
-giant.postpone(giant, 'StringDictionary', function () {
+$oop.postpone(giant, 'StringDictionary', function () {
     "use strict";
 
     /**
@@ -127,7 +127,7 @@ giant.postpone(giant, 'StringDictionary', function () {
         });
 });
 
-giant.amendPostponed(giant, 'Hash', function () {
+$oop.amendPostponed(giant, 'Hash', function () {
     "use strict";
 
     giant.Hash.addMethods(/** @lends giant.Hash# */{
@@ -155,7 +155,7 @@ giant.amendPostponed(giant, 'Hash', function () {
         }
     });
 
-    giant.extendBuiltIn(Array.prototype, /** @lends Array# */{
+    $oop.extendBuiltIn(Array.prototype, /** @lends Array# */{
         /**
          * Creates a new StringDictionary instance based on the current array.
          * @returns {giant.StringDictionary}

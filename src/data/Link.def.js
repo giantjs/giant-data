@@ -1,8 +1,8 @@
 /*global giant */
-giant.postpone(giant, 'Link', function () {
+$oop.postpone(giant, 'Link', function () {
     "use strict";
 
-    var base = giant.Base,
+    var base = $oop.Base,
         self = base.extend();
 
     /**
@@ -15,7 +15,7 @@ giant.postpone(giant, 'Link', function () {
     /**
      * Basic link, can chain other links to it.
      * @class
-     * @extends giant.Base
+     * @extends $oop.Base
      */
     giant.Link = self
         .addMethods(/** @lends giant.Link# */{

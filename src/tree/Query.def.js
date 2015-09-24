@@ -1,5 +1,5 @@
 /*global giant */
-giant.postpone(giant, 'Query', function () {
+$oop.postpone(giant, 'Query', function () {
     "use strict";
 
     var KeyValuePattern = giant.KeyValuePattern,
@@ -275,7 +275,7 @@ giant.postpone(giant, 'Query', function () {
         }
     });
 
-    giant.extendBuiltIn(String.prototype, /** @lends String# */{
+    $oop.extendBuiltIn(String.prototype, /** @lends String# */{
         /**
          * Creates a new Query instance based on the current string.
          * Keys are URI decoded or translated to the corresponding pattern object before being added to the internal buffer.
@@ -299,7 +299,7 @@ giant.postpone(giant, 'Query', function () {
         }
     });
 
-    giant.extendBuiltIn(Array.prototype, /** @lends Array# */{
+    $oop.extendBuiltIn(Array.prototype, /** @lends Array# */{
         /**
          * Creates a new Query instance based on the current array.
          * @returns {giant.Query}

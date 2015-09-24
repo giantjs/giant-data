@@ -1,5 +1,5 @@
 /*global giant */
-giant.postpone(giant, 'ValueLink', function () {
+$oop.postpone(giant, 'ValueLink', function () {
     "use strict";
 
     var base = giant.Link,
