@@ -1,4 +1,4 @@
-/*global giant */
+/*global $data */
 (function () {
     "use strict";
 
@@ -6,7 +6,7 @@
 
     test("Object method names", function () {
         deepEqual(
-            giant.Collection._getObjectMethodNames({
+            $data.Collection._getObjectMethodNames({
                 foo   : function () {
                 }, bar: "hello"
             }),
@@ -21,7 +21,7 @@
 
         if (!$oop.Feature.hasPropertyAttributes()) {
             deepEqual(
-                giant.Collection._getObjectMethodNames(Boolean.prototype).sort(), // boolean is used b/c of the brevity of its method list
+                $data.Collection._getObjectMethodNames(Boolean.prototype).sort(), // boolean is used b/c of the brevity of its method list
                 ["sntlsTest", "toString", "valueOf"],
                 "ES3 general purpose object proto"
             );
@@ -43,15 +43,15 @@
             });
 
         deepEqual(
-            giant.Collection._getClassMethodNames(MyClass).sort(),
+            $data.Collection._getClassMethodNames(MyClass).sort(),
             ['foo', 'bar'].concat(Object.getOwnPropertyNames($oop.Base)).sort(),
             "Gets method names from class"
         );
     });
 
     test("Shortcuts", function () {
-        var mockCollection = giant.Collection.create({a: 'a', b: 'b'});
-        mockCollection.toUpperCase = giant.Collection._genShortcut('toUpperCase');
+        var mockCollection = $data.Collection.create({a: 'a', b: 'b'});
+        mockCollection.toUpperCase = $data.Collection._genShortcut('toUpperCase');
         deepEqual(
             mockCollection.toUpperCase().items,
             {a: 'A', b: 'B'},
@@ -60,9 +60,9 @@
     });
 
     test("Shortcuts with array buffer", function () {
-        var mockCollection = giant.Collection.create(['a', 'b']),
+        var mockCollection = $data.Collection.create(['a', 'b']),
             result;
-        mockCollection.toUpperCase = giant.Collection._genShortcut('toUpperCase');
+        mockCollection.toUpperCase = $data.Collection._genShortcut('toUpperCase');
 
         result = mockCollection.toUpperCase();
 
@@ -76,9 +76,9 @@
     });
 
     test("Specified collection", function () {
-        var StringCollection = giant.Collection.of(String.prototype),
-            FatStringCollection = giant.Collection.of(String),
-            ArrayCollection = giant.Collection.of(Array.prototype),
+        var StringCollection = $data.Collection.of(String.prototype),
+            FatStringCollection = $data.Collection.of(String),
+            ArrayCollection = $data.Collection.of(Array.prototype),
             Class = $oop.Base.extend()
                 .addMethods({
                     init: function (a) {
@@ -91,7 +91,7 @@
                         return this;
                     }
                 }),
-            ClassCollection = giant.Collection.of(Class),
+            ClassCollection = $data.Collection.of(Class),
             stringData = {
                 'foo': "Hello world!",
                 'bar': "E pluribus unum"
@@ -162,7 +162,7 @@
                         result.push('bar');
                     }
                 }),
-            MyCollection = giant.Collection.of(MyClass),
+            MyCollection = $data.Collection.of(MyClass),
             collection = MyCollection.create({0: MyClass.create()});
 
         collection.foo();
@@ -197,14 +197,14 @@
                     }
                 }),
 
-            Specified = giant.Collection.of(MyClass),
+            Specified = $data.Collection.of(MyClass),
 
             specified = Specified.create();
 
-        equal(typeof giant.Collection.nonConflicting, 'undefined', "Sanity check, non-conflicting method is absent on Collection");
+        equal(typeof $data.Collection.nonConflicting, 'undefined', "Sanity check, non-conflicting method is absent on Collection");
 
-        strictEqual(Specified.init, giant.Collection.init, "Init not overridden");
-        strictEqual(Specified.filterByPrefix, giant.Collection.filterByPrefix, "Conflicting method not overridden");
+        strictEqual(Specified.init, $data.Collection.init, "Init not overridden");
+        strictEqual(Specified.filterByPrefix, $data.Collection.filterByPrefix, "Conflicting method not overridden");
         equal(typeof Specified.nonConflicting, 'function', "Non-conflicting method applied");
 
         equal(reg.init, 0, "Conflicting .init was not called");
@@ -217,7 +217,7 @@
 
         // legitimate filter expression (conflicting method call)
 
-        giant.Collection.addMocks({
+        $data.Collection.addMocks({
             filterByPrefix: function () {
                 reg.originalFilter++;
             }
@@ -225,7 +225,7 @@
 
         specified.filterByPrefix('f');
 
-        giant.Collection.removeMocks();
+        $data.Collection.removeMocks();
 
         equal(reg.originalFilter, 1, "Original filter invoked");
         equal(reg.customFilter, 0, "Custom filter not invoked");
@@ -236,7 +236,7 @@
     });
 
     test("Specified extended collection", function () {
-        var ExtendedCollection = giant.Collection.extend()
+        var ExtendedCollection = $data.Collection.extend()
                 .addMethods({
                     foo: function () {
                         return "bar";
@@ -268,10 +268,10 @@
     test("Initializing collection", function () {
         var collection;
 
-        collection = giant.Collection.create();
+        collection = $data.Collection.create();
         equal(collection.keyCount, 0, "Count initialized to empty");
 
-        collection = giant.Collection.create({
+        collection = $data.Collection.create({
             0: "hello",
             1: "world",
             2: "what",
@@ -292,14 +292,14 @@
     });
 
     test("Type conversion", function () {
-        var hash = giant.Hash.create(),
+        var hash = $data.Hash.create(),
             collection = hash.toCollection();
 
-        ok(collection.isA(giant.Collection), "Hash converted to collection");
+        ok(collection.isA($data.Collection), "Hash converted to collection");
 
-        collection = hash.toCollection(giant.Collection.of(String));
+        collection = hash.toCollection($data.Collection.of(String));
 
-        ok(collection.isA(giant.Collection), "Hash converted to specified collection");
+        ok(collection.isA($data.Collection), "Hash converted to specified collection");
         equal(typeof collection.split, 'function', "String collection");
     });
 
@@ -307,12 +307,12 @@
         var buffer = [1, 2, 3, 4],
             hash = buffer.toCollection();
 
-        ok(hash.isA(giant.Collection), "Is collection");
+        ok(hash.isA($data.Collection), "Is collection");
         strictEqual(hash.items, buffer, "Same buffer");
     });
 
     test("Building collection", function () {
-        var collection = giant.Collection.create();
+        var collection = $data.Collection.create();
 
         deepEqual(collection.items, {}, "Initial buffer is empty object");
         equal(collection.keyCount, 0, "Initial count");
@@ -330,26 +330,26 @@
     });
 
     test("Rebasing collection", function () {
-        var original = giant.Collection.create({foo: 'bar'}),
+        var original = $data.Collection.create({foo: 'bar'}),
             rebased;
 
         throws(function () {
             rebased = original.asType('notCollection');
         }, "Invalid collection type");
 
-        rebased = original.asType(giant.Collection.of(String));
-        ok(rebased.isA(giant.Collection), "Rebased still a collection");
+        rebased = original.asType($data.Collection.of(String));
+        ok(rebased.isA($data.Collection), "Rebased still a collection");
         equal(typeof rebased.split, 'function', "Rebased is specified collection");
         strictEqual(rebased.items, original.items, "Rebased shares items w/ original");
         equal(rebased.keyCount, original.keyCount, "Rebased item count same as in original");
     });
 
     test("Merging collections", function () {
-        var collection1 = giant.Collection.create({
+        var collection1 = $data.Collection.create({
                 foo  : 'bar',
                 hello: 'world'
             }),
-            collection2 = giant.Collection.create({
+            collection2 = $data.Collection.create({
                 first : 1,
                 second: 2
             }),
@@ -389,11 +389,11 @@
     test("Merging with conflict", function () {
         expect(7);
 
-        var collection1 = giant.Collection.create({
+        var collection1 = $data.Collection.create({
                 foo  : 'bar',
                 hello: 'world'
             }),
-            collection2 = giant.Collection.create({
+            collection2 = $data.Collection.create({
                 foo   : 1,
                 second: 2
             }),
@@ -413,8 +413,8 @@
 
         merged = collection1.mergeWith(collection2, function (leftCollection, rightCollection, itemName) {
             notStrictEqual(leftCollection, rightCollection);
-            ok(leftCollection.isA(giant.Collection));
-            ok(rightCollection.isA(giant.Collection));
+            ok(leftCollection.isA($data.Collection));
+            ok(rightCollection.isA($data.Collection));
             return rightCollection.items[itemName];
         });
         equal(merged.getKeyCount(), 3, "Merged item count");
@@ -430,12 +430,12 @@
     });
 
     test("Merging specified collection", function () {
-        var ArrayCollection = giant.Collection.of(Array),
+        var ArrayCollection = $data.Collection.of(Array),
             specified = ArrayCollection.create({
                 a: [1, 2, 3, 4],
                 b: [5, 6, 7, 8]
             }),
-            invalidColl = giant.Collection.create({
+            invalidColl = $data.Collection.create({
                 foo  : 'bar',
                 hello: 'world'
             }),
@@ -465,11 +465,11 @@
     });
 
     test("Merging into collection", function () {
-        var collection1 = giant.Collection.create({
+        var collection1 = $data.Collection.create({
                 foo  : 'bar',
                 hello: 'world'
             }),
-            collection2 = giant.Collection.create({
+            collection2 = $data.Collection.create({
                 first : 1,
                 second: 2
             });
@@ -485,7 +485,7 @@
 
     /**
      * Initializes lookup by filling it with sufficient amount of test data.
-     * @param {giant.Collection} lookup Collection instance.
+     * @param {$data.Collection} lookup Collection instance.
      */
     function init(lookup) {
         lookup.setItem('one', 'hello');
@@ -496,7 +496,7 @@
     }
 
     test("Querying", function () {
-        var collection = giant.Collection.create();
+        var collection = $data.Collection.create();
 
         equal(typeof collection.getItem('one'), 'undefined', "Querying non-existing item");
 
@@ -510,7 +510,7 @@
     });
 
     test("Selection by keys", function () {
-        var collection = giant.Collection.create(),
+        var collection = $data.Collection.create(),
             result;
 
         init(collection);
@@ -534,7 +534,7 @@
     });
 
     test("Selection by keys on array buffer", function () {
-        var collection = giant.Collection.create(['foo', 'friend', 'field', 'boom', 'bar']),
+        var collection = $data.Collection.create(['foo', 'friend', 'field', 'boom', 'bar']),
             filtered;
 
         filtered = collection.filterByKeys([1, 3, 10]);
@@ -549,7 +549,7 @@
     });
 
     test("Key extraction (RegExp)", function () {
-        var collection = giant.Collection.create();
+        var collection = $data.Collection.create();
 
         init(collection);
 
@@ -564,7 +564,7 @@
     });
 
     test("Key extraction (prefix)", function () {
-        var collection = giant.Collection.create({
+        var collection = $data.Collection.create({
             'hello world': 'foo',
             'world hello': 'bar',
             'hello'      : 'all'
@@ -579,26 +579,26 @@
     });
 
     test("Key extraction wrapped in hash", function () {
-        var collection = giant.Collection.create(),
+        var collection = $data.Collection.create(),
             result;
 
         init(collection);
 
         result = collection.getKeysAsHash();
 
-        ok(result.isA(giant.Hash), "Keys wrapped in hash");
+        ok(result.isA($data.Hash), "Keys wrapped in hash");
 
         deepEqual(result.items, ['one', 'two', 'three', 'four', 'five'], "Items in hash");
     });
 
     test("Filtering", function () {
-        var collection = giant.Collection.create(),
+        var collection = $data.Collection.create(),
             filtered;
 
         init(collection);
 
         filtered = collection.filterByRegExp(/f\w+/);
-        equal(filtered.getBase(), giant.Collection, "Type of filtered collection is collection");
+        equal(filtered.getBase(), $data.Collection, "Type of filtered collection is collection");
         deepEqual(filtered.items, {
             four: {},
             five: true
@@ -631,7 +631,7 @@
     });
 
     test("Filtering on array buffer", function () {
-        var collection = giant.Collection.create(['foo', 'friend', 'field', 'boom', 'bar']),
+        var collection = $data.Collection.create(['foo', 'friend', 'field', 'boom', 'bar']),
             filtered;
 
         filtered = collection.filterBySelector(function (item) {
@@ -648,7 +648,7 @@
     });
 
     test("Filtering of extended collection", function () {
-        var StringCollection = giant.Collection.of(String.prototype),
+        var StringCollection = $data.Collection.of(String.prototype),
             names = StringCollection.create({
                 test : 'test',
                 hello: 'hello',
@@ -671,7 +671,7 @@
     });
 
     test("Removal", function () {
-        var collection = giant.Collection.create(),
+        var collection = $data.Collection.create(),
             countBefore,
             beforeCount;
 
@@ -713,7 +713,7 @@
     });
 
     test("Sorted value extraction", function () {
-        var collection = giant.Collection.create();
+        var collection = $data.Collection.create();
 
         init(collection);
 
@@ -745,14 +745,14 @@
     });
 
     test("Sorted value extraction wrapped", function () {
-        var collection = giant.Collection.create(),
+        var collection = $data.Collection.create(),
             result;
 
         init(collection);
 
         result = collection.getSortedValuesAsHash();
 
-        ok(result.isA(giant.Hash), "Hash retrieved");
+        ok(result.isA($data.Hash), "Hash retrieved");
 
         deepEqual(
             result.items,
@@ -768,7 +768,7 @@
     });
 
     test("For Each", function () {
-        var collection = giant.Collection.create();
+        var collection = $data.Collection.create();
 
         init(collection);
 
@@ -788,7 +788,7 @@
     });
 
     test("For-Next", function () {
-        var collection = giant.Collection.create(),
+        var collection = $data.Collection.create(),
             order = [];
 
         init(collection);
@@ -816,7 +816,7 @@
     });
 
     test("For-Next with custom order", function () {
-        var collection = giant.Collection.create(),
+        var collection = $data.Collection.create(),
             order = [];
 
         init(collection);
@@ -858,8 +858,8 @@
     });
 
     test("Key mapping", function () {
-        var StringCollection = giant.Collection.of(String),
-            collection = giant.Collection.create({
+        var StringCollection = $data.Collection.of(String),
+            collection = $data.Collection.create({
                 foo  : "bar",
                 hello: "world",
                 howdy: "all"
@@ -870,7 +870,7 @@
             return itemKey.toUpperCase();
         });
 
-        ok(result.isA(giant.Collection), "Mapping returns collection");
+        ok(result.isA($data.Collection), "Mapping returns collection");
         notStrictEqual(result, collection, "Mapping returns different collection");
         deepEqual(result.items, {
             FOO  : "bar",
@@ -913,7 +913,7 @@
     });
 
     test("Key mapping mimicking dictionary reverse", function () {
-        var collection = giant.Collection.create({
+        var collection = $data.Collection.create({
                 foo  : 'bar',
                 baz  : 'bar',
                 hello: 'world'
@@ -941,8 +941,8 @@
     });
 
     test("Value mapping", function () {
-        var StringCollection = giant.Collection.of(String),
-            collection = giant.Collection.create(),
+        var StringCollection = $data.Collection.of(String),
+            collection = $data.Collection.create(),
             result;
 
         function lastChar(item) {
@@ -953,7 +953,7 @@
 
         result = collection.mapValues(lastChar);
 
-        ok(result.instanceOf(giant.Collection), "Result plain collection");
+        ok(result.instanceOf($data.Collection), "Result plain collection");
 
         deepEqual(
             result.items,
@@ -973,12 +973,12 @@
     });
 
     test("Property collection", function () {
-        var collection = giant.Collection.create(["foo", null, "bar", undefined, "hello"]),
-            NumberCollection = giant.Collection.of(Number),
+        var collection = $data.Collection.create(["foo", null, "bar", undefined, "hello"]),
+            NumberCollection = $data.Collection.of(Number),
             result;
 
         result = collection.collectProperty('length');
-        ok(result.isA(giant.Collection), "Collection returned");
+        ok(result.isA($data.Collection), "Collection returned");
         deepEqual(result.items, [3, undefined, 3, undefined, 5], "Result contents");
 
         result = collection.collectProperty('length', NumberCollection);
@@ -986,7 +986,7 @@
     });
 
     test("Corben Dallas multi-pass", function () {
-        var collection = giant.Collection.create(["foo", "bar", "baz"]),
+        var collection = $data.Collection.create(["foo", "bar", "baz"]),
             context;
 
         function splitIntoLetters(str) {
@@ -1024,7 +1024,7 @@
     test("Creating new instance for each", function () {
         expect(4);
 
-        var collection = giant.Collection.create([
+        var collection = $data.Collection.create([
                 ['foo', 'bar'],
                 ['hello', 'world'],
                 ['one', 'two', 'three']
@@ -1033,18 +1033,18 @@
 
         collection.addMocks({
             passEachItemTo: function (handler, context) {
-                strictEqual(handler, giant.Path.create, "Handler set to constructor");
-                strictEqual(context, giant.Path, "Context set to class");
+                strictEqual(handler, $data.Path.create, "Handler set to constructor");
+                strictEqual(context, $data.Path, "Context set to class");
             }
         });
 
-        collection.createWithEachItem(giant.Path);
+        collection.createWithEachItem($data.Path);
 
         collection.removeMocks();
 
-        result = collection.createWithEachItem(giant.Path);
+        result = collection.createWithEachItem($data.Path);
 
-        ok(result.isA(giant.Collection), "Result is collection");
+        ok(result.isA($data.Collection), "Result is collection");
         deepEqual(
             result.collectProperty('asArray').items,
             [
@@ -1056,7 +1056,7 @@
     });
 
     test("Mapping with array buffer", function () {
-        var collection = giant.Collection.create(['foo', 'bar']),
+        var collection = $data.Collection.create(['foo', 'bar']),
             result;
 
         result = collection.mapValues(function (item) {
@@ -1073,7 +1073,7 @@
     });
 
     test("Call-each", function () {
-        var collection = giant.Collection.create(),
+        var collection = $data.Collection.create(),
             i, result;
 
         expect(6);
@@ -1101,7 +1101,7 @@
     });
 
     test("Chainable call-each", function () {
-        var collection = giant.Collection.create(),
+        var collection = $data.Collection.create(),
             i, result;
 
         expect(6);
@@ -1124,7 +1124,7 @@
     });
 
     test("Call each on array buffer", function () {
-        var collection = giant.Collection.create(['foo', 'bar']),
+        var collection = $data.Collection.create(['foo', 'bar']),
             result;
 
         result = collection.callOnEachItem('split', '');

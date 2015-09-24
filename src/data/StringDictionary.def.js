@@ -1,14 +1,14 @@
-/*global giant */
-$oop.postpone(giant, 'StringDictionary', function () {
+/*global $data */
+$oop.postpone($data, 'StringDictionary', function () {
     "use strict";
 
     /**
      * Instantiates class.
      * Constructs a dictionary, initialized with the items passed in the optional argument.
-     * @name giant.StringDictionary.create
+     * @name $data.StringDictionary.create
      * @function
      * @param {object|Array} items
-     * @returns {giant.StringDictionary}
+     * @returns {$data.StringDictionary}
      */
 
     /**
@@ -16,21 +16,21 @@ $oop.postpone(giant, 'StringDictionary', function () {
      * or other primitives that can be converted to string implicitly (numbers, booleans, etc.).
      * @example
      * {foo: 'bar', 'hello': ['all', 'the', 'world']}
-     * @class giant.StringDictionary
-     * @extends giant.Dictionary
+     * @class $data.StringDictionary
+     * @extends $data.Dictionary
      */
-    giant.StringDictionary = giant.Dictionary.extend()
-        .addMethods(/** @lends giant.StringDictionary# */{
+    $data.StringDictionary = $data.Dictionary.extend()
+        .addMethods(/** @lends $data.StringDictionary# */{
             /**
              * Combines current dictionary with another dictionary and returns the combined dictionary
              * in a new instance. The result will contain values from key-value pairs in the remote dictionary
              * where keys match the current dictionary's values.
              * @example
-             * var left = giant.StringDictionary.create({foo: 'bar', hello: ['world', 'all']}),
-             *     right = giant.StringDictionary.create({bar: 'BAR', all: 'ALL'});
+             * var left = $data.StringDictionary.create({foo: 'bar', hello: ['world', 'all']}),
+             *     right = $data.StringDictionary.create({bar: 'BAR', all: 'ALL'});
              * left.combineWith(right).items // {foo: "BAR", hello: "ALL"}
-             * @param {giant.Dictionary} remoteDict Remote dictionary (doesn't have to be string dictionary)
-             * @returns {giant.Dictionary} Dictionary instance with the combined items. When the two dictionaries
+             * @param {$data.Dictionary} remoteDict Remote dictionary (doesn't have to be string dictionary)
+             * @returns {$data.Dictionary} Dictionary instance with the combined items. When the two dictionaries
              * (current and remote) are of different (sub)classes, the return value will match the class of the
              * remote dictionary. This way, a `StringDictionary` may be combined with a regular dictionary,
              * resulting in a regular dictionary, but not the other way around.
@@ -40,7 +40,7 @@ $oop.postpone(giant, 'StringDictionary', function () {
 
                 var items = this.items,
                     resultBuffer = items instanceof Array ? [] : {},
-                    result = /** @type {giant.Dictionary} */ remoteDict.getBase().create(resultBuffer),
+                    result = /** @type {$data.Dictionary} */ remoteDict.getBase().create(resultBuffer),
                     currentKeys = this.getKeys(),
                     i, currentKey, currentValue, remoteValue;
 
@@ -60,22 +60,22 @@ $oop.postpone(giant, 'StringDictionary', function () {
             /**
              * Combines current dictionary itself.
              * Equivalent to: `stringDictionary.combineWith(stringDictionary)`.
-             * @returns {giant.StringDictionary} New dictionary instance with combined items.
+             * @returns {$data.StringDictionary} New dictionary instance with combined items.
              */
             combineWithSelf: function () {
-                return /** @type giant.StringDictionary */ this.combineWith(this);
+                return /** @type $data.StringDictionary */ this.combineWith(this);
             },
 
             /**
              * Flips keys and values in the dictionary and returns the results in a new instance. In the reversed
              * dictionary, keys will be the current dictionary's values and vice versa.
              * @example
-             * var d = giant.StringDictionary.create({
+             * var d = $data.StringDictionary.create({
              *  foo: 'bar',
              *  hello: ['world', 'all', 'bar']
              * });
              * d.reverse().items // {bar: ["foo", "hello"], world: "hello", all: "hello"}
-             * @returns {giant.StringDictionary} New dictionary instance with reversed key-value pairs.
+             * @returns {$data.StringDictionary} New dictionary instance with reversed key-value pairs.
              */
             reverse: function () {
                 var resultBuffer = {},
@@ -110,7 +110,7 @@ $oop.postpone(giant, 'StringDictionary', function () {
 
             /**
              * Retrieves unique values from dictionary wrapped in a hash.
-             * @returns {giant.Hash}
+             * @returns {$data.Hash}
              */
             getUniqueValuesAsHash: function () {
                 return this
@@ -120,23 +120,23 @@ $oop.postpone(giant, 'StringDictionary', function () {
 
             /**
              * Clears dictionary and resets counters.
-             * @name giant.StringDictionary#clear
+             * @name $data.StringDictionary#clear
              * @function
-             * @returns {giant.StringDictionary}
+             * @returns {$data.StringDictionary}
              */
         });
 });
 
-$oop.amendPostponed(giant, 'Hash', function () {
+$oop.amendPostponed($data, 'Hash', function () {
     "use strict";
 
-    giant.Hash.addMethods(/** @lends giant.Hash# */{
+    $data.Hash.addMethods(/** @lends $data.Hash# */{
         /**
          * Reinterprets hash as a string dictionary.
-         * @returns {giant.StringDictionary}
+         * @returns {$data.StringDictionary}
          */
         toStringDictionary: function () {
-            return giant.StringDictionary.create(this.items);
+            return $data.StringDictionary.create(this.items);
         }
     });
 });
@@ -144,24 +144,24 @@ $oop.amendPostponed(giant, 'Hash', function () {
 (function () {
     "use strict";
 
-    $assertion.addTypes(/** @lends giant */{
+    $assertion.addTypes(/** @lends $data */{
         isStringDictionary: function (expr) {
-            return giant.StringDictionary.isBaseOf(expr);
+            return $data.StringDictionary.isBaseOf(expr);
         },
 
         isStringDictionaryOptional: function (expr) {
             return typeof expr === 'undefined' ||
-                giant.StringDictionary.isBaseOf(expr);
+                $data.StringDictionary.isBaseOf(expr);
         }
     });
 
     $oop.extendBuiltIn(Array.prototype, /** @lends Array# */{
         /**
          * Creates a new StringDictionary instance based on the current array.
-         * @returns {giant.StringDictionary}
+         * @returns {$data.StringDictionary}
          */
         toStringDictionary: function () {
-            return giant.StringDictionary.create(this);
+            return $data.StringDictionary.create(this);
         }
     });
 }());

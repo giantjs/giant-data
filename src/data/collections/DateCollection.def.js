@@ -1,34 +1,34 @@
-/*global giant */
-$oop.postpone(giant, 'DateCollection', function () {
+/*global $data */
+$oop.postpone($data, 'DateCollection', function () {
     "use strict";
 
     /**
-     * @name giant.DateCollection.create
+     * @name $data.DateCollection.create
      * @function
      * @param {object} [items] Initial contents.
-     * @returns {giant.DateCollection}
+     * @returns {$data.DateCollection}
      */
 
     /**
      * General collection for managing multiple date objects.
-     * @class giant.DateCollection
-     * @extends giant.Collection
+     * @class $data.DateCollection
+     * @extends $data.Collection
      * @extends Date
      * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date
      */
-    giant.DateCollection = giant.Collection.of(Date);
+    $data.DateCollection = $data.Collection.of(Date);
 });
 
-$oop.amendPostponed(giant, 'Hash', function () {
+$oop.amendPostponed($data, 'Hash', function () {
     "use strict";
 
-    giant.Hash.addMethods(/** @lends giant.Hash# */{
+    $data.Hash.addMethods(/** @lends $data.Hash# */{
         /**
          * Reinterprets hash as date collection.
-         * @returns {giant.DateCollection}
+         * @returns {$data.DateCollection}
          */
         toDateCollection: function () {
-            return giant.DateCollection.create(this.items);
+            return $data.DateCollection.create(this.items);
         }
     });
 });
@@ -39,10 +39,10 @@ $oop.amendPostponed(giant, 'Hash', function () {
     $oop.extendBuiltIn(Array.prototype, /** @lends Array# */{
         /**
          * Creates a new DateCollection instance based on the current array.
-         * @returns {giant.DateCollection}
+         * @returns {$data.DateCollection}
          */
         toDateCollection: function () {
-            return giant.DateCollection.create(this);
+            return $data.DateCollection.create(this);
         }
     });
 }());

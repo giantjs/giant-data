@@ -1,17 +1,17 @@
-/*global giant */
-$oop.postpone(giant, 'Hash', function () {
+/*global $data */
+$oop.postpone($data, 'Hash', function () {
     "use strict";
 
     var hOP = Object.prototype.hasOwnProperty,
         slice = Array.prototype.slice,
-        isEmptyObject = giant.DataUtils.isEmptyObject;
+        isEmptyObject = $data.DataUtils.isEmptyObject;
 
     /**
      * Instantiates class.
-     * @name giant.Hash.create
+     * @name $data.Hash.create
      * @function
      * @param {object|Array} items Container for hash items.
-     * @returns {giant.Hash}
+     * @returns {$data.Hash}
      */
 
     /**
@@ -19,11 +19,11 @@ $oop.postpone(giant, 'Hash', function () {
      * Calling `Object.prototype` methods on hash objects is not safe as they may be
      * shadowed by user data, and such cases certainly lead the application to break.
      * Other `Hash`-based classes may delegate conversion methods to this class.
-     * @class giant.Hash
+     * @class $data.Hash
      * @extends $oop.Base
      */
-    giant.Hash = $oop.Base.extend()
-        .addMethods(/** @lends giant.Hash# */{
+    $data.Hash = $oop.Base.extend()
+        .addMethods(/** @lends $data.Hash# */{
             /**
              * @param {object|Array} items Container for hash items.
              * @ignore
@@ -60,17 +60,17 @@ $oop.postpone(giant, 'Hash', function () {
             /**
              * Clones hash. Creates an instance of the same class (for subclasses of `Hash`)
              * and initializes it with a shallow copy of the current items buffer and item count.
-             * @returns {giant.Hash} New hash with identical contents.
+             * @returns {$data.Hash} New hash with identical contents.
              */
             clone: function () {
-                var result = /** @type giant.Hash */ this.getBase().create();
+                var result = /** @type $data.Hash */ this.getBase().create();
 
                 /**
                  * Copying items and count
                  * Other properties added by descendants
                  * must be cloned in override methods
                  */
-                result.items = giant.DataUtils.shallowCopy(this.items);
+                result.items = $data.DataUtils.shallowCopy(this.items);
                 result.keyCount = this.keyCount;
 
                 return result;
@@ -81,7 +81,7 @@ $oop.postpone(giant, 'Hash', function () {
              * any of the hash's keys may be returned. Result does not necessarily match up with the return value
              * of `.getFirstValue()`.
              * @returns {string}
-             * @see giant.Hash#getFirstValue
+             * @see $data.Hash#getFirstValue
              */
             getFirstKey: function () {
                 var items = this.items,
@@ -109,17 +109,17 @@ $oop.postpone(giant, 'Hash', function () {
 
             /**
              * Retrieves item keys wrapped in a hash.
-             * @returns {giant.Hash}
-             * @see giant.Hash#getKeys
+             * @returns {$data.Hash}
+             * @see $data.Hash#getKeys
              */
             getKeysAsHash: function () {
-                return giant.Hash.create(this.getKeys());
+                return $data.Hash.create(this.getKeys());
             },
 
             /**
              * Retrieves the number of keys in hash.
              * @example
-             * var c = giant.Hash.create({foo: 1, bar: 2});
+             * var c = $data.Hash.create({foo: 1, bar: 2});
              * c.getKeyCount() // 2
              * @returns {number}
              */
@@ -135,7 +135,7 @@ $oop.postpone(giant, 'Hash', function () {
              * any value from the hash may be returned. Result does not necessarily match up with the return value
              * of `.getFirstKey()`.
              * @returns {*}
-             * @see giant.Hash#getFirstKey
+             * @see $data.Hash#getFirstKey
              */
             getFirstValue: function () {
                 var items = this.items,
@@ -168,11 +168,11 @@ $oop.postpone(giant, 'Hash', function () {
 
             /**
              * Retrieves item values wrapped in a hash.
-             * @returns {giant.Hash}
-             * @see giant.Hash#getValues
+             * @returns {$data.Hash}
+             * @see $data.Hash#getValues
              */
             getValuesAsHash: function () {
-                return giant.Hash.create(this.getValues());
+                return $data.Hash.create(this.getValues());
             },
 
             /**
@@ -180,8 +180,8 @@ $oop.postpone(giant, 'Hash', function () {
              * Changes the current hash instance!
              * @param {function} bufferType=Object `Array` or `Object`, specifying new buffer type.
              * @example
-             * giant.Hash.create({0: 'foo', 1: 'bar'}).changeBufferTypeTo(Array).items // ['foo', 'bar']
-             * @returns {giant.Hash}
+             * $data.Hash.create({0: 'foo', 1: 'bar'}).changeBufferTypeTo(Array).items // ['foo', 'bar']
+             * @returns {$data.Hash}
              */
             changeBufferTypeTo: function (bufferType) {
                 var items = this.items;
@@ -213,7 +213,7 @@ $oop.postpone(giant, 'Hash', function () {
              * Clears hash by replacing items buffer with an empty one.
              * Observes current buffer type, ie. if hash was array based, the new buffer will be also array.
              * @param {function} handler Change handler callback. Receives the new `items` buffer.
-             * @returns {giant.Hash}
+             * @returns {$data.Hash}
              */
             clear: function (handler) {
                 if (!isEmptyObject(this.items)) {
@@ -264,24 +264,24 @@ $oop.postpone(giant, 'Hash', function () {
 (function () {
     "use strict";
 
-    $assertion.addTypes(/** @lends giant */{
+    $assertion.addTypes(/** @lends $data */{
         isHash: function (expr) {
-            return giant.Hash.isBaseOf(expr);
+            return $data.Hash.isBaseOf(expr);
         },
 
         isHashOptional: function (expr) {
             return typeof expr === 'undefined' ||
-                giant.Hash.isBaseOf(expr);
+                $data.Hash.isBaseOf(expr);
         }
     });
 
     $oop.extendBuiltIn(Array.prototype, /** @lends Array# */{
         /**
          * Creates a new Hash instance based on the current array.
-         * @returns {giant.Hash}
+         * @returns {$data.Hash}
          */
         toHash: function () {
-            return giant.Hash.create(this);
+            return $data.Hash.create(this);
         }
     });
 }());

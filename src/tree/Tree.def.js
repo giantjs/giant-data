@@ -1,28 +1,28 @@
-/*global giant */
-$oop.postpone(giant, 'Tree', function () {
+/*global $data */
+$oop.postpone($data, 'Tree', function () {
     "use strict";
 
     var hop = Object.prototype.hasOwnProperty,
-        Hash = giant.Hash;
+        Hash = $data.Hash;
 
     /**
      * Instantiates class
-     * @name giant.Tree.create
+     * @name $data.Tree.create
      * @function
      * @param {object} [items]
-     * @returns {giant.Tree}
+     * @returns {$data.Tree}
      */
 
     /**
      * Accesses, traverses, and modifies tree-like object structures.
-     * @class giant.Tree
-     * @extends giant.Hash
+     * @class $data.Tree
+     * @extends $data.Hash
      */
-    giant.Tree = Hash.extend()
-        .addMethods(/** @lends giant.Tree# */{
+    $data.Tree = Hash.extend()
+        .addMethods(/** @lends $data.Tree# */{
             /**
              * Retrieves the value at the specified path.
-             * @param {giant.Path} path Path to node
+             * @param {$data.Path} path Path to node
              * @returns {*} Whatever value is found at path
              */
             getNode: function (path) {
@@ -42,8 +42,8 @@ $oop.postpone(giant, 'Tree', function () {
 
             /**
              * Retrieves object at the specified path wrapped in a Hash object.
-             * @param {giant.Path} path Path to node
-             * @returns {giant.Hash}
+             * @param {$data.Path} path Path to node
+             * @returns {$data.Hash}
              */
             getNodeAsHash: function (path) {
                 return Hash.create(this.getNode(path));
@@ -53,7 +53,7 @@ $oop.postpone(giant, 'Tree', function () {
              * Retrieves the value at the specified path, or
              * when the path does not exist, creates path and
              * assigns an empty object.
-             * @param {giant.Path} path
+             * @param {$data.Path} path
              * @param {function} [handler] Callback receiving the path and value affected by change.
              * @returns {object}
              */
@@ -81,9 +81,9 @@ $oop.postpone(giant, 'Tree', function () {
 
             /**
              * Retrieves safe value at path, wrapped in a hash.
-             * @param {giant.Path} path
+             * @param {$data.Path} path
              * @param {function} [handler] Callback receiving the path and value affected by change.
-             * @returns {giant.Hash}
+             * @returns {$data.Hash}
              */
             getSafeNodeAsHash: function (path, handler) {
                 return Hash.create(this.getSafeNode(path, handler));
@@ -91,10 +91,10 @@ $oop.postpone(giant, 'Tree', function () {
 
             /**
              * Sets the node at the specified path to the given value.
-             * @param {giant.Path} path Path to node
+             * @param {$data.Path} path Path to node
              * @param {*} value Node value to set
              * @param {function} [handler] Called on change
-             * @returns {giant.Tree}
+             * @returns {$data.Tree}
              */
             setNode: function (path, value, handler) {
                 var parentPath = path.clone().trimRight(),
@@ -122,10 +122,10 @@ $oop.postpone(giant, 'Tree', function () {
             /**
              * Appends the node with the specified value.
              * In case of conflict the new value wins.
-             * @param {giant.Path} path Path to node
+             * @param {$data.Path} path Path to node
              * @param {Object|Array} value Value to append to node
              * @param {function} [handler] Called on change
-             * @returns {giant.Tree}
+             * @returns {$data.Tree}
              */
             appendNode: function (path, value, handler) {
                 var node = this.getNode(path),
@@ -180,7 +180,7 @@ $oop.postpone(giant, 'Tree', function () {
              * Retrieves the value at the specified path, or
              * when the path does not exist, creates path and
              * assigns the return value of the generator.
-             * @param {giant.Path} path Path to node
+             * @param {$data.Path} path Path to node
              * @param {function} generator Generator function returning value to be set.
              * @param {function} [handler] Callback receiving the path and value affected by change.
              * @returns {*}
@@ -206,8 +206,8 @@ $oop.postpone(giant, 'Tree', function () {
             /**
              * Removes node from the specified path, ie.
              * the node will be overwritten with an undefined value.
-             * @param {giant.Path} path
-             * @returns {giant.Tree}
+             * @param {$data.Path} path
+             * @returns {$data.Tree}
              */
             unsetNode: function (path) {
                 if (!path.asArray.length) {
@@ -228,10 +228,10 @@ $oop.postpone(giant, 'Tree', function () {
 
             /**
              * Removes key from the specified path.
-             * @param {giant.Path} path Path to node
+             * @param {$data.Path} path Path to node
              * @param {boolean} [splice=false] Whether to use splice when removing key from array.
              * @param {function} [handler] Callback receiving the path affected by change.
-             * @returns {giant.Tree}
+             * @returns {$data.Tree}
              */
             unsetKey: function (path, splice, handler) {
                 if (!path.asArray.length) {
@@ -272,10 +272,10 @@ $oop.postpone(giant, 'Tree', function () {
             /**
              * Removes nodes from tree that have no children
              * other than the one specified by the path.
-             * @param {giant.Path} path Datastore path
+             * @param {$data.Path} path Datastore path
              * @param {boolean} [splice=false] Whether to use splice when removing key from array.
              * @param {function} [handler] Callback receiving the path affected by change.
-             * @returns {giant.Tree}
+             * @returns {$data.Tree}
              */
             unsetPath: function (path, splice, handler) {
                 if (!path.asArray.length) {
@@ -307,7 +307,7 @@ $oop.postpone(giant, 'Tree', function () {
                         break;
                     }
 
-                    currentNodeSingle = giant.DataUtils.isSingularObject(currentNode);
+                    currentNodeSingle = $data.DataUtils.isSingularObject(currentNode);
                     if (currentNodeSingle && parentNode !== null) {
                         // current node has exactly one child
                         // and is not root node
@@ -355,10 +355,10 @@ $oop.postpone(giant, 'Tree', function () {
 
             /**
              * Moves node from one path to another.
-             * @param {giant.Path} fromPath
-             * @param {giant.Path} toPath
+             * @param {$data.Path} fromPath
+             * @param {$data.Path} toPath
              * @param {function} [handler]
-             * @returns {giant.Tree}
+             * @returns {$data.Tree}
              */
             moveNode: function (fromPath, toPath, handler) {
                 var node = this.getNode(fromPath);
@@ -372,13 +372,13 @@ $oop.postpone(giant, 'Tree', function () {
 
             /**
              * Traverses tree recursively, guided by the specified query array
-             * @param {giant.Query} query
+             * @param {$data.Query} query
              * @param {function} handler
-             * @returns {giant.Tree}
+             * @returns {$data.Tree}
              */
             traverseByQuery: function (query, handler) {
                 // recursive tree walker may be guided by query expression
-                giant.RecursiveTreeWalker.create(handler, query)
+                $data.RecursiveTreeWalker.create(handler, query)
                     .walk(this.items);
 
                 return this;
@@ -388,12 +388,12 @@ $oop.postpone(giant, 'Tree', function () {
              * Traverses tree iteratively, calling handler on every node
              * unless interrupted by returning false from handler.
              * @param {function} handler
-             * @returns {giant.Tree}
+             * @returns {$data.Tree}
              */
             traverseAllNodes: function (handler) {
                 // iterative walker operates unguided,
                 // touching all nodes along traversal
-                giant.IterativeTreeWalker.create(handler)
+                $data.IterativeTreeWalker.create(handler)
                     .walk(this.items);
 
                 return this;
@@ -401,7 +401,7 @@ $oop.postpone(giant, 'Tree', function () {
 
             /**
              * Queries node values from tree
-             * @param {giant.Query} query
+             * @param {$data.Query} query
              * @returns {Array}
              */
             queryValues: function (query) {
@@ -412,7 +412,7 @@ $oop.postpone(giant, 'Tree', function () {
                 }
 
                 // creating tree walker and walking tree buffer
-                giant.RecursiveTreeWalker.create(handler, query)
+                $data.RecursiveTreeWalker.create(handler, query)
                     .walk(this.items);
 
                 return result;
@@ -420,8 +420,8 @@ $oop.postpone(giant, 'Tree', function () {
 
             /**
              * Queries node values from tree wrapped in a hash
-             * @param {giant.Query} query
-             * @returns {giant.Hash}
+             * @param {$data.Query} query
+             * @returns {$data.Hash}
              */
             queryValuesAsHash: function (query) {
                 return Hash.create(this.queryValues(query));
@@ -429,7 +429,7 @@ $oop.postpone(giant, 'Tree', function () {
 
             /**
              * Queries node keys from tree
-             * @param {giant.Query} query
+             * @param {$data.Query} query
              * @returns {Array}
              */
             queryKeys: function (query) {
@@ -441,7 +441,7 @@ $oop.postpone(giant, 'Tree', function () {
                 }
 
                 // creating tree walker and walking tree buffer
-                giant.RecursiveTreeWalker.create(handler, query)
+                $data.RecursiveTreeWalker.create(handler, query)
                     .walk(this.items);
 
                 return result;
@@ -449,8 +449,8 @@ $oop.postpone(giant, 'Tree', function () {
 
             /**
              * Queries node keys from tree wrapped in a hash
-             * @param {giant.Query} query
-             * @returns {giant.Hash}
+             * @param {$data.Query} query
+             * @returns {$data.Hash}
              */
             queryKeysAsHash: function (query) {
                 return Hash.create(this.queryKeys(query));
@@ -458,7 +458,7 @@ $oop.postpone(giant, 'Tree', function () {
 
             /**
              * Queries paths from tree
-             * @param {giant.Query} query
+             * @param {$data.Query} query
              * @returns {Array}
              */
             queryPaths: function (query) {
@@ -470,7 +470,7 @@ $oop.postpone(giant, 'Tree', function () {
                 }
 
                 // creating tree walker and walking tree buffer
-                giant.RecursiveTreeWalker.create(handler, query)
+                $data.RecursiveTreeWalker.create(handler, query)
                     .walk(this.items);
 
                 return result;
@@ -478,8 +478,8 @@ $oop.postpone(giant, 'Tree', function () {
 
             /**
              * Queries paths from tree wrapped in a hash
-             * @param {giant.Query} query
-             * @returns {giant.Hash}
+             * @param {$data.Query} query
+             * @returns {$data.Hash}
              */
             queryPathsAsHash: function (query) {
                 return Hash.create(this.queryPaths(query));
@@ -487,7 +487,7 @@ $oop.postpone(giant, 'Tree', function () {
 
             /**
              * Queries key-value associations from tree as an object
-             * @param {giant.Query} query
+             * @param {$data.Query} query
              * @returns {object}
              */
             queryKeyValuePairs: function (query) {
@@ -499,7 +499,7 @@ $oop.postpone(giant, 'Tree', function () {
                 }
 
                 // creating tree walker and walking tree buffer
-                giant.RecursiveTreeWalker.create(handler, query)
+                $data.RecursiveTreeWalker.create(handler, query)
                     .walk(this.items);
 
                 return result;
@@ -507,8 +507,8 @@ $oop.postpone(giant, 'Tree', function () {
 
             /**
              * Queries key-value associations from tree as an object wrapped in a hash
-             * @param {giant.Query} query
-             * @returns {giant.Hash}
+             * @param {$data.Query} query
+             * @returns {$data.Hash}
              */
             queryKeyValuePairsAsHash: function (query) {
                 return Hash.create(this.queryKeyValuePairs(query));
@@ -516,7 +516,7 @@ $oop.postpone(giant, 'Tree', function () {
 
             /**
              * Queries pat-value associations from tree as object
-             * @param {giant.Query} query
+             * @param {$data.Query} query
              * @returns {object}
              */
             queryPathValuePairs: function (query) {
@@ -528,7 +528,7 @@ $oop.postpone(giant, 'Tree', function () {
                 }
 
                 // creating tree walker and walking tree buffer
-                giant.RecursiveTreeWalker.create(handler, query)
+                $data.RecursiveTreeWalker.create(handler, query)
                     .walk(this.items);
 
                 return result;
@@ -536,8 +536,8 @@ $oop.postpone(giant, 'Tree', function () {
 
             /**
              * Queries pat-value associations from tree as object wrapped in a hash
-             * @param {giant.Query} query
-             * @returns {giant.Hash}
+             * @param {$data.Query} query
+             * @returns {$data.Hash}
              */
             queryPathValuePairsAsHash: function (query) {
                 return Hash.create(this.queryPathValuePairs(query));
@@ -545,16 +545,16 @@ $oop.postpone(giant, 'Tree', function () {
         });
 });
 
-$oop.amendPostponed(giant, 'Hash', function () {
+$oop.amendPostponed($data, 'Hash', function () {
     "use strict";
 
-    giant.Hash.addMethods(/** @lends giant.Hash# */{
+    $data.Hash.addMethods(/** @lends $data.Hash# */{
         /**
          * Reinterprets hash as a tree.
-         * @returns {giant.Tree}
+         * @returns {$data.Tree}
          */
         toTree: function () {
-            return giant.Tree.create(this.items);
+            return $data.Tree.create(this.items);
         }
     });
 });
@@ -562,24 +562,24 @@ $oop.amendPostponed(giant, 'Hash', function () {
 (function () {
     "use strict";
 
-    $assertion.addTypes(/** @lends giant */{
+    $assertion.addTypes(/** @lends $data */{
         isTree: function (expr) {
-            return giant.Tree.isBaseOf(expr);
+            return $data.Tree.isBaseOf(expr);
         },
 
         isTreeOptional: function (expr) {
             return typeof expr === 'undefined' ||
-                giant.Tree.isBaseOf(expr);
+                $data.Tree.isBaseOf(expr);
         }
     });
 
     $oop.extendBuiltIn(Array.prototype, /** @lends Array# */{
         /**
          * Creates a new Tree instance based on the current array.
-         * @returns {giant.Tree}
+         * @returns {$data.Tree}
          */
         toTree: function () {
-            return giant.Tree.create(this);
+            return $data.Tree.create(this);
         }
     });
 }());

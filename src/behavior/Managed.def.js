@@ -1,26 +1,26 @@
-/*global giant */
-$oop.postpone(giant, 'Managed', function (ns, className) {
+/*global $data */
+$oop.postpone($data, 'Managed', function (ns, className) {
     "use strict";
 
-    var base = giant.Documented,
+    var base = $data.Documented,
         self = base.extend(className);
 
     /**
-     * @name giant.Managed.create
+     * @name $data.Managed.create
      * @function
-     * @returns {giant.Managed}
+     * @returns {$data.Managed}
      */
 
     /**
      * Managed trait, extends `Documented` trait with a dynamic instance registry.
      * @class
-     * @extends giant.Documented
+     * @extends $data.Documented
      */
-    giant.Managed = self
-        .addPublic(/** @lends giant.Managed */{
-            instanceRegistry: giant.Collection.create()
+    $data.Managed = self
+        .addPublic(/** @lends $data.Managed */{
+            instanceRegistry: $data.Collection.create()
         })
-        .addMethods(/** @lends giant.Managed# */{
+        .addMethods(/** @lends $data.Managed# */{
             /**
              * @ignore
              */
@@ -31,7 +31,7 @@ $oop.postpone(giant, 'Managed', function (ns, className) {
 
             /**
              * Adds instance to registry.
-             * @returns {giant.Managed}
+             * @returns {$data.Managed}
              */
             addToRegistry: function () {
                 self.instanceRegistry.setItem(this.instanceId, this);
@@ -40,7 +40,7 @@ $oop.postpone(giant, 'Managed', function (ns, className) {
 
             /**
              * Removes instance from registry.
-             * @returns {giant.Managed}
+             * @returns {$data.Managed}
              */
             removeFromRegistry: function () {
                 self.instanceRegistry.deleteItem(this.instanceId);
@@ -52,13 +52,13 @@ $oop.postpone(giant, 'Managed', function (ns, className) {
              * memory leaks.
              * @example
              * MyManaged = $oop.Base.extend()
-             *   .addTrait(giant.Managed)
+             *   .addTrait($data.Managed)
              *   .addMethods({
-             *       init: function () {giant.Managed.init.call(this);}
+             *       init: function () {$data.Managed.init.call(this);}
              *   });
              * instance = MyManaged.create(); // instance will be added to registry
              * instance.destroy(); // cleans up
-             * @returns {giant.Managed}
+             * @returns {$data.Managed}
              */
             destroy: function () {
                 this.removeFromRegistry();
@@ -68,8 +68,8 @@ $oop.postpone(giant, 'Managed', function (ns, className) {
             /**
              * Fetches instance by ID.
              * @param {number|string} instanceId
-             * @returns {giant.Managed}
-             * @memberOf giant.Managed
+             * @returns {$data.Managed}
+             * @memberOf $data.Managed
              */
             getInstanceById: function (instanceId) {
                 return self.instanceRegistry.getItem(instanceId);

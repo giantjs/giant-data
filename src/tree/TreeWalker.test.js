@@ -1,4 +1,4 @@
-/*global giant */
+/*global $data */
 (function () {
     "use strict";
 
@@ -8,10 +8,10 @@
         function handler() {}
 
         throws(function () {
-            giant.TreeWalker.create();
+            $data.TreeWalker.create();
         }, "Invalid walker handler");
 
-        var walker = /** @type {giant.IterativeTreeWalker} */ giant.TreeWalker.create(handler);
+        var walker = /** @type {$data.IterativeTreeWalker} */ $data.TreeWalker.create(handler);
 
         strictEqual(walker.handler, handler, "Handler assigned");
         equal(typeof walker.currentKey, 'undefined', "Key uninitialized");
@@ -21,7 +21,7 @@
     });
 
     test("Termination", function () {
-        var walker = /** @type {giant.IterativeTreeWalker} */ giant.TreeWalker.create(function handler() {}),
+        var walker = /** @type {$data.IterativeTreeWalker} */ $data.TreeWalker.create(function handler() {}),
             result;
 
         result = walker.terminateTraversal();
@@ -33,7 +33,7 @@
     test("Reset", function () {
         function handler() {}
 
-        var walker = giant.TreeWalker.create(handler),
+        var walker = $data.TreeWalker.create(handler),
             result;
 
         walker.currentKey = 'foo';

@@ -1,13 +1,13 @@
-/*global giant */
+/*global $data */
 (function () {
     "use strict";
 
     module("Managed");
 
     var base = $oop.Base.extend()
-            .addTrait(giant.Managed)
+            .addTrait($data.Managed)
             .addMethods({
-                init: function () {giant.Managed.init.call(this);}
+                init: function () {$data.Managed.init.call(this);}
             }),
         MyManaged = base
             .extend('MyManaged')
@@ -18,10 +18,10 @@
             });
 
     test("Instantiation", function () {
-        var nextInstanceId = giant.Documented.nextInstanceId,
+        var nextInstanceId = $data.Documented.nextInstanceId,
             myInstance = MyManaged.create();
 
-        equal(giant.Documented.nextInstanceId, nextInstanceId + 1);
+        equal($data.Documented.nextInstanceId, nextInstanceId + 1);
         equal(myInstance.instanceId, nextInstanceId);
     });
 
@@ -33,36 +33,36 @@
         result = myInstance.addToRegistry();
 
         strictEqual(result, myInstance, "Registry addition is chainable");
-        strictEqual(giant.Managed.instanceRegistry.getItem(instanceId), myInstance, "Instance stored");
+        strictEqual($data.Managed.instanceRegistry.getItem(instanceId), myInstance, "Instance stored");
 
         result = myInstance.removeFromRegistry();
         strictEqual(result, myInstance, "Registry removal is chainable");
 
-        ok(!giant.Managed.instanceRegistry.getItem(instanceId), "Instance not in registry");
+        ok(!$data.Managed.instanceRegistry.getItem(instanceId), "Instance not in registry");
 
         result = myInstance.addToRegistry();
 
         strictEqual(result, myInstance, "Registry addition is chainable");
-        strictEqual(giant.Managed.instanceRegistry.getItem(instanceId), myInstance, "Removed instance stored again");
+        strictEqual($data.Managed.instanceRegistry.getItem(instanceId), myInstance, "Removed instance stored again");
     });
 
     test("Fetching instance", function () {
         var myInstance = MyManaged.create(),
             instanceId = myInstance.instanceId;
 
-        strictEqual(giant.Managed.getInstanceById(instanceId), myInstance, "Instance fetched");
+        strictEqual($data.Managed.getInstanceById(instanceId), myInstance, "Instance fetched");
 
         myInstance.removeFromRegistry();
 
-        strictEqual(typeof giant.Managed.getInstanceById(instanceId), 'undefined', "Fetches nothing");
+        strictEqual(typeof $data.Managed.getInstanceById(instanceId), 'undefined', "Fetches nothing");
     });
 
     test("Destroy", function () {
         expect(1);
 
-        var managed = giant.Managed.create();
+        var managed = $data.Managed.create();
 
-        giant.Managed.addMocks({
+        $data.Managed.addMocks({
             removeFromRegistry: function () {
                 ok(true, "Removal called");
                 return this;
@@ -71,6 +71,6 @@
 
         managed.destroy();
 
-        giant.Managed.removeMocks();
+        $data.Managed.removeMocks();
     });
 }());

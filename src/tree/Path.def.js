@@ -1,5 +1,5 @@
-/*global giant */
-$oop.postpone(giant, 'Path', function () {
+/*global $data */
+$oop.postpone($data, 'Path', function () {
     "use strict";
 
     var base = $oop.Base,
@@ -8,23 +8,23 @@ $oop.postpone(giant, 'Path', function () {
     /**
      * Instantiates class.
      * Constructs path instance and populates it with path information. Keys are assumed to be URI-encoded.
-     * @name giant.Path.create
+     * @name $data.Path.create
      * @function
      * @param {string[]} path Path in array representation (eg. ['this', 'is', 'a', 'path']).
-     * @returns {giant.Path}
+     * @returns {$data.Path}
      */
 
     /**
      * Unambiguously identifies a node in a tree-like structure. Paths break down to a series of keys, each
      * subsequent key corresponding to a property in the next child node.
-     * @class giant.Path
+     * @class
      * @extends $oop.Base
      */
-    giant.Path = self
-        .addConstants(/** @lends giant.Path */{
+    $data.Path = self
+        .addConstants(/** @lends $data.Path */{
             PATH_SEPARATOR: '>'
         })
-        .addMethods(/** @lends giant.Path# */{
+        .addMethods(/** @lends $data.Path# */{
             /**
              * @param {string[]} asArray Path in string or array representation
              * @ignore
@@ -50,10 +50,10 @@ $oop.postpone(giant, 'Path', function () {
 
             /**
              * Creates a new instance of the same path subclass, initialized with identical path information.
-             * @returns {giant.Path}
+             * @returns {$data.Path}
              */
             clone: function () {
-                return /** @type giant.Path */ this.getBase().create(this.asArray.concat());
+                return /** @type $data.Path */ this.getBase().create(this.asArray.concat());
             },
 
             /**
@@ -62,7 +62,7 @@ $oop.postpone(giant, 'Path', function () {
              * var p = 'test>path>it>is'.toPath();
              * p.trimLeft().asArray // ['path', 'it', 'is']
              * @param {number} [count=1] Number of keys to remove from path.
-             * @returns {giant.Path}
+             * @returns {$data.Path}
              */
             trimLeft: function (count) {
                 if (typeof count === 'undefined' || count === 1) {
@@ -79,7 +79,7 @@ $oop.postpone(giant, 'Path', function () {
              * var p = 'test>path>it>is'.toPath();
              * p.trimRight().asArray // ['test', 'path', 'it']
              * @param {number} [count=1] Number of keys to remove from path.
-             * @returns {giant.Path}
+             * @returns {$data.Path}
              */
             trimRight: function (count) {
                 if (typeof count === 'undefined' || count === 1) {
@@ -92,8 +92,8 @@ $oop.postpone(giant, 'Path', function () {
 
             /**
              * Appends the specified path to the current path. Alters path buffer!
-             * @param {giant.Path} path Path to be appended to the current path.
-             * @returns {giant.Path}
+             * @param {$data.Path} path Path to be appended to the current path.
+             * @returns {$data.Path}
              */
             append: function (path) {
                 this.asArray = this.asArray.concat(path.asArray);
@@ -103,7 +103,7 @@ $oop.postpone(giant, 'Path', function () {
             /**
              * Appends a single key to the current path. Alters path buffer!
              * @param {string} key Key to be appended to the current path.
-             * @returns {giant.Path}
+             * @returns {$data.Path}
              */
             appendKey: function (key) {
                 this.asArray.push(key);
@@ -115,8 +115,8 @@ $oop.postpone(giant, 'Path', function () {
              * @example
              * var p = 'test>path'.toPath();
              * p.prepend('foo.bar').asArray // ['foo', 'bar', 'test', 'path']
-             * @param {giant.Path} path Path to be prepended to the current path.
-             * @returns {giant.Path}
+             * @param {$data.Path} path Path to be prepended to the current path.
+             * @returns {$data.Path}
              */
             prepend: function (path) {
                 this.asArray = path.asArray.concat(this.asArray);
@@ -126,7 +126,7 @@ $oop.postpone(giant, 'Path', function () {
             /**
              * Prepends a single key to the current path. Alters path buffer!
              * @param {string} key Key to be prepended to the current path.
-             * @returns {giant.Path}
+             * @returns {$data.Path}
              */
             prependKey: function (key) {
                 this.asArray.unshift(key);
@@ -139,7 +139,7 @@ $oop.postpone(giant, 'Path', function () {
              * var p = 'foo>bar'.toPath();
              * p.equal('foo.bar') // true
              * p.equal('hello.world') // false
-             * @param {giant.Path} remotePath Remote path
+             * @param {$data.Path} remotePath Remote path
              * @returns {boolean}
              */
             equals: function (remotePath) {
@@ -171,7 +171,7 @@ $oop.postpone(giant, 'Path', function () {
              * var p = 'foo>bar'.toPath();
              * p.isRelativeTo('foo') // true
              * p.isRelativeTo('foo.bar.hello') // false
-             * @param {giant.Path} rootPath
+             * @param {$data.Path} rootPath
              * @returns {boolean}
              */
             isRelativeTo: function (rootPath) {
@@ -196,7 +196,7 @@ $oop.postpone(giant, 'Path', function () {
 
             /**
              * Determines whether current path is root of specified path.
-             * @param {giant.Path} relativePath
+             * @param {$data.Path} relativePath
              * @returns {boolean}
              */
             isRootOf: function (relativePath) {
@@ -219,14 +219,14 @@ $oop.postpone(giant, 'Path', function () {
 (function () {
     "use strict";
 
-    $assertion.addTypes(/** @lends giant */{
+    $assertion.addTypes(/** @lends $data */{
         isPath: function (expr) {
-            return giant.Path.isBaseOf(expr);
+            return $data.Path.isBaseOf(expr);
         },
 
         isPathOptional: function (expr) {
             return typeof expr === 'undefined' ||
-                giant.Path.isBaseOf(expr);
+                $data.Path.isBaseOf(expr);
         }
     });
 
@@ -234,10 +234,10 @@ $oop.postpone(giant, 'Path', function () {
         /**
          * Creates a new Path instance based on the current string.
          * Individual keys will be URI decoded.
-         * @returns {giant.Path}
+         * @returns {$data.Path}
          */
         toPath: function () {
-            var Path = giant.Path;
+            var Path = $data.Path;
             return Path.create(this.split(Path.PATH_SEPARATOR).toUriDecoded());
         }
     });
@@ -245,10 +245,10 @@ $oop.postpone(giant, 'Path', function () {
     $oop.extendBuiltIn(Array.prototype, /** @lends Array# */{
         /**
          * Creates a new Path instance based on the current array.
-         * @returns {giant.Path}
+         * @returns {$data.Path}
          */
         toPath: function () {
-            return giant.Path.create(this);
+            return $data.Path.create(this);
         }
     });
 }());

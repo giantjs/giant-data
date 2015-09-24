@@ -1,5 +1,5 @@
-/*global giant */
-$oop.postpone(giant, 'KeyValuePattern', function () {
+/*global $data */
+$oop.postpone($data, 'KeyValuePattern', function () {
     "use strict";
 
     var base = $oop.Base,
@@ -9,24 +9,24 @@ $oop.postpone(giant, 'KeyValuePattern', function () {
 
     /**
      * Instantiates class
-     * @name giant.KeyValuePattern.create
+     * @name $data.KeyValuePattern.create
      * @function
      * @param {string|object} pattern
      * @example
-     * giant.KeyValuePattern.create('|') // matches any key
-     * giant.KeyValuePattern.create(['foo', 'bar']) // matches keys 'foo' and 'bar'
-     * giant.KeyValuePattern.create('foo<bar^hello') // matches KV pairs 'foo'-'hello' & 'bar'-'hello'
-     * @returns {giant.KeyValuePattern}
+     * $data.KeyValuePattern.create('|') // matches any key
+     * $data.KeyValuePattern.create(['foo', 'bar']) // matches keys 'foo' and 'bar'
+     * $data.KeyValuePattern.create('foo<bar^hello') // matches KV pairs 'foo'-'hello' & 'bar'-'hello'
+     * @returns {$data.KeyValuePattern}
      */
 
     /**
      * Matches a key-value pair. A series of key-value patterns make
      * up a query, which then can be used to traverse tree structures with.
-     * @class giant.KeyValuePattern
+     * @class $data.KeyValuePattern
      * @extends $oop.Base
      */
-    giant.KeyValuePattern = self
-        .addConstants(/** @lends giant.KeyValuePattern */{
+    $data.KeyValuePattern = self
+        .addConstants(/** @lends $data.KeyValuePattern */{
             /**
              * Separates keys from values in string pattern
              * @type {string}
@@ -78,7 +78,7 @@ $oop.postpone(giant, 'KeyValuePattern', function () {
              */
             RE_MARKER_EXTRACTOR: /\[([^\[\]]*)\]|{([^{}]*)}|.*/
         })
-        .addPrivateMethods(/** @lends giant.KeyValuePattern */{
+        .addPrivateMethods(/** @lends $data.KeyValuePattern */{
             /**
              * URI decodes all items of an array.
              * @param {string[]} strings Array of strings
@@ -184,7 +184,7 @@ $oop.postpone(giant, 'KeyValuePattern', function () {
                 return result;
             }
         })
-        .addMethods(/** @lends giant.KeyValuePattern# */{
+        .addMethods(/** @lends $data.KeyValuePattern# */{
             /**
              * @param {string|object} pattern
              * @ignore
@@ -213,7 +213,7 @@ $oop.postpone(giant, 'KeyValuePattern', function () {
              * Sets value on query pattern. Pattern with a value will only
              * match nodes with the specified value.
              * @param {*} value
-             * @returns {giant.KeyValuePattern}
+             * @returns {$data.KeyValuePattern}
              */
             setValue: function (value) {
                 // making sure descriptor is object
@@ -244,7 +244,7 @@ $oop.postpone(giant, 'KeyValuePattern', function () {
             /**
              * Sets pattern marker.
              * @param {string} marker Left marker boundary. Either '[' or '{'.
-             * @returns {giant.KeyValuePattern}
+             * @returns {$data.KeyValuePattern}
              */
             setMarker: function (marker) {
                 $assertion.assert(
@@ -346,78 +346,78 @@ $oop.postpone(giant, 'KeyValuePattern', function () {
         });
 });
 
-$oop.postpone(giant, 'KeyValuePatternCollection', function () {
+$oop.postpone($data, 'KeyValuePatternCollection', function () {
     "use strict";
 
     /**
      * Instantiates class
-     * @name giant.KeyValuePatternCollection.create
+     * @name $data.KeyValuePatternCollection.create
      * @function
-     * @returns {giant.KeyValuePatternCollection}
+     * @returns {$data.KeyValuePatternCollection}
      */
 
     /**
-     * @name giant.KeyValuePatternCollection#descriptor
+     * @name $data.KeyValuePatternCollection#descriptor
      * @ignore
      */
 
     /**
-     * @class giant.KeyValuePatternCollection
-     * @extends giant.Collection
-     * @extends giant.KeyValuePattern
+     * @class $data.KeyValuePatternCollection
+     * @extends $data.Collection
+     * @extends $data.KeyValuePattern
      */
-    giant.KeyValuePatternCollection = giant.Collection.of(giant.KeyValuePattern);
+    $data.KeyValuePatternCollection = $data.Collection.of($data.KeyValuePattern);
 });
 
 (function () {
     "use strict";
 
-    $assertion.addTypes(/** @lends giant */{
+    $assertion.addTypes(/** @lends $data */{
         isKeyValuePattern: function (expr) {
-            return giant.KeyValuePattern.isBaseOf(expr);
+            return $data.KeyValuePattern.isBaseOf(expr);
         },
 
         isKeyValuePatternOptional: function (expr) {
             return typeof expr === 'undefined' ||
-                giant.KeyValuePattern.isBaseOf(expr);
+                $data.KeyValuePattern.isBaseOf(expr);
         }
     });
 
     $oop.extendBuiltIn(String.prototype, /** @lends String# */{
         /**
          * Creates a new KeyValuePattern instance based on the current string.
-         * @returns {giant.KeyValuePattern}
+         * @returns {$data.KeyValuePattern}
          */
         toKeyValuePattern: function () {
-            return /** @type {giant.KeyValuePattern} */ giant.KeyValuePattern.create(this);
+            return /** @type {$data.KeyValuePattern} */ $data.KeyValuePattern.create(this);
         },
 
         /**
          * Shorthand to String.prototype.toKeyValuePattern().
          * Creates a new KeyValuePattern instance based on the current string.
-         * @returns {giant.KeyValuePattern}
+         * @returns {$data.KeyValuePattern}
          */
         toKVP: function () {
-            return /** @type {giant.KeyValuePattern} */ giant.KeyValuePattern.create(this);
+            return /** @type {$data.KeyValuePattern} */ $data.KeyValuePattern.create(this);
         }
     });
 
     $oop.extendBuiltIn(Array.prototype, /** @lends Array# */{
         /**
          * Creates a new KeyValuePattern instance based on the current array.
-         * @returns {giant.KeyValuePattern}
+         * @returns {$data.KeyValuePattern}
          */
         toKeyValuePattern: function () {
-            return /** @type {giant.KeyValuePattern} */ giant.KeyValuePattern.create(this);
+            return /** @type {$data.KeyValuePattern} */ $data.KeyValuePattern.create(this);
         },
 
         /**
          * Shorthand to Array.prototype.toKeyValuePattern().
          * Creates a new KeyValuePattern instance based on the current array.
-         * @returns {giant.KeyValuePattern}
+         * @returns {$data.KeyValuePattern}
          */
         toKVP: function () {
-            return /** @type {giant.KeyValuePattern} */ giant.KeyValuePattern.create(this);
+            return /** @type {$data.KeyValuePattern} */ $data.KeyValuePattern.create(this);
         }
     });
 }());

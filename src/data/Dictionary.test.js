@@ -1,18 +1,18 @@
-/*global giant */
+/*global $data */
 (function () {
     "use strict";
 
     module("Dictionary");
 
     test("Type conversion", function () {
-        var hash = giant.Hash.create(),
+        var hash = $data.Hash.create(),
             dict = hash.toDictionary();
 
-        ok(dict.isA(giant.Dictionary), "Hash converted to dictionary");
+        ok(dict.isA($data.Dictionary), "Hash converted to dictionary");
     });
 
     test("Value count", function () {
-        var dictionary = giant.Dictionary.create({
+        var dictionary = $data.Dictionary.create({
             foo  : ['bar', 'moo'],
             hello: 'world'
         });
@@ -23,12 +23,12 @@
     test("Instantiation", function () {
         var dict;
 
-        dict = giant.Dictionary.create();
+        dict = $data.Dictionary.create();
 
         equal(dict.keyCount, 0, "Item count in empty buffer");
         equal(dict.itemCount, 0, "Value count in empty buffer");
 
-        dict = giant.Dictionary.create({
+        dict = $data.Dictionary.create({
             foo  : ['bar', 'moo'],
             hello: 'world'
         });
@@ -41,15 +41,15 @@
         var buffer = [1, 2, 3, 4],
             hash = buffer.toDictionary();
 
-        ok(hash.isA(giant.Dictionary), "Is dictionary");
+        ok(hash.isA($data.Dictionary), "Is dictionary");
         strictEqual(hash.items, buffer, "Same buffer");
     });
 
     test("Single item addition", function () {
         /**
-         * @type {giant.Dictionary}
+         * @type {$data.Dictionary}
          */
-        var dict = giant.Dictionary.create();
+        var dict = $data.Dictionary.create();
 
         dict.addItem('foo', 'bar');
         equal(dict.keyCount, 1, "Item count");
@@ -85,9 +85,9 @@
 
     test("Array item addition", function () {
         /**
-         * @type {giant.Dictionary}
+         * @type {$data.Dictionary}
          */
-        var dict = giant.Dictionary.create();
+        var dict = $data.Dictionary.create();
 
         dict.addItem('foo', ['bar']);
         deepEqual(dict.items, {
@@ -115,9 +115,9 @@
 
     test("Item addition to multiple keys", function () {
         /**
-         * @type {giant.Dictionary}
+         * @type {$data.Dictionary}
          */
-        var dict = giant.Dictionary.create();
+        var dict = $data.Dictionary.create();
 
         throws(function () {
             dict.addItems('foo', 'bar');
@@ -138,7 +138,7 @@
     });
 
     test("Item removal", function () {
-        var dict = giant.Dictionary.create({
+        var dict = $data.Dictionary.create({
             foo  : ['bar', 'BAR', 'woot'],
             hello: 'world'
         });
@@ -194,7 +194,7 @@
     });
 
     test("Multiple items removal", function () {
-        var dict = giant.Dictionary.create({
+        var dict = $data.Dictionary.create({
             foo: ['bar', 'hello'],
             boo: 'bar',
             moo: 'hello'
@@ -216,7 +216,7 @@
     });
 
     test("Multiple values removal", function () {
-        var dict = giant.Dictionary.create({
+        var dict = $data.Dictionary.create({
             foo: ['bar', 'hello'],
             boo: 'bar',
             moo: 'hello'
@@ -236,9 +236,9 @@
 
     test("Item retrieval", function () {
         /**
-         * @type {giant.Dictionary}
+         * @type {$data.Dictionary}
          */
-        var dict = giant.Dictionary.create({
+        var dict = $data.Dictionary.create({
             foo  : ['bar', 'moo', 'boo'],
             hello: 'world',
             1    : 'howdy'
@@ -282,7 +282,7 @@
     });
 
     test("Item counter", function () {
-        var dictionary = giant.Dictionary.create({
+        var dictionary = $data.Dictionary.create({
             foo  : 'bar',
             hello: ['world', 'all']
         });
@@ -293,7 +293,7 @@
     });
 
     test("Cloning", function () {
-        var dictionary = giant.Dictionary.create()
+        var dictionary = $data.Dictionary.create()
                 .addItem('foo', ["hello", "world"])
                 .addItem('bar', "baz"),
             clone = dictionary.clone();
@@ -305,7 +305,7 @@
     });
 
     test("Clearing", function () {
-        var dict = giant.Dictionary.create({
+        var dict = $data.Dictionary.create({
             foo  : 'bar',
             hello: ['world', 'all']
         });

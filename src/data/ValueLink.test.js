@@ -1,17 +1,17 @@
-/*global giant */
+/*global $data */
 (function () {
     "use strict";
 
     module("ValueLink");
 
     test("Instantiation", function () {
-        var link = giant.ValueLink.create();
+        var link = $data.ValueLink.create();
 
         ok(link.hasOwnProperty('value'), "should add value property");
     });
 
     test("Value setter", function () {
-        var link = giant.ValueLink.create(),
+        var link = $data.ValueLink.create(),
             value = {};
 
         strictEqual(link.setValue(value), link, "should be chainable");

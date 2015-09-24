@@ -1,34 +1,34 @@
-/*global giant */
-$oop.postpone(giant, 'ArrayCollection', function () {
+/*global $data */
+$oop.postpone($data, 'ArrayCollection', function () {
     "use strict";
 
     /**
-     * @name giant.ArrayCollection.create
+     * @name $data.ArrayCollection.create
      * @function
      * @param {object} [items] Initial contents.
-     * @returns {giant.ArrayCollection}
+     * @returns {$data.ArrayCollection}
      */
 
     /**
      * General collection for managing multiple arrays.
-     * @class giant.ArrayCollection
-     * @extends giant.Collection
+     * @class $data.ArrayCollection
+     * @extends $data.Collection
      * @extends Array
      * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array
      */
-    giant.ArrayCollection = giant.Collection.of(Array);
+    $data.ArrayCollection = $data.Collection.of(Array);
 });
 
-$oop.amendPostponed(giant, 'Hash', function () {
+$oop.amendPostponed($data, 'Hash', function () {
     "use strict";
 
-    giant.Hash.addMethods(/** @lends giant.Hash# */{
+    $data.Hash.addMethods(/** @lends $data.Hash# */{
         /**
          * Reinterprets hash as array collection.
-         * @returns {giant.ArrayCollection}
+         * @returns {$data.ArrayCollection}
          */
         toArrayCollection: function () {
-            return giant.ArrayCollection.create(this.items);
+            return $data.ArrayCollection.create(this.items);
         }
     });
 });
@@ -39,10 +39,10 @@ $oop.amendPostponed(giant, 'Hash', function () {
     $oop.extendBuiltIn(Array.prototype, /** @lends Array# */{
         /**
          * Creates a new ArrayCollection instance based on the current array.
-         * @returns {giant.ArrayCollection}
+         * @returns {$data.ArrayCollection}
          */
         toArrayCollection: function () {
-            return giant.ArrayCollection.create(this);
+            return $data.ArrayCollection.create(this);
         }
     });
 }());

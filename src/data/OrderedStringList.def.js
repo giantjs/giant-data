@@ -1,23 +1,23 @@
-/*global giant */
-$oop.postpone(giant, 'OrderedStringList', function () {
+/*global $data */
+$oop.postpone($data, 'OrderedStringList', function () {
     "use strict";
 
     /**
      * Instantiates class.
-     * @name giant.OrderedStringList.create
+     * @name $data.OrderedStringList.create
      * @function
      * @param {string[]} [items] Initial values. Array of strings.
      * @param {string} [orderType='ascending'] Order type. Either 'ascending' or 'descending'.
-     * @returns {giant.OrderedStringList}
+     * @returns {$data.OrderedStringList}
      */
 
     /**
      * Ordered list extended with string-specific fast, prefix-based search.
-     * @class giant.OrderedStringList
-     * @extends giant.OrderedList
+     * @class $data.OrderedStringList
+     * @extends $data.OrderedList
      */
-    giant.OrderedStringList = giant.OrderedList.extend()
-        .addPrivateMethods(/** @lends giant.OrderedStringList */{
+    $data.OrderedStringList = $data.OrderedList.extend()
+        .addPrivateMethods(/** @lends $data.OrderedStringList */{
             /**
              * Calculates range search end value for prefix search based on start value.
              * Increments char code on the string's last character.
@@ -39,11 +39,11 @@ $oop.postpone(giant, 'OrderedStringList', function () {
                 return startValue + String.fromCharCode(0);
             }
         })
-        .addMethods(/** @lends giant.OrderedStringList# */{
+        .addMethods(/** @lends $data.OrderedStringList# */{
             /**
              * Retrieves items from the list matching the specified prefix.
              * @example
-             * var osl = giant.OrderedStringList(['hi', 'hello', 'hire', 'foo']);
+             * var osl = $data.OrderedStringList(['hi', 'hello', 'hire', 'foo']);
              * osl.getRangeByPrefix('hi') // ['hi', 'hire']
              * osl.getRangeByPrefix('h') // ['hello', 'hi', 'hire']
              * @param {string} prefix Prefix to be matched by list items.
@@ -71,21 +71,21 @@ $oop.postpone(giant, 'OrderedStringList', function () {
              * @param {boolean} [excludeOriginal=false] Whether to exclude `prefix` from the results
              * @param {number} [offset=0] Number of items to skip at start.
              * @param {number} [limit=Infinity] Number of items to fetch at most.
-             * @returns {giant.Hash}
-             * @see giant.OrderedList#getRange
+             * @returns {$data.Hash}
+             * @see $data.OrderedList#getRange
              */
             getRangeByPrefixAsHash: function (prefix, excludeOriginal, offset, limit) {
                 var range = this.getRangeByPrefix.apply(this, arguments);
-                return giant.Hash.create(range);
+                return $data.Hash.create(range);
             },
 
             /**
              * Removes all occurrences of a specific string from the list.
              * @example
-             * var osl = giant.OrderedStringList(['hi', 'hello', 'hire', 'hi', 'foo']);
+             * var osl = $data.OrderedStringList(['hi', 'hello', 'hire', 'hi', 'foo']);
              * osl.removeAll('hi').items // ['hello', 'hire', 'foo']
              * @param {string} value String value to be removed from list.
-             * @returns {giant.OrderedStringList}
+             * @returns {$data.OrderedStringList}
              */
             removeEvery: function (value) {
                 $assertion.isString(value);
@@ -95,17 +95,17 @@ $oop.postpone(giant, 'OrderedStringList', function () {
         });
 });
 
-$oop.amendPostponed(giant, 'Hash', function () {
+$oop.amendPostponed($data, 'Hash', function () {
     "use strict";
 
-    giant.Hash.addMethods(/** @lends giant.Hash# */{
+    $data.Hash.addMethods(/** @lends $data.Hash# */{
         /**
          * Converts Hash to OrderedStringList instance.
          * @param {string} [orderType='ascending']
-         * @returns {giant.OrderedStringList}
+         * @returns {$data.OrderedStringList}
          */
         toOrderedStringList: function (orderType) {
-            return giant.OrderedStringList.create(this.items, orderType);
+            return $data.OrderedStringList.create(this.items, orderType);
         }
     });
 });
@@ -117,10 +117,10 @@ $oop.amendPostponed(giant, 'Hash', function () {
         /**
          * Creates a new OrderedStringList instance based on the current array.
          * @param {string} [orderType='ascending']
-         * @returns {giant.OrderedStringList}
+         * @returns {$data.OrderedStringList}
          */
         toOrderedStringList: function (orderType) {
-            return giant.OrderedStringList.create(this, orderType);
+            return $data.OrderedStringList.create(this, orderType);
         }
     });
 }());

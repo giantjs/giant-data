@@ -1,19 +1,19 @@
-/*global giant */
-$oop.postpone(giant, 'Collection', function () {
+/*global $data */
+$oop.postpone($data, 'Collection', function () {
     "use strict";
 
     var hOP = Object.prototype.hasOwnProperty,
         slice = Array.prototype.slice,
         validators = $assertion.validators,
-        base = giant.Hash,
+        base = $data.Hash,
         self = base.extend();
 
     /**
      * Instantiates class.
-     * @name giant.Collection.create
+     * @name $data.Collection.create
      * @function
      * @param {object|Array} [items] Initial contents.
-     * @returns {giant.Collection}
+     * @returns {$data.Collection}
      */
 
     /**
@@ -22,11 +22,11 @@ $oop.postpone(giant, 'Collection', function () {
      * performed on collections regardless of item types. So called "specified collections"
      * allow however to mix the item's API into the collection and treat collections of
      * objects as if they were a single instance of the same type.
-     * @class giant.Collection
-     * @extends giant.Hash
+     * @class $data.Collection
+     * @extends $data.Hash
      */
-    giant.Collection = self
-        .addPrivateMethods(/** @lends giant.Collection */{
+    $data.Collection = self
+        .addPrivateMethods(/** @lends $data.Collection */{
             /**
              * Generates a shortcut method to be applied to the collection.
              * Shortcut methods traverse the collection and call the
@@ -35,11 +35,11 @@ $oop.postpone(giant, 'Collection', function () {
              * @param {string} methodName Name of method to make shortcut for.
              * @returns {function}
              * @private
-             * @memberOf giant.Collection#
+             * @memberOf $data.Collection#
              */
             _genShortcut: function (methodName) {
                 /**
-                 * @this {giant.Collection} Collection instance.
+                 * @this {$data.Collection} Collection instance.
                  */
                 return function () {
                     var items = this.items,
@@ -107,7 +107,7 @@ $oop.postpone(giant, 'Collection', function () {
                 return methodNames;
             }
         })
-        .addMethods(/** @lends giant.Collection# */{
+        .addMethods(/** @lends $data.Collection# */{
             /**
              * Creates a specified collection that is modeled on a template object.
              * Specified collections inherit all methods from the template unless there's a conflict
@@ -119,14 +119,14 @@ $oop.postpone(giant, 'Collection', function () {
              * template remain chainable on the collection.
              * @example
              * var specified;
-             * specified = giant.Collection.of(Array);
-             * specified = giant.Collection.of($oop.Base);
-             * specified = giant.Collection.of(['foo', 'bar']);
-             * specified = giant.Collection.of({
+             * specified = $data.Collection.of(Array);
+             * specified = $data.Collection.of($oop.Base);
+             * specified = $data.Collection.of(['foo', 'bar']);
+             * specified = $data.Collection.of({
              *  foo: function () {},
              *  bar: function () {}
              * });
-             * giant.Collection.of(String).create({
+             * $data.Collection.of(String).create({
              *  foo: "hello",
              *  bar: "world"
              * }).split().items; // {foo: ['h', 'e', 'l', 'l', 'o'], bar: ['w', 'o', 'r', 'l', 'd']}
@@ -135,8 +135,8 @@ $oop.postpone(giant, 'Collection', function () {
              * From `Troop` classes only those methods will be considered that were added by the topmost extension.
              * Functions are treated as constructors, and `.of()` works with their `.prototype` the same way as
              * with any other object passed.
-             * @returns {giant.Collection}
-             * @memberOf giant.Collection
+             * @returns {$data.Collection}
+             * @memberOf $data.Collection
              */
             of: function (template) {
                 // in case methodNames is a fat constructor
@@ -155,7 +155,7 @@ $oop.postpone(giant, 'Collection', function () {
                 }
 
                 // must work on classes derived from Collection, too
-                var specifiedCollection = /** @type {giant.Collection} */ $oop.Base.extend.call(this),
+                var specifiedCollection = /** @type {$data.Collection} */ $oop.Base.extend.call(this),
                     shortcutMethods = {},
                     i, methodName;
 
@@ -179,12 +179,12 @@ $oop.postpone(giant, 'Collection', function () {
              * Sets an item in the collection. Overwrites item if there is already one by the same item key.
              * Increments counter for new items.
              * @example
-             * var coll = giant.Collection.create();
+             * var coll = $data.Collection.create();
              * coll.set('foo', "bar");
              * coll.get('foo'); // "bar"
              * @param {string} itemKey Item key.
              * @param item Item variable / object.
-             * @returns {giant.Collection}
+             * @returns {$data.Collection}
              */
             setItem: function (itemKey, item) {
                 var isNew = !hOP.call(this.items, itemKey);
@@ -203,7 +203,7 @@ $oop.postpone(giant, 'Collection', function () {
             /**
              * Deletes item from collection. Decrements counter when an item was in fact deleted.
              * @param {string} itemKey Item key.
-             * @returns {giant.Collection}
+             * @returns {$data.Collection}
              */
             deleteItem: function (itemKey) {
                 if (hOP.call(this.items, itemKey)) {
@@ -225,16 +225,16 @@ $oop.postpone(giant, 'Collection', function () {
              * encouraged after calling this method.
              * @example
              * // converts a collection of strings to a string collection
-             * var stringCollection = giant.Collection.create(['hello', 'world'])
-             *  .asType(giant.Collection.of(String));
-             * @param {giant.Collection} subClass Subclass of `Collection`
-             * @returns {giant.Collection} Instance of the specified collection subclass, initialized with the
+             * var stringCollection = $data.Collection.create(['hello', 'world'])
+             *  .asType($data.Collection.of(String));
+             * @param {$data.Collection} subClass Subclass of `Collection`
+             * @returns {$data.Collection} Instance of the specified collection subclass, initialized with the
              * caller's item buffer and item count.
              */
             asType: function (subClass) {
                 $assertion.isCollection(subClass, "Type must be Collection-based");
 
-                var result = /** @type giant.Collection */ subClass.create();
+                var result = /** @type $data.Collection */ subClass.create();
 
                 result.items = this.items;
                 result.keyCount = this.keyCount;
@@ -251,12 +251,12 @@ $oop.postpone(giant, 'Collection', function () {
              *  .mergeWith(otherStringCollection, function (a, b, conflictingKey) {
              *      return b.getItem(conflictingKey);
              *  });
-             * @param {giant.Collection} collection Collection to be merged to current. Must share
+             * @param {$data.Collection} collection Collection to be merged to current. Must share
              * a common base with the current collection.
              * @param {function} [conflictResolver] Callback for resolving merge conflicts.
              * Callback receives as arguments: current collection, remote collection, and key of
              * the conflicting item, and is expected to return a collection item.
-             * @returns {giant.Collection} New collection with items from both collections in it.
+             * @returns {$data.Collection} New collection with items from both collections in it.
              * Return type will be that of the current collection.
              */
             mergeWith: function (collection, conflictResolver) {
@@ -285,12 +285,12 @@ $oop.postpone(giant, 'Collection', function () {
              * Merges another collection into current collection. Item key conflicts are resolved
              * by a suitable callback, or, when there is none specified, the value from the remote
              * collection will be used.
-             * @param {giant.Collection} collection Collection to be merged into current. Must share
+             * @param {$data.Collection} collection Collection to be merged into current. Must share
              * a common base with the current collection.
              * @param {function} [conflictResolver] Callback for resolving merge conflicts.
              * Callback receives as arguments: current collection, remote collection, and key of
              * the conflicting item, and is expected to return a collection item.
-             * @returns {giant.Collection} Current collection instance.
+             * @returns {$data.Collection} Current collection instance.
              * @example
              * var merged = stringCollection
              *  .mergeIn(otherStringCollection, function (a, b, conflictingKey) {
@@ -322,7 +322,7 @@ $oop.postpone(giant, 'Collection', function () {
              * Retrieves item keys as an array, filtered by a prefix. The in which keys appear in the resulting
              * array is not deterministic.
              * @example
-             * var c = giant.Collection.create({
+             * var c = $data.Collection.create({
              *  foo: 1,
              *  bar: 10,
              *  force: 100
@@ -352,18 +352,18 @@ $oop.postpone(giant, 'Collection', function () {
             /**
              * Retrieves item keys as an array, filtered by a prefix, and wrapped in a hash.
              * @param {string} prefix
-             * @returns {giant.Hash}
-             * @see giant.Collection#getKeysByPrefix
+             * @returns {$data.Hash}
+             * @see $data.Collection#getKeysByPrefix
              */
             getKeysByPrefixAsHash: function (prefix) {
-                return giant.Hash.create(this.getKeysByPrefix(prefix));
+                return $data.Hash.create(this.getKeysByPrefix(prefix));
             },
 
             /**
              * Retrieves item keys as an array, filtered by a RegExp. The in which keys appear in the resulting
              * array is not deterministic.
              * @example
-             * var c = giant.Collection.create({
+             * var c = $data.Collection.create({
              *  foo: 1,
              *  bar: 10,
              *  force: 100
@@ -391,18 +391,18 @@ $oop.postpone(giant, 'Collection', function () {
             /**
              * Retrieves item keys as an array, filtered by a RegExp, and wrapped in a hash.
              * @param {RegExp} regExp
-             * @returns {giant.Hash}
-             * @see giant.Collection#getKeysByRegExp
+             * @returns {$data.Hash}
+             * @see $data.Collection#getKeysByRegExp
              */
             getKeysByRegExpAsHash: function (regExp) {
-                return giant.Hash.create(this.getKeysByRegExp(regExp));
+                return $data.Hash.create(this.getKeysByRegExp(regExp));
             },
 
             /**
              * Filters the collection by selecting only the items with the specified keys. Item keys that are not
              * present in the collection will be included in the results, too, as undefined.
              * @param {string[]} itemKeys Keys of items to be included in result.
-             * @returns {giant.Collection} New instance of the same collection subclass holding the filtered contents.
+             * @returns {$data.Collection} New instance of the same collection subclass holding the filtered contents.
              */
             filterByKeys: function (itemKeys) {
                 $assertion.isArray(itemKeys, "Invalid item keys");
@@ -424,7 +424,7 @@ $oop.postpone(giant, 'Collection', function () {
             /**
              * Filters collection by matching keys against the specified prefix.
              * @param {string} prefix Item key prefix that keys must match in order to be included in the result.
-             * @returns {giant.Collection} New instance of the same collection subclass holding the filtered contents.
+             * @returns {$data.Collection} New instance of the same collection subclass holding the filtered contents.
              */
             filterByPrefix: function (prefix) {
                 return this.filterByKeys(this.getKeysByPrefix(prefix));
@@ -433,7 +433,7 @@ $oop.postpone(giant, 'Collection', function () {
             /**
              * Filters collection by matching keys against the specified regular expression.
              * @param {RegExp} regExp Regular expression that keys must match in order to be included in the result.
-             * @returns {giant.Collection} New instance of the same collection subclass holding the filtered contents.
+             * @returns {$data.Collection} New instance of the same collection subclass holding the filtered contents.
              */
             filterByRegExp: function (regExp) {
                 return this.filterByKeys(this.getKeysByRegExp(regExp));
@@ -446,7 +446,7 @@ $oop.postpone(giant, 'Collection', function () {
              * @example
              * c.filterByType('string') // fetches string items only
              * c.filterByType($oop.Base) // fetches classes and instances only
-             * @returns {giant.Collection}
+             * @returns {$data.Collection}
              */
             filterByType: function (type) {
                 var isString = typeof type === 'string',
@@ -481,7 +481,7 @@ $oop.postpone(giant, 'Collection', function () {
              * of the current item as second argument. Expected to return a boolean: true when the item should be
              * included in the result, false if not. (In reality and truthy or falsy value will do.)
              * @param {object} [context=this] Optional selector context. Set to the collection instance by default.
-             * @returns {giant.Collection} New instance of the same collection subclass holding the filtered contents.
+             * @returns {$data.Collection} New instance of the same collection subclass holding the filtered contents.
              */
             filterBySelector: function (selector, context) {
                 $assertion
@@ -529,11 +529,11 @@ $oop.postpone(giant, 'Collection', function () {
             /**
              * Retrieves sorted item values array wrapped in a hash.
              * @param {function} [comparator] Comparator for sorting keys.
-             * @returns {giant.Hash}
-             * @see giant.Collection#getSortedValues
+             * @returns {$data.Hash}
+             * @see $data.Collection#getSortedValues
              */
             getSortedValuesAsHash: function (comparator) {
-                return giant.Hash.create(this.getSortedValues(comparator));
+                return $data.Hash.create(this.getSortedValues(comparator));
             },
 
             /**
@@ -551,7 +551,7 @@ $oop.postpone(giant, 'Collection', function () {
              * as first argument, item key as second argument, and all other arguments passed to `.forEachItem()`
              * as the rest of its arguments.
              * @param {object} [context=this] Optional handler context. Set to the collection instance by default.
-             * @returns {giant.Collection}
+             * @returns {$data.Collection}
              */
             forEachItem: function (handler, context) {
                 $assertion
@@ -576,13 +576,13 @@ $oop.postpone(giant, 'Collection', function () {
             /**
              * Iterates over collection items and calls the specified handler function on each in the order of keys.
              * Other than that, the method behaves the same way as `.forEach()`.
-             * @param {function} handler @see giant.Collection#forEachItem
+             * @param {function} handler @see $data.Collection#forEachItem
              * Iteration breaks when handler returns false.
              * @param {object} [context=this] Optional selector context. Set to the collection instance by default.
              * @param {function} [comparator] Optional callback for comparing keys when sorting. The context (`this`)
              * will be set to the collection so item values may be compared too via `this.items`. Expected to return
              * an integer, the same way as in `Array.sort()`
-             * @returns {giant.Collection}
+             * @returns {$data.Collection}
              * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
              */
             forEachItemSorted: function (handler, context, comparator) {
@@ -613,8 +613,8 @@ $oop.postpone(giant, 'Collection', function () {
              * @param {object} [context=this] Optional handler context. Set to the collection instance by default.
              * @param {function} [conflictResolver] Optional callback that resolves key conflicts.
              * Takes conflicting values and the mapped key associated with them.
-             * @param {giant.Collection} [subClass] Optional collection subclass for the output.
-             * @returns {giant.Collection} New collection with mapped keys.
+             * @param {$data.Collection} [subClass] Optional collection subclass for the output.
+             * @returns {$data.Collection} New collection with mapped keys.
              */
             mapKeys: function (mapper, context, conflictResolver, subClass) {
                 $assertion
@@ -651,8 +651,8 @@ $oop.postpone(giant, 'Collection', function () {
              * @param {function} mapper Mapper function. Takes `item` and `itemKey` as arguments, and is expected
              * to return the mapped item value for the new collection.
              * @param {object} [context=this] Optional handler context. Set to the collection instance by default.
-             * @param {giant.Collection} [subClass] Optional collection subclass for the output.
-             * @returns {giant.Collection} New collection instance (of the specified type) containing mapped items.
+             * @param {$data.Collection} [subClass] Optional collection subclass for the output.
+             * @returns {$data.Collection} New collection instance (of the specified type) containing mapped items.
              */
             mapValues: function (mapper, context, subClass) {
                 $assertion
@@ -679,8 +679,8 @@ $oop.postpone(giant, 'Collection', function () {
              * Equivalent to mapping the collection using a property getter, but
              * saves a function call on each item.
              * @param {string} propertyName Name of property to retrieve from each item.
-             * @param {giant.Collection} [subClass] Optional collection subclass for the output.
-             * @returns {giant.Collection}
+             * @param {$data.Collection} [subClass] Optional collection subclass for the output.
+             * @returns {$data.Collection}
              */
             collectProperty: function (propertyName, subClass) {
                 $assertion.isCollectionOptional(subClass, "Invalid collection subclass");
@@ -705,7 +705,7 @@ $oop.postpone(giant, 'Collection', function () {
              * Passes each item to the specified handler as argument, and returns the results packed in a
              * plain collection instance. Similar to `.mapValues`
              * @example
-             * var c = giant.Collection.create(['foo', 'bar']);
+             * var c = $data.Collection.create(['foo', 'bar']);
              * function splitIntoLetters(delim, str) {
              *  return str.split(delim);
              * }
@@ -714,7 +714,7 @@ $oop.postpone(giant, 'Collection', function () {
              * @param {*} [context=this] Context in which to call the handler. If handler is a method, the context
              * should be the owner (instance or class) of the method. Set to the collection instance by default.
              * @param {number} [argIndex] Argument index at which collection items will be expected.
-             * @returns {giant.Collection}
+             * @returns {$data.Collection}
              */
             passEachItemTo: function (handler, context, argIndex) {
                 var args = slice.call(arguments, 3),
@@ -749,7 +749,7 @@ $oop.postpone(giant, 'Collection', function () {
              * Creates a new instance of the specified class passing each item to its constructor.
              * @param {$oop.Base} template
              * @param {number} [argIndex=0]
-             * @returns {giant.Collection}
+             * @returns {$data.Collection}
              */
             createWithEachItem: function (template, argIndex) {
                 $assertion.isClass(template, "Invalid template class");
@@ -762,13 +762,13 @@ $oop.postpone(giant, 'Collection', function () {
              * a reference to the original collection is returned, similarly to methods auto-generated by `.of()`.
              * The rest of the arguments are forwarded to the method calls.
              * @example
-             * var c = giant.Collection.create({
+             * var c = $data.Collection.create({
              *  foo: "bar",
              *  hello: "world"
              * });
              * c.callOnEachItem('split').items; // {foo: ['b', 'a', 'r'], hello: ['h', 'e', 'l', 'l', 'o']}
              * @param {string} methodName Name identifying method on items.
-             * @returns {giant.Collection}
+             * @returns {$data.Collection}
              */
             callOnEachItem: function (methodName) {
                 $assertion.isString(methodName, "Invalid method name");
@@ -801,14 +801,14 @@ $oop.postpone(giant, 'Collection', function () {
         });
 });
 
-$oop.amendPostponed(giant, 'Hash', function () {
+$oop.amendPostponed($data, 'Hash', function () {
     "use strict";
 
-    giant.Hash.addMethods(/** @lends giant.Hash# */{
+    $data.Hash.addMethods(/** @lends $data.Hash# */{
         /**
          * Reinterprets hash as collection, optionally as the specified subclass.
-         * @param {giant.Collection} [subClass] Collection subclass.
-         * @returns {giant.Collection}
+         * @param {$data.Collection} [subClass] Collection subclass.
+         * @returns {$data.Collection}
          */
         toCollection: function (subClass) {
             $assertion.isCollectionOptional(subClass);
@@ -816,7 +816,7 @@ $oop.amendPostponed(giant, 'Hash', function () {
             if (subClass) {
                 return subClass.create(this.items);
             } else {
-                return giant.Collection.create(this.items);
+                return $data.Collection.create(this.items);
             }
         }
     });
@@ -825,24 +825,24 @@ $oop.amendPostponed(giant, 'Hash', function () {
 (function () {
     "use strict";
 
-    $assertion.addTypes(/** @lends giant */{
+    $assertion.addTypes(/** @lends $data */{
         isCollection: function (expr) {
-            return giant.Collection.isPrototypeOf(expr);
+            return $data.Collection.isPrototypeOf(expr);
         },
 
         isCollectionOptional: function (expr) {
             return typeof expr === 'undefined' ||
-                giant.Collection.isPrototypeOf(expr);
+                $data.Collection.isPrototypeOf(expr);
         }
     });
 
     $oop.extendBuiltIn(Array.prototype, /** @lends Array# */{
         /**
          * Creates a new Collection instance based on the current array.
-         * @returns {giant.Collection}
+         * @returns {$data.Collection}
          */
         toCollection: function () {
-            return giant.Collection.create(this);
+            return $data.Collection.create(this);
         }
     });
 }());

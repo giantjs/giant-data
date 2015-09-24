@@ -1,24 +1,24 @@
-/*global giant */
-$oop.postpone(giant, 'ValueLink', function () {
+/*global $data */
+$oop.postpone($data, 'ValueLink', function () {
     "use strict";
 
-    var base = giant.Link,
+    var base = $data.Link,
         self = base.extend();
 
     /**
      * Creates a ValueLink instance.
-     * @name giant.ValueLink.create
+     * @name $data.ValueLink.create
      * @function
-     * @returns {giant.ValueLink}
+     * @returns {$data.ValueLink}
      */
 
     /**
      * Link that carries a value, and has the option to be unlinked.
      * @class
-     * @extends giant.Link
+     * @extends $data.Link
      */
-    giant.ValueLink = self
-        .addMethods(/** @lends giant.ValueLink# */{
+    $data.ValueLink = self
+        .addMethods(/** @lends $data.ValueLink# */{
             /** @ignore */
             init: function () {
                 base.init.call(this);
@@ -33,7 +33,7 @@ $oop.postpone(giant, 'ValueLink', function () {
             /**
              * Sets link value.
              * @param {*} value
-             * @returns {giant.ValueLink}
+             * @returns {$data.ValueLink}
              */
             setValue: function (value) {
                 this.value = value;

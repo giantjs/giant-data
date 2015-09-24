@@ -1,5 +1,5 @@
-/*global giant */
-$oop.postpone(giant, 'Link', function () {
+/*global $data */
+$oop.postpone($data, 'Link', function () {
     "use strict";
 
     var base = $oop.Base,
@@ -7,9 +7,9 @@ $oop.postpone(giant, 'Link', function () {
 
     /**
      * Creates a Link instance.
-     * @name giant.Link.create
+     * @name $data.Link.create
      * @function
-     * @returns {giant.Link}
+     * @returns {$data.Link}
      */
 
     /**
@@ -17,33 +17,33 @@ $oop.postpone(giant, 'Link', function () {
      * @class
      * @extends $oop.Base
      */
-    giant.Link = self
-        .addMethods(/** @lends giant.Link# */{
+    $data.Link = self
+        .addMethods(/** @lends $data.Link# */{
             /** @ignore */
             init: function () {
                 /**
                  * Link that comes before the current link in the chain.
-                 * @type {giant.Link}
+                 * @type {$data.Link}
                  */
                 this.previousLink = undefined;
 
                 /**
                  * Link that comes after the current link in the chain.
-                 * @type {giant.Link}
+                 * @type {$data.Link}
                  */
                 this.nextLink = undefined;
 
                 /**
                  * Chain instance the link is associated with.
-                 * @type {giant.OpenChain}
+                 * @type {$data.OpenChain}
                  */
                 this.parentChain = undefined;
             },
 
             /**
              * Adds current unconnected link after the specified link.
-             * @param {giant.Link} link
-             * @returns {giant.Link}
+             * @param {$data.Link} link
+             * @returns {$data.Link}
              */
             addAfter: function (link) {
                 $assertion.assert(!this.previousLink && !this.nextLink,
@@ -67,8 +67,8 @@ $oop.postpone(giant, 'Link', function () {
 
             /**
              * Adds current link before the specified link.
-             * @param {giant.Link} link
-             * @returns {giant.Link}
+             * @param {$data.Link} link
+             * @returns {$data.Link}
              */
             addBefore: function (link) {
                 $assertion.assert(!this.previousLink && !this.nextLink,
@@ -92,7 +92,7 @@ $oop.postpone(giant, 'Link', function () {
 
             /**
              * Removes link from the chain.
-             * @returns {giant.Link}
+             * @returns {$data.Link}
              */
             unlink: function () {
                 var nextLink = this.nextLink,
@@ -115,8 +115,8 @@ $oop.postpone(giant, 'Link', function () {
             /**
              * Sets the parent chain on unconnected links.
              * Fails when called on connected links.
-             * @param {giant.OpenChain} parentChain
-             * @returns {giant.Link}
+             * @param {$data.OpenChain} parentChain
+             * @returns {$data.Link}
              */
             setParentChain: function (parentChain) {
                 $assertion.assert(!this.previousLink && !this.nextLink,

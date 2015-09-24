@@ -1,20 +1,20 @@
-/*global giant */
-$oop.postpone(giant, 'Query', function () {
+/*global $data */
+$oop.postpone($data, 'Query', function () {
     "use strict";
 
-    var KeyValuePattern = giant.KeyValuePattern,
-        base = giant.Path,
+    var KeyValuePattern = $data.KeyValuePattern,
+        base = $data.Path,
         self = base.extend();
 
     /**
      * Instantiates class.
      * Constructs query instance and populates it with query information. Keys in the query
      * (except for pattern objects) are assumed to be URI-encoded.
-     * @name giant.Query.create
+     * @name $data.Query.create
      * @function
      * @param {Array} query Query in array representation (eg. ['this', 'is', '|'.toKeyValuePattern(), 'path']).
      * All patterns should be converted to KeyValuePattern instance.
-     * @returns {giant.Query}
+     * @returns {$data.Query}
      */
 
     /**
@@ -31,40 +31,40 @@ $oop.postpone(giant, 'Query', function () {
      * 'hello>people>of>the>world' as well as 'hello>world', but not 'hello>all'.
      * - '^value' is ignored.
      * On top of that, individual key-value patterns may be marked as return values by placing them inside curly braces.
-     * @class giant.Query
-     * @extends giant.Path
+     * @class $data.Query
+     * @extends $data.Path
      */
-    giant.Query = self
-        .addConstants(/** @lends giant.Query */{
+    $data.Query = self
+        .addConstants(/** @lends $data.Query */{
             /**
              * Regular expression that tests whether string contains query patterns.
              * Should include all special KeyValuePattern characters.
              * @type {RegExp}
              */
             RE_QUERY_TESTER: new RegExp([
-                '\\' + giant.KeyValuePattern.OPTION_SEPARATOR,
-                '\\' + giant.KeyValuePattern.KEY_VALUE_SEPARATOR,
-                '\\' + giant.KeyValuePattern.WILDCARD_SYMBOL,
-                '\\' + giant.KeyValuePattern.PRIMITIVE_SYMBOL,
-                '\\' + giant.KeyValuePattern.SKIP_SYMBOL,
-                '\\' + giant.KeyValuePattern.MARKER_BRACKET,
-                '\\' + giant.KeyValuePattern.MARKER_CURLY
+                '\\' + $data.KeyValuePattern.OPTION_SEPARATOR,
+                '\\' + $data.KeyValuePattern.KEY_VALUE_SEPARATOR,
+                '\\' + $data.KeyValuePattern.WILDCARD_SYMBOL,
+                '\\' + $data.KeyValuePattern.PRIMITIVE_SYMBOL,
+                '\\' + $data.KeyValuePattern.SKIP_SYMBOL,
+                '\\' + $data.KeyValuePattern.MARKER_BRACKET,
+                '\\' + $data.KeyValuePattern.MARKER_CURLY
             ].join('|')),
 
             /**
              * Pattern indicating skip mode. In skip mode, keys are skipped
              * in the path between the previous key and the nearest key matched
              * by the next pattern in the query.
-             * @type {giant.KeyValuePattern}
+             * @type {$data.KeyValuePattern}
              */
             PATTERN_SKIP: KeyValuePattern.create(KeyValuePattern.SKIP_SYMBOL)
         })
-        .addMethods(/** @lends giant.Query# */{
+        .addMethods(/** @lends $data.Query# */{
             /**
              * Prepares string query buffer for normalization.
              * @param {string} asString Array of strings
-             * @returns {string[]|giant.KeyValuePattern[]}
-             * @memberOf giant.Query
+             * @returns {string[]|$data.KeyValuePattern[]}
+             * @memberOf $data.Query
              */
             stringToQueryArray: function (asString) {
                 var asArray = asString.split(self.PATH_SEPARATOR),
@@ -93,9 +93,9 @@ $oop.postpone(giant, 'Query', function () {
              * Normalizes query buffer. Leaves key literals as they are,
              * converts array pattern expressions to actual pattern objects.
              * Makes sure skipper patterns all reference the same instance.
-             * @param {string[]|giant.KeyValuePattern[]} asArray
-             * @returns {string[]|giant.KeyValuePattern[]}
-             * @memberOf giant.Query
+             * @param {string[]|$data.KeyValuePattern[]} asArray
+             * @returns {string[]|$data.KeyValuePattern[]}
+             * @memberOf $data.Query
              */
             arrayToQueryArray: function (asArray) {
                 var result = [],
@@ -129,8 +129,8 @@ $oop.postpone(giant, 'Query', function () {
              * Extracts the longest path from the start of the query.
              * Stem may not contain any wildcards, or other query expressions, only key literals.
              * @example
-             * giant.Query.create('hello>world>|>foo>\>bar').getStemPath(); // path 'hello>world'
-             * @returns {giant.Path}
+             * $data.Query.create('hello>world>|>foo>\>bar').getStemPath(); // path 'hello>world'
+             * @returns {$data.Path}
              */
             getStemPath: function () {
                 var asArray = this.asArray,
@@ -147,12 +147,12 @@ $oop.postpone(giant, 'Query', function () {
                     }
                 }
 
-                return giant.Path.create(result);
+                return $data.Path.create(result);
             },
 
             /**
              * Determines whether the specified path matches the current query.
-             * @param {giant.Path} path Path to be tested against the current query.
+             * @param {$data.Path} path Path to be tested against the current query.
              * @returns {boolean}
              */
             matchesPath: function (path) {
@@ -208,7 +208,7 @@ $oop.postpone(giant, 'Query', function () {
 
             /**
              * Determines whether paths matched by current query may be roots of the specified path.
-             * @param {giant.Path} relativePath
+             * @param {$data.Path} relativePath
              * @returns {boolean}
              * @example
              * 'foo>|>bar'.toQuery().isRootOf('foo>baz>bar>hello'.toPath()) // true
@@ -223,7 +223,7 @@ $oop.postpone(giant, 'Query', function () {
              * Returns the string representation for the query, keys URI encoded and separated by '>',
              * patterns converted back to their symbol form ('|', '\', '<', and '^').
              * @example
-             * giant.Query.create(['test^', '|'.toKeyValuePattern(), 'path']).toString() // "test%5E>|>path"
+             * $data.Query.create(['test^', '|'.toKeyValuePattern(), 'path']).toString() // "test%5E>|>path"
              * @returns {string}
              */
             toString: function () {
@@ -245,14 +245,14 @@ $oop.postpone(giant, 'Query', function () {
 
     var validators = $assertion.validators;
 
-    $assertion.addTypes(/** @lends giant */{
+    $assertion.addTypes(/** @lends $data */{
         isQuery: function (expr) {
-            return giant.Query.isBaseOf(expr);
+            return $data.Query.isBaseOf(expr);
         },
 
         isQueryOptional: function (expr) {
             return typeof expr === 'undefined' ||
-                giant.Query.isBaseOf(expr);
+                $data.Query.isBaseOf(expr);
         },
 
         /**
@@ -269,7 +269,7 @@ $oop.postpone(giant, 'Query', function () {
                     }
                 }
             } else if (this.isString(expr)) {
-                return giant.Query.RE_QUERY_TESTER.test(expr);
+                return $data.Query.RE_QUERY_TESTER.test(expr);
             }
             return false;
         }
@@ -279,21 +279,21 @@ $oop.postpone(giant, 'Query', function () {
         /**
          * Creates a new Query instance based on the current string.
          * Keys are URI decoded or translated to the corresponding pattern object before being added to the internal buffer.
-         * @returns {giant.Query}
+         * @returns {$data.Query}
          */
         toQuery: function () {
-            var Query = giant.Query;
-            return /** @type {giant.Query} */ Query.create(Query.stringToQueryArray(this));
+            var Query = $data.Query;
+            return /** @type {$data.Query} */ Query.create(Query.stringToQueryArray(this));
         },
 
         /**
          * Creates a new Path or Query instance based on the current string, depending on the
          * actual string contents.
-         * @returns {giant.Path}
+         * @returns {$data.Path}
          */
         toPathOrQuery: function () {
-            var Query = giant.Query;
-            return /** @type {giant.Path} */ validators.isQueryExpression(this) ?
+            var Query = $data.Query;
+            return /** @type {$data.Path} */ validators.isQueryExpression(this) ?
                 this.toQuery() :
                 this.toPath();
         }
@@ -302,20 +302,20 @@ $oop.postpone(giant, 'Query', function () {
     $oop.extendBuiltIn(Array.prototype, /** @lends Array# */{
         /**
          * Creates a new Query instance based on the current array.
-         * @returns {giant.Query}
+         * @returns {$data.Query}
          */
         toQuery: function () {
-            var Query = giant.Query;
-            return /** @type {giant.Query} */ Query.create(Query.arrayToQueryArray(this));
+            var Query = $data.Query;
+            return /** @type {$data.Query} */ Query.create(Query.arrayToQueryArray(this));
         },
 
         /**
          * Creates a new Path or Query instance based on the current array, depending on the
          * actual contents of the array.
-         * @returns {giant.Path}
+         * @returns {$data.Path}
          */
         toPathOrQuery: function () {
-            return /** @type {giant.Path} */ validators.isQueryExpression(this) ?
+            return /** @type {$data.Path} */ validators.isQueryExpression(this) ?
                 this.toQuery() :
                 this.toPath();
         }

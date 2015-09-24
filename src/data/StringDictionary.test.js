@@ -1,23 +1,23 @@
-/*global giant */
+/*global $data */
 (function () {
     "use strict";
 
-    var StringDictionary = giant.StringDictionary;
+    var StringDictionary = $data.StringDictionary;
 
     module("StringDictionary");
 
     test("Type conversion", function () {
-        var hash = giant.Hash.create(),
+        var hash = $data.Hash.create(),
             dict = hash.toStringDictionary();
 
-        ok(dict.isA(giant.StringDictionary), "Hash converted to string dictionary");
+        ok(dict.isA($data.StringDictionary), "Hash converted to string dictionary");
     });
 
     test("Array conversion", function () {
         var buffer = [1, 2, 3, 4],
             hash = buffer.toStringDictionary();
 
-        ok(hash.isA(giant.StringDictionary), "Is string dictionary");
+        ok(hash.isA($data.StringDictionary), "Is string dictionary");
         strictEqual(hash.items, buffer, "Same buffer");
     });
 

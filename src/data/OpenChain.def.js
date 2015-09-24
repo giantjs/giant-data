@@ -1,5 +1,5 @@
-/*global giant */
-$oop.postpone(giant, 'OpenChain', function () {
+/*global $data */
+$oop.postpone($data, 'OpenChain', function () {
     "use strict";
 
     var base = $oop.Base,
@@ -7,9 +7,9 @@ $oop.postpone(giant, 'OpenChain', function () {
 
     /**
      * Creates an OpenChain instance.
-     * @name giant.OpenChain.create
+     * @name $data.OpenChain.create
      * @function
-     * @returns {giant.OpenChain}
+     * @returns {$data.OpenChain}
      */
 
     /**
@@ -19,28 +19,28 @@ $oop.postpone(giant, 'OpenChain', function () {
      * @class
      * @extends $oop.Base
      */
-    giant.OpenChain = self
-        .addMethods(/** @lends giant.OpenChain# */{
+    $data.OpenChain = self
+        .addMethods(/** @lends $data.OpenChain# */{
             /** @ignore */
             init: function () {
                 /**
                  * First (fixed) link in the chain.
-                 * @type {giant.ValueLink}
+                 * @type {$data.ValueLink}
                  */
-                this.firstLink = giant.Link.create()
+                this.firstLink = $data.Link.create()
                     .setParentChain(this);
 
                 /**
                  * Last (fixed) link in the chain.
-                 * @type {giant.ValueLink}
+                 * @type {$data.ValueLink}
                  */
-                this.lastLink = giant.Link.create()
+                this.lastLink = $data.Link.create()
                     .addAfter(this.firstLink);
             },
 
             /**
              * Adds link at the end of the chain.
-             * @param {giant.Link} link
+             * @param {$data.Link} link
              */
             pushLink: function (link) {
                 link.addBefore(this.lastLink);
@@ -50,17 +50,17 @@ $oop.postpone(giant, 'OpenChain', function () {
             /**
              * Adds new link with the specified value at the end of the chain.
              * @param {*} value
-             * @returns {giant.OpenChain}
+             * @returns {$data.OpenChain}
              */
             pushValue: function (value) {
-                this.pushLink(giant.ValueLink.create()
+                this.pushLink($data.ValueLink.create()
                     .setValue(value));
                 return this;
             },
 
             /**
              * Removes link from the end of the chain and returns removed link.
-             * @returns {giant.Link}
+             * @returns {$data.Link}
              */
             popLink: function () {
                 return this.lastLink.previousLink
@@ -69,7 +69,7 @@ $oop.postpone(giant, 'OpenChain', function () {
 
             /**
              * Adds link at the start of the chain.
-             * @param {giant.Link} link
+             * @param {$data.Link} link
              */
             unshiftLink: function (link) {
                 link.addAfter(this.firstLink);
@@ -79,17 +79,17 @@ $oop.postpone(giant, 'OpenChain', function () {
             /**
              * Adds new link with the specified value at the start of the chain.
              * @param {*} value
-             * @returns {giant.OpenChain}
+             * @returns {$data.OpenChain}
              */
             unshiftValue: function (value) {
-                this.unshiftLink(giant.ValueLink.create()
+                this.unshiftLink($data.ValueLink.create()
                     .setValue(value));
                 return this;
             },
 
             /**
              * Removes link from the start of the chain and returns removed link.
-             * @returns {giant.Link}
+             * @returns {$data.Link}
              */
             shiftLink: function () {
                 return this.firstLink.nextLink
@@ -101,7 +101,7 @@ $oop.postpone(giant, 'OpenChain', function () {
              * passing the current link to it.
              * @param {function} handler
              * @param {object} [context=this]
-             * @returns {giant.OpenChain}
+             * @returns {$data.OpenChain}
              */
             forEachLink: function (handler, context) {
                 $assertion

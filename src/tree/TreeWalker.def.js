@@ -1,15 +1,15 @@
-/*global giant */
-$oop.postpone(giant, 'TreeWalker', function () {
+/*global $data */
+$oop.postpone($data, 'TreeWalker', function () {
     "use strict";
 
     /**
      * Base class for tree walker classes.
      * Holds basic properties and state of the tree walker.
-     * @class giant.TreeWalker
+     * @class $data.TreeWalker
      * @extends $oop.Base
      */
-    giant.TreeWalker = $oop.Base.extend()
-        .addMethods(/** @lends giant.TreeWalker# */{
+    $data.TreeWalker = $oop.Base.extend()
+        .addMethods(/** @lends $data.TreeWalker# */{
             /**
              * @param {function} handler
              * @ignore
@@ -39,7 +39,7 @@ $oop.postpone(giant, 'TreeWalker', function () {
 
                 /**
                  * Path currently being traversed
-                 * @type {giant.Path}
+                 * @type {$data.Path}
                  */
                 this.currentPath = undefined;
 
@@ -52,7 +52,7 @@ $oop.postpone(giant, 'TreeWalker', function () {
 
             /**
              * Sets termination flag.
-             * @returns {giant.TreeWalker}
+             * @returns {$data.TreeWalker}
              */
             terminateTraversal: function () {
                 this.isTerminated = true;
@@ -61,7 +61,7 @@ $oop.postpone(giant, 'TreeWalker', function () {
 
             /**
              * Resets walker state
-             * @returns {giant.TreeWalker}
+             * @returns {$data.TreeWalker}
              */
             reset: function () {
                 this.currentKey = undefined;

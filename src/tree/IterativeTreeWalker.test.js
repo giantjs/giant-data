@@ -1,4 +1,4 @@
-/*global giant */
+/*global $data */
 (function () {
     "use strict";
 
@@ -24,7 +24,7 @@
         keys = [];
         paths = [];
 
-        walker = giant.IterativeTreeWalker
+        walker = $data.IterativeTreeWalker
             .create(function () {
                 paths.push(this.currentPath.toString());
                 keys.push(this.currentKey);
@@ -54,7 +54,7 @@
         paths = [];
 
         // setting up traversal to stop at key '1'
-        giant.IterativeTreeWalker
+        $data.IterativeTreeWalker
             .create(function () {
                 paths.push(this.currentPath.toString());
                 if (this.currentKey === '1') {

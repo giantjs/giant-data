@@ -1,4 +1,4 @@
-/*global giant */
+/*global $data */
 (function () {
     "use strict";
 
@@ -35,20 +35,20 @@
             walker;
 
         throws(function () {
-            giant.RecursiveTreeWalker.create(handler, 'foo');
+            $data.RecursiveTreeWalker.create(handler, 'foo');
         }, "should raise exception on invalid query");
 
-        walker = /** @type {giant.RecursiveTreeWalker} */ giant.RecursiveTreeWalker.create(handler, query);
+        walker = /** @type {$data.RecursiveTreeWalker} */ $data.RecursiveTreeWalker.create(handler, query);
         strictEqual(walker.query, query, "should set query property");
         strictEqual(walker.handler, handler, "should set handler property");
 
         // TODO: Revisit this. Is this necessary?
-        walker = /** @type {giant.RecursiveTreeWalker} */ giant.RecursiveTreeWalker.create(handler);
+        walker = /** @type {$data.RecursiveTreeWalker} */ $data.RecursiveTreeWalker.create(handler);
         equal(walker.query.toString(), '\\>"', "should set skip-until-leaf-node as default query");
     });
 
     test("Gathering indices by value from Array", function () {
-        var allIndicesOf = giant.RecursiveTreeWalker._allIndicesOf;
+        var allIndicesOf = $data.RecursiveTreeWalker._allIndicesOf;
 
         deepEqual(
             allIndicesOf(['foo', 'bar', 1, 2, 'foo', 3], 'baz'),
@@ -64,7 +64,7 @@
     });
 
     test("Gathering matching keys from Object", function () {
-        var getKeysByValue = giant.RecursiveTreeWalker._getKeysByValue;
+        var getKeysByValue = $data.RecursiveTreeWalker._getKeysByValue;
 
         deepEqual(
             getKeysByValue({ foo: 1, bar: 2, baz: 3 }, 4),
@@ -80,7 +80,7 @@
     });
 
     test("Gathering object properties from Object", function () {
-        var getKeysForObjectProperties = giant.RecursiveTreeWalker._getKeysForObjectProperties;
+        var getKeysForObjectProperties = $data.RecursiveTreeWalker._getKeysForObjectProperties;
 
         deepEqual(
             getKeysForObjectProperties({ foo: 1, bar: 2, baz: 3 }),
@@ -109,7 +109,7 @@
     });
 
     test("Gathering keys matching a key-value pattern", function () {
-        var RecursiveTreeWalker = giant.RecursiveTreeWalker,
+        var RecursiveTreeWalker = $data.RecursiveTreeWalker,
             hashNode = {
                 foo  : 'bar',
                 hello: 'world',
@@ -172,7 +172,7 @@
             };
 
         result = [];
-        giant.RecursiveTreeWalker.create(handler, 'foo>|>2'.toQuery()).walk(node);
+        $data.RecursiveTreeWalker.create(handler, 'foo>|>2'.toQuery()).walk(node);
         deepEqual(
             result,
             ["woohoo", 3, {foo: "bar"}],
@@ -186,7 +186,7 @@
                 result.push(node);
             };
 
-        giant.RecursiveTreeWalker.create(handler, '\\>2'.toQuery()).walk(node);
+        $data.RecursiveTreeWalker.create(handler, '\\>2'.toQuery()).walk(node);
         deepEqual(
             result,
             ["woohoo", 3, {foo: "bar"}, "what"],
@@ -200,7 +200,7 @@
                 result.push(node);
             };
 
-        giant.RecursiveTreeWalker.create(handler, 'foo>\\>foo'.toQuery()).walk(node);
+        $data.RecursiveTreeWalker.create(handler, 'foo>\\>foo'.toQuery()).walk(node);
         deepEqual(result, ["bar"], "should hit nodes matching query");
     });
 
@@ -210,7 +210,7 @@
                 result.push(node);
             };
 
-        giant.RecursiveTreeWalker.create(handler, 'foo>baz>\\>"'.toQuery()).walk(node);
+        $data.RecursiveTreeWalker.create(handler, 'foo>baz>\\>"'.toQuery()).walk(node);
         deepEqual(
             result,
             [1, 3, "bar"],
@@ -224,7 +224,7 @@
                 result.push(node);
             };
 
-        giant.RecursiveTreeWalker.create(handler).walk(node);
+        $data.RecursiveTreeWalker.create(handler).walk(node);
         deepEqual(result,
             ["world", "woohoo", "hello again", 3, 1, 3, "bar", "what", "cow"],
             "should hit root node only");
@@ -235,7 +235,7 @@
             handler = function (node) {
                 result.push(node);
             };
-        giant.RecursiveTreeWalker.create(
+        $data.RecursiveTreeWalker.create(
             handler,
             ['\\'.toKeyValuePattern(), '|'.toKeyValuePattern().setValue(3)].toQuery()).walk(node);
         deepEqual(result, [3, 3], "should hit nodes matching query");
@@ -284,7 +284,7 @@
                 result.push(node);
             };
 
-        giant.RecursiveTreeWalker.create(handler, '\\>1>\\>2>\\>x'.toQuery()).walk(node);
+        $data.RecursiveTreeWalker.create(handler, '\\>1>\\>2>\\>x'.toQuery()).walk(node);
         deepEqual(result, ['world', 'hello', 'foo'], "should hit nodes matching query");
     });
 
@@ -308,11 +308,11 @@
             };
 
         result = [];
-        giant.RecursiveTreeWalker.create(handler, '\\>|^all'.toQuery()).walk(node);
+        $data.RecursiveTreeWalker.create(handler, '\\>|^all'.toQuery()).walk(node);
         deepEqual(result, [ 'hello>1', 'its>not' ], "should hit nodes with specified value");
 
         result = [];
-        giant.RecursiveTreeWalker.create(handler, '\\>|^bar'.toQuery()).walk(node);
+        $data.RecursiveTreeWalker.create(handler, '\\>|^bar'.toQuery()).walk(node);
         deepEqual(result, [
             'foo',
             'hello>2',
@@ -336,7 +336,7 @@
             };
 
         result = [];
-        giant.RecursiveTreeWalker.create(handler, ['\\'.toKVP(), '|'.toKVP().setValue(value)].toQuery()).walk(node);
+        $data.RecursiveTreeWalker.create(handler, ['\\'.toKVP(), '|'.toKVP().setValue(value)].toQuery()).walk(node);
         deepEqual(result, [ 'foo>bar', 'baz>1' ], "should hit matching paths");
     });
 
@@ -374,7 +374,7 @@
                 }
             };
 
-        giant.RecursiveTreeWalker.create(handler, '\\>1'.toQuery()).walk(node);
+        $data.RecursiveTreeWalker.create(handler, '\\>1'.toQuery()).walk(node);
         deepEqual(result, ["hello again", 1], "should stop traversal where handler returned false");
     });
 
@@ -408,7 +408,7 @@
 
         paths = [];
         values = [];
-        giant.RecursiveTreeWalker.create(handler, '{|}>|^hello'.toQuery()).walk(node);
+        $data.RecursiveTreeWalker.create(handler, '{|}>|^hello'.toQuery()).walk(node);
         deepEqual(
             paths.sort(),
             [
@@ -439,7 +439,7 @@
         );
 
         paths = [];
-        giant.RecursiveTreeWalker.create(handler, '|>{|^hello}'.toQuery()).walk(node);
+        $data.RecursiveTreeWalker.create(handler, '|>{|^hello}'.toQuery()).walk(node);
         deepEqual(
             paths.sort(),
             [
@@ -491,7 +491,7 @@
             };
 
         result = [];
-        giant.RecursiveTreeWalker.create(handler, '{|}>|>|^hello'.toQuery()).walk(node);
+        $data.RecursiveTreeWalker.create(handler, '{|}>|>|^hello'.toQuery()).walk(node);
         deepEqual(
             result.sort(),
             [
@@ -502,7 +502,7 @@
         );
 
         result = [];
-        giant.RecursiveTreeWalker.create(handler, '|>{|}>|^hello'.toQuery()).walk(node);
+        $data.RecursiveTreeWalker.create(handler, '|>{|}>|^hello'.toQuery()).walk(node);
         deepEqual(
             result.sort(),
             [
@@ -516,7 +516,7 @@
         );
 
         result = [];
-        giant.RecursiveTreeWalker.create(handler, '{|}>{|}>|^hello'.toQuery())
+        $data.RecursiveTreeWalker.create(handler, '{|}>{|}>|^hello'.toQuery())
             .walk(node);
         deepEqual(
             result.sort(),
@@ -563,7 +563,7 @@
             };
 
         result = [];
-        giant.RecursiveTreeWalker.create(handler, '\\>2'.toQuery()).walk(node);
+        $data.RecursiveTreeWalker.create(handler, '\\>2'.toQuery()).walk(node);
         deepEqual(
             result,
             [

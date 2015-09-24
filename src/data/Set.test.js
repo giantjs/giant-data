@@ -1,30 +1,30 @@
-/*global giant */
+/*global $data */
 (function () {
     "use strict";
 
     module("Set");
 
     test("Type conversion", function () {
-        var hash = giant.Hash.create();
+        var hash = $data.Hash.create();
 
-        ok(hash.toSet().isA(giant.Set), "Converted to set");
+        ok(hash.toSet().isA($data.Set), "Converted to set");
     });
 
     test("Array conversion", function () {
         var buffer = [1, 2, 3, 4],
             hash = buffer.toSet();
 
-        ok(hash.isA(giant.Set), "Is set");
+        ok(hash.isA($data.Set), "Is set");
         strictEqual(hash.items, buffer, "Same buffer");
     });
 
     test("Intersection", function () {
-        var set1 = giant.Set.create({
+        var set1 = $data.Set.create({
                 foo  : 'bar',
                 hello: 'world',
                 howdy: 'all'
             }),
-            set2 = giant.Set.create({
+            set2 = $data.Set.create({
                 foo  : 'baz',
                 santa: 'claus'
             }),
@@ -32,7 +32,7 @@
 
         result = set1.intersectWith(set2);
 
-        ok(result.isA(giant.Set), "Return type");
+        ok(result.isA($data.Set), "Return type");
         deepEqual(
             result.items,
             {
@@ -44,12 +44,12 @@
     });
 
     test("Union", function () {
-        var set1 = giant.Set.create({
+        var set1 = $data.Set.create({
                 foo  : 'bar',
                 hello: 'world',
                 howdy: 'all'
             }),
-            set2 = giant.Set.create({
+            set2 = $data.Set.create({
                 foo  : 'baz',
                 santa: 'claus'
             }),
@@ -57,7 +57,7 @@
 
         result = set1.unionWith(set2);
 
-        ok(result.isA(giant.Set), "Result type");
+        ok(result.isA($data.Set), "Result type");
         deepEqual(
             result.items,
             {
@@ -73,17 +73,17 @@
     });
 
     test("Subtraction", function () {
-        var set1 = giant.Set.create({
+        var set1 = $data.Set.create({
                 foo  : 'bar',
                 hello: 'world',
                 howdy: 'all'
             }),
-            set2 = giant.Set.create({
+            set2 = $data.Set.create({
                 foo  : 'baz',
                 santa: 'claus'
             });
 
-        ok(set1.subtract(set2).isA(giant.Set), "Result type");
+        ok(set1.subtract(set2).isA($data.Set), "Result type");
 
         deepEqual(
             set1.subtract(set2).items,
@@ -104,17 +104,17 @@
     });
 
     test("Subtraction 2", function () {
-        var set1 = giant.Set.create({
+        var set1 = $data.Set.create({
                 foo  : 'bar',
                 hello: 'world',
                 howdy: 'all'
             }),
-            set2 = giant.Set.create({
+            set2 = $data.Set.create({
                 foo  : 'baz',
                 santa: 'claus'
             });
 
-        ok(set1.subtractFrom(set2).isA(giant.Set), "Result type");
+        ok(set1.subtractFrom(set2).isA($data.Set), "Result type");
 
         deepEqual(
             set2.subtractFrom(set1).items,
@@ -135,12 +135,12 @@
     });
 
     test("Difference", function () {
-        var set1 = giant.Set.create({
+        var set1 = $data.Set.create({
                 foo  : 'bar',
                 hello: 'world',
                 howdy: 'all'
             }),
-            set2 = giant.Set.create({
+            set2 = $data.Set.create({
                 foo  : 'baz',
                 santa: 'claus'
             });

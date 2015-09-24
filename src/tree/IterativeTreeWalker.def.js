@@ -1,31 +1,31 @@
-/*global giant */
-$oop.postpone(giant, 'IterativeTreeWalker', function () {
+/*global $data */
+$oop.postpone($data, 'IterativeTreeWalker', function () {
     "use strict";
 
     /**
      * Instantiates class
-     * @name giant.IterativeTreeWalker.create
+     * @name $data.IterativeTreeWalker.create
      * @function
      * @param {function} handler
-     * @returns {giant.IterativeTreeWalker}
+     * @returns {$data.IterativeTreeWalker}
      */
 
     /**
      * Traverses tree iteratively, touching all nodes within.
-     * @class giant.IterativeTreeWalker
-     * @extends giant.TreeWalker
+     * @class $data.IterativeTreeWalker
+     * @extends $data.TreeWalker
      */
-    giant.IterativeTreeWalker = giant.TreeWalker.extend()
-        .addMethods(/** @lends giant.IterativeTreeWalker# */{
+    $data.IterativeTreeWalker = $data.TreeWalker.extend()
+        .addMethods(/** @lends $data.IterativeTreeWalker# */{
             /**
              * Traverses all enumerable nodes in object.
              * Iterative implementation.
              * @param node {object} Object to be traversed.
-             * @returns {giant.IterativeTreeWalker}
+             * @returns {$data.IterativeTreeWalker}
              */
             walk: function (node) {
                 // reference to path
-                this.currentPath = giant.Path.create([]);
+                this.currentPath = $data.Path.create([]);
 
                 var keysStack = [Object.keys(node)], // stack of keys associated with each node on current path
                     indexStack = [0], // stack of key indexes on current path

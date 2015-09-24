@@ -1,4 +1,4 @@
-/*global giant */
+/*global $data */
 (function () {
     "use strict";
 
@@ -8,14 +8,14 @@
         var query;
 
         throws(function () {
-            giant.Query.create(5);
+            $data.Query.create(5);
         }, "should raise exception on invalid arguments");
 
         throws(function () {
-            giant.Query.create('foo');
+            $data.Query.create('foo');
         }, "should raise exception on invalid arguments");
 
-        query = giant.Query.create(['hello', '|'.toKVP(), 'you<all'.toKVP()]);
+        query = $data.Query.create(['hello', '|'.toKVP(), 'you<all'.toKVP()]);
         equal(query.asArray[0], 'hello', "should set string key as is");
         equal(query.asArray[1].descriptor.symbol, '|', "should set symbol-based KVP");
         deepEqual(query.asArray[2].descriptor.options, ['you', 'all'], "should set options-based KVP");
@@ -30,7 +30,7 @@
         deepEqual(query.asArray[2].descriptor.options, ['you', 'all'], "should convert options to KVP");
 
         query = '\\'.toQuery();
-        strictEqual(query.asArray[0], giant.Query.PATTERN_SKIP, "should convert skipper to KVP");
+        strictEqual(query.asArray[0], $data.Query.PATTERN_SKIP, "should convert skipper to KVP");
 
         query = 'foo>{bar}'.toQuery();
         deepEqual(query.asArray[1], '{bar}'.toKVP(), "should handle markers");
@@ -49,18 +49,18 @@
         deepEqual(query.asArray[1].descriptor.options, ['you', 'all'], "should leave options passed as KVP intact");
 
         query = ['\\'.toKVP()].toQuery();
-        strictEqual(query.asArray[0], giant.Query.PATTERN_SKIP, "should preserve skipper KVP");
+        strictEqual(query.asArray[0], $data.Query.PATTERN_SKIP, "should preserve skipper KVP");
     });
 
     test("Fallback conversion from string", function () {
         var query;
 
         query = 'test>path>it>is'.toPathOrQuery();
-        ok(query.isA(giant.Path), "should return Path instance");
-        ok(!query.isA(giant.Query), "should not return query instance for expression that has no KVPs");
+        ok(query.isA($data.Path), "should return Path instance");
+        ok(!query.isA($data.Query), "should not return query instance for expression that has no KVPs");
 
         query = 'test>\\>path>it<that>is'.toPathOrQuery();
-        ok(query.isA(giant.Query),
+        ok(query.isA($data.Query),
             "should return Query instance for expression that does have KVPs in it");
     });
 
@@ -68,11 +68,11 @@
         var query;
 
         query = ['test', 'path', 'it', 'is'].toPathOrQuery();
-        ok(query.isA(giant.Path), "should return Path instance");
-        ok(!query.isA(giant.Query), "should not return query instance for expression that has no KVPs");
+        ok(query.isA($data.Path), "should return Path instance");
+        ok(!query.isA($data.Query), "should not return query instance for expression that has no KVPs");
 
-        query = ['test', giant.KeyValuePattern.create('|'), 'it', 'is'].toPathOrQuery();
-        ok(query.isA(giant.Query),
+        query = ['test', $data.KeyValuePattern.create('|'), 'it', 'is'].toPathOrQuery();
+        ok(query.isA($data.Query),
             "should return Query instance for expression that does have KVPs in it");
     });
 
@@ -82,7 +82,7 @@
 
         result = query.getStemPath();
 
-        ok(result.instanceOf(giant.Path), "should return Path instance");
+        ok(result.instanceOf($data.Path), "should return Path instance");
         deepEqual(result.asArray, ['foo', 'bar'], "should set path contents");
     });
 
@@ -184,7 +184,7 @@
     });
 
     test("Serialization", function () {
-        var query = giant.Query.create(['foo%5E', '\\', 'bar', 'hello%5E<world', '|', '|^baz']);
+        var query = $data.Query.create(['foo%5E', '\\', 'bar', 'hello%5E<world', '|', '|^baz']);
 
         equal(query.toString(), 'foo%5E>\\>bar>hello%5E<world>|>|^baz', "should generate correct string");
     });

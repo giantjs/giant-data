@@ -1,4 +1,4 @@
-/*global giant */
+/*global $data */
 (function () {
     "use strict";
 
@@ -6,13 +6,13 @@
 
     test("Pattern parsing", function () {
         equal(
-            giant.KeyValuePattern._parseString('foo%5E'),
+            $data.KeyValuePattern._parseString('foo%5E'),
             'foo^',
             "String literal pattern"
         );
 
         deepEqual(
-            giant.KeyValuePattern._parseString('{foo%5E}'),
+            $data.KeyValuePattern._parseString('{foo%5E}'),
             {
                 key   : 'foo^',
                 marker: '{'
@@ -21,7 +21,7 @@
         );
 
         deepEqual(
-            giant.KeyValuePattern._parseString('foo%5E<bar%5E'),
+            $data.KeyValuePattern._parseString('foo%5E<bar%5E'),
             {
                 options: ['foo^', 'bar^']
             },
@@ -29,7 +29,7 @@
         );
 
         deepEqual(
-            giant.KeyValuePattern._parseString('[foo%5E<bar%5E]'),
+            $data.KeyValuePattern._parseString('[foo%5E<bar%5E]'),
             {
                 options: ['foo^', 'bar^'],
                 marker : '['
@@ -38,7 +38,7 @@
         );
 
         deepEqual(
-            giant.KeyValuePattern._parseString('|'),
+            $data.KeyValuePattern._parseString('|'),
             {
                 symbol: '|'
             },
@@ -46,7 +46,7 @@
         );
 
         deepEqual(
-            giant.KeyValuePattern._parseString('[|]'),
+            $data.KeyValuePattern._parseString('[|]'),
             {
                 symbol: '|',
                 marker: '['
@@ -55,7 +55,7 @@
         );
 
         deepEqual(
-            giant.KeyValuePattern._parseString('\\'),
+            $data.KeyValuePattern._parseString('\\'),
             {
                 symbol: '\\'
             },
@@ -63,7 +63,7 @@
         );
 
         deepEqual(
-            giant.KeyValuePattern._parseString('{\\}'),
+            $data.KeyValuePattern._parseString('{\\}'),
             {
                 symbol: '\\'
             },
@@ -71,7 +71,7 @@
         );
 
         deepEqual(
-            giant.KeyValuePattern._parseString('foo%5E^bar%5E'),
+            $data.KeyValuePattern._parseString('foo%5E^bar%5E'),
             {
                 key  : 'foo^',
                 value: 'bar^'
@@ -80,7 +80,7 @@
         );
 
         deepEqual(
-            giant.KeyValuePattern._parseString('foo%5E<bar%5E^baz%5E'),
+            $data.KeyValuePattern._parseString('foo%5E<bar%5E^baz%5E'),
             {
                 options: ['foo^', 'bar^'],
                 value  : 'baz^'
@@ -89,7 +89,7 @@
         );
 
         deepEqual(
-            giant.KeyValuePattern._parseString('|^bar%5E'),
+            $data.KeyValuePattern._parseString('|^bar%5E'),
             {
                 symbol: '|',
                 value : 'bar^'
@@ -98,7 +98,7 @@
         );
 
         deepEqual(
-            giant.KeyValuePattern._parseString('\\^bar%5E'),
+            $data.KeyValuePattern._parseString('\\^bar%5E'),
             {
                 symbol: '\\'
             },
@@ -111,21 +111,21 @@
             pattern;
 
         throws(function () {
-            giant.KeyValuePattern.create(4);
+            $data.KeyValuePattern.create(4);
         }, "Key-value pattern initialized w/ other than string, array, or object");
 
-        pattern = giant.KeyValuePattern.create('|^foo');
+        pattern = $data.KeyValuePattern.create('|^foo');
         deepEqual(
             pattern.descriptor,
-            giant.KeyValuePattern._parseString('|^foo'),
+            $data.KeyValuePattern._parseString('|^foo'),
             "Descriptor parsed from string"
         );
 
         descriptor = {symbol: '|', value: 'foo'};
-        pattern = giant.KeyValuePattern.create(descriptor);
+        pattern = $data.KeyValuePattern.create(descriptor);
         deepEqual(
             pattern.descriptor,
-            giant.KeyValuePattern._parseString('|^foo'),
+            $data.KeyValuePattern._parseString('|^foo'),
             "Descriptor supplied as object"
         );
         strictEqual(
@@ -134,15 +134,15 @@
             "Descriptor supplied as object"
         );
 
-        pattern = giant.KeyValuePattern.create(['foo', 'bar']);
+        pattern = $data.KeyValuePattern.create(['foo', 'bar']);
         deepEqual(
             pattern.descriptor,
-            giant.KeyValuePattern._parseString('foo<bar'),
+            $data.KeyValuePattern._parseString('foo<bar'),
             "Descriptor created from array"
         );
 
         deepEqual(
-            giant.KeyValuePattern._parseString('"'),
+            $data.KeyValuePattern._parseString('"'),
             {symbol: '"'},
             "Descriptor created from array"
         );
@@ -159,34 +159,34 @@
         }
 
         pattern = '|'.toKeyValuePattern();
-        ok(pattern.isA(giant.KeyValuePattern), "Type of converted value");
+        ok(pattern.isA($data.KeyValuePattern), "Type of converted value");
         deepEqual(
             pattern.descriptor,
-            giant.KeyValuePattern.create('|').descriptor,
+            $data.KeyValuePattern.create('|').descriptor,
             "Pattern contents"
         );
 
         pattern = ['foo', 'bar'].toKeyValuePattern();
-        ok(pattern.isA(giant.KeyValuePattern), "Type of converted value");
+        ok(pattern.isA($data.KeyValuePattern), "Type of converted value");
         deepEqual(
             pattern.descriptor,
-            giant.KeyValuePattern.create('foo<bar').descriptor,
+            $data.KeyValuePattern.create('foo<bar').descriptor,
             "Pattern contents"
         );
 
         pattern = '|'.toKVP();
-        ok(pattern.isA(giant.KeyValuePattern), "Type of converted value");
+        ok(pattern.isA($data.KeyValuePattern), "Type of converted value");
         deepEqual(
             pattern.descriptor,
-            giant.KeyValuePattern.create('|').descriptor,
+            $data.KeyValuePattern.create('|').descriptor,
             "Pattern contents"
         );
 
         pattern = ['foo', 'bar'].toKVP();
-        ok(pattern.isA(giant.KeyValuePattern), "Type of converted value");
+        ok(pattern.isA($data.KeyValuePattern), "Type of converted value");
         deepEqual(
             pattern.descriptor,
-            giant.KeyValuePattern.create('foo<bar').descriptor,
+            $data.KeyValuePattern.create('foo<bar').descriptor,
             "Pattern contents"
         );
     });
@@ -217,8 +217,8 @@
     });
 
     test("Skipper detection", function () {
-        ok(!giant.KeyValuePattern.create('hello').isSkipper(), "Literal not skipper");
-        ok(giant.KeyValuePattern.create('\\').isSkipper(), "Skipper");
+        ok(!$data.KeyValuePattern.create('hello').isSkipper(), "Literal not skipper");
+        ok($data.KeyValuePattern.create('\\').isSkipper(), "Skipper");
     });
 
     test("Marker retrieval", function () {
@@ -256,7 +256,7 @@
 
         ok('|'.toKVP().matchesKey('hello'), "should pass on normal string key on a wildcard");
         ok('|'.toKVP().matchesKey(''), "should pass on empty string key on a wildcard");
-        ok(!giant.KeyValuePattern.create({}).matchesKey('hello'), "should fail on any value for custom empty descriptor");
+        ok(!$data.KeyValuePattern.create({}).matchesKey('hello'), "should fail on any value for custom empty descriptor");
 
         ok('|^foo'.toKVP().matchesKey('hello'), "should pass when key part of KVP is wildcard");
 
@@ -280,25 +280,25 @@
 
     test("String representation", function () {
         equal(
-            giant.KeyValuePattern.create({symbol: '|', value: 'foo^'}).toString(),
+            $data.KeyValuePattern.create({symbol: '|', value: 'foo^'}).toString(),
             '|^foo%5E',
             "Wildcard with value"
         );
 
         equal(
-            giant.KeyValuePattern.create({symbol: '\\'}).toString(),
+            $data.KeyValuePattern.create({symbol: '\\'}).toString(),
             '\\',
             "Skipper"
         );
 
         equal(
-            giant.KeyValuePattern.create({options: ['foo^', 'bar^']}).toString(),
+            $data.KeyValuePattern.create({options: ['foo^', 'bar^']}).toString(),
             'foo%5E<bar%5E',
             "Options"
         );
 
         equal(
-            giant.KeyValuePattern.create({options: ['foo^', 'bar^'], value: 'baz^'}).toString(),
+            $data.KeyValuePattern.create({options: ['foo^', 'bar^'], value: 'baz^'}).toString(),
             'foo%5E<bar%5E^baz%5E',
             "Options with value"
         );

@@ -1,4 +1,4 @@
-/*global giant */
+/*global $data */
 (function () {
     "use strict";
 
@@ -6,14 +6,14 @@
 
     test("Instantiation w/o items", function () {
         throws(function () {
-            giant.OrderedList.create('foo');
+            $data.OrderedList.create('foo');
         }, "should raise exception on invalid arguments");
 
         throws(function () {
-            giant.OrderedList.create([], 'foo');
+            $data.OrderedList.create([], 'foo');
         }, "should raise exception on invalid arguments");
 
-        var orderedList = giant.OrderedList.create();
+        var orderedList = $data.OrderedList.create();
         ok(orderedList.items instanceof Array, "should add array buffer");
         equal(orderedList.items.length, 0, "should initialize array buffer to empty");
         equal(orderedList.orderType, orderedList.orderTypes.ascending, "should set default orderType property");
@@ -21,7 +21,7 @@
 
     test("Instantiation ascending order", function () {
         var items = [2, 3, 1, 4],
-            orderedList = giant.OrderedList.create(items);
+            orderedList = $data.OrderedList.create(items);
         strictEqual(orderedList.items, items, "should retain original buffer");
         deepEqual(orderedList.items, [1, 2, 3, 4], "should sort buffer contents in ascending order");
         equal(orderedList.orderType, orderedList.orderTypes.ascending, "should set default orderType property");
@@ -29,7 +29,7 @@
 
     test("Instantiation descending order", function () {
         var items = [2, 3, 1, 4],
-            orderedList = giant.OrderedList.create(items, 'descending');
+            orderedList = $data.OrderedList.create(items, 'descending');
         strictEqual(orderedList.items, items, "should retain original buffer");
         deepEqual(orderedList.items, [4, 3, 2, 1], "should sort buffer contents in descending order");
         equal(orderedList.orderType, orderedList.orderTypes.descending, "should set orderType to descending");
@@ -38,19 +38,19 @@
     test("Conversion from Hash", function () {
         var hash, list;
 
-        hash = giant.Hash.create();
+        hash = $data.Hash.create();
 
         throws(function () {
             hash.toOrderedList();
         }, "Hash buffer is not array");
 
-        hash = giant.Hash.create([]);
+        hash = $data.Hash.create([]);
         list = hash.toOrderedList();
 
-        ok(list.isA(giant.OrderedList), "should return OrderedList instance");
+        ok(list.isA($data.OrderedList), "should return OrderedList instance");
 
-        list = hash.toOrderedList(giant.OrderedList.orderTypes.descending);
-        equal(list.orderType, giant.OrderedList.orderTypes.descending, "should set specified order type");
+        list = hash.toOrderedList($data.OrderedList.orderTypes.descending);
+        equal(list.orderType, $data.OrderedList.orderTypes.descending, "should set specified order type");
     });
 
     test("Conversion from Array", function () {
@@ -58,15 +58,15 @@
             list;
 
         list = buffer.toOrderedList();
-        ok(list.isA(giant.OrderedList), "should return OrderedList");
+        ok(list.isA($data.OrderedList), "should return OrderedList");
         strictEqual(list.items, buffer, "should retain original array as buffer");
 
-        list = list.toOrderedList(giant.OrderedList.orderTypes.descending);
-        equal(list.orderType, giant.OrderedList.orderTypes.descending, "should set specified order type");
+        list = list.toOrderedList($data.OrderedList.orderTypes.descending);
+        equal(list.orderType, $data.OrderedList.orderTypes.descending, "should set specified order type");
     });
 
     test("Numeric search in ascending order", function () {
-        var orderedList = giant.OrderedList.create([0, 1, 3, 5, 6, 9]);
+        var orderedList = $data.OrderedList.create([0, 1, 3, 5, 6, 9]);
         equal(orderedList.spliceIndexOf(4), 3, "should return index of upper closest item for no exact hit");
         equal(orderedList.spliceIndexOf(6), 4, "should return index of specified value on exact hit");
         equal(orderedList.spliceIndexOf(0), 0, "should return 0 for lower extreme");
@@ -76,7 +76,7 @@
     });
 
     test("Numeric search in descending order", function () {
-        var orderedList = giant.OrderedList.create([9, 6, 5, 3, 1, 0], 'descending');
+        var orderedList = $data.OrderedList.create([9, 6, 5, 3, 1, 0], 'descending');
         equal(orderedList.spliceIndexOf(4), 3, "should return index of lower closest item for no exact hit");
         equal(orderedList.spliceIndexOf(6), 1, "should return index of specified value on exact hit");
         equal(orderedList.spliceIndexOf(0), 5, "should return last index for lower extreme");
@@ -86,19 +86,19 @@
     });
 
     test("Numeric search in 1-item list", function () {
-        var orderedList = giant.OrderedList.create([4]);
+        var orderedList = $data.OrderedList.create([4]);
         equal(orderedList.spliceIndexOf(4), 0, "should return 0 for exact hit");
         equal(orderedList.spliceIndexOf(-4), 0, "should return 0 for lower out-of-bounds");
         equal(orderedList.spliceIndexOf(100), 1, "should return 1 for upper out-of-bounds");
     });
 
     test("Numeric search in empty list", function () {
-        var orderedList = giant.OrderedList.create();
+        var orderedList = $data.OrderedList.create();
         equal(orderedList.spliceIndexOf(4), 0, "should return 0 for upper out-of-bounds");
     });
 
     test("String search in ascending order", function () {
-        var orderedList = giant.OrderedList.create(["bar", "foo", "hello", "ipsum", "lorem", "world"]);
+        var orderedList = $data.OrderedList.create(["bar", "foo", "hello", "ipsum", "lorem", "world"]);
         equal(orderedList.spliceIndexOf('hell'), 2, "should return index of upper closest item for no exact hit");
         equal(orderedList.spliceIndexOf('hew'), 3, "should return index of upper closest item for no exact hit");
         equal(orderedList.spliceIndexOf('hello'), 2, "should return index of specified value on exact hit");
@@ -109,7 +109,7 @@
     });
 
     test("String search in descending order", function () {
-        var orderedList = giant.OrderedList.create(["world", "lorem", "ipsum", "hello", "foo", "bar"], 'descending');
+        var orderedList = $data.OrderedList.create(["world", "lorem", "ipsum", "hello", "foo", "bar"], 'descending');
         equal(orderedList.spliceIndexOf('hell'), 4, "should return index of lower closest item for no exact hit");
         equal(orderedList.spliceIndexOf('hew'), 3, "should return index of lower closest item for no exact hit");
         equal(orderedList.spliceIndexOf('hello'), 3, "should return index of specified value on exact hit");
@@ -120,7 +120,7 @@
     });
 
     test("Search with repeating items", function () {
-        var orderedList = giant.OrderedList.create(["bar", "foo", "foo", "foo", "hello", "hello", "world"]);
+        var orderedList = $data.OrderedList.create(["bar", "foo", "foo", "foo", "hello", "hello", "world"]);
         equal(orderedList.spliceIndexOf('foo'), 1, "should return index of first matching item");
         equal(orderedList.spliceIndexOf('foo!'), 4, "should return index of upper closest item for non-exact hit");
         equal(orderedList.spliceIndexOf('hello'), 4, "should return index of first matching item");
@@ -128,7 +128,7 @@
     });
 
     test("Range retrieval in ascending order", function () {
-        var orderedList = giant.OrderedList.create(["bar", "foo", "hello", "ipsum", "lorem", "world"]);
+        var orderedList = $data.OrderedList.create(["bar", "foo", "hello", "ipsum", "lorem", "world"]);
 
         deepEqual(
             orderedList.getRange("bar", "lorem"),
@@ -162,7 +162,7 @@
     });
 
     test("Range retrieval in descending order", function () {
-        var orderedList = giant.OrderedList.create(["world", "lorem", "ipsum", "hello", "foo", "bar"], 'descending');
+        var orderedList = $data.OrderedList.create(["world", "lorem", "ipsum", "hello", "foo", "bar"], 'descending');
 
         deepEqual(
             orderedList.getRange("lorem", "bar"),
@@ -172,7 +172,7 @@
     });
 
     test("Range retrieval with repetition", function () {
-        var orderedList = giant.OrderedList.create(["bar", "foo", "foo", "foo", "world"]);
+        var orderedList = $data.OrderedList.create(["bar", "foo", "foo", "foo", "world"]);
 
         deepEqual(
             orderedList.getRange("bar", "lorem"),
@@ -188,7 +188,7 @@
     });
 
     test("Range retrieval with offset & limit", function () {
-        var orderedList = giant.OrderedList.create(["bar", "foo", "foo", "foo", "world"]);
+        var orderedList = $data.OrderedList.create(["bar", "foo", "foo", "foo", "world"]);
 
         deepEqual(
             orderedList.getRange("bar", "lorem", 2),
@@ -210,12 +210,12 @@
     });
 
     test("Range retrieval as hash", function () {
-        var orderedList = giant.OrderedList.create(["bar", "foo", "foo", "foo", "world"]),
+        var orderedList = $data.OrderedList.create(["bar", "foo", "foo", "foo", "world"]),
             result;
 
         result = orderedList.getRangeAsHash("bar", "lorem");
 
-        ok(result.isA(giant.Hash), "should return Hash instance");
+        ok(result.isA($data.Hash), "should return Hash instance");
         deepEqual(
             result.items,
             ["bar", "foo", "foo", "foo"],
@@ -224,7 +224,7 @@
     });
 
     test("Item addition in ascending order", function () {
-        var orderedList = giant.OrderedList.create(["bar", "foo", "hello", "ipsum", "lorem", "world"]),
+        var orderedList = $data.OrderedList.create(["bar", "foo", "hello", "ipsum", "lorem", "world"]),
             result;
 
         result = orderedList.addItem('hell');
@@ -247,7 +247,7 @@
     });
 
     test("Item addition in descending order", function () {
-        var orderedList = giant.OrderedList.create(["world", "lorem", "ipsum", "hello", "foo", "bar"], 'descending'),
+        var orderedList = $data.OrderedList.create(["world", "lorem", "ipsum", "hello", "foo", "bar"], 'descending'),
             result;
 
         result = orderedList.addItem('hell');
@@ -261,7 +261,7 @@
     });
 
     test("Multiple item addition", function () {
-        var orderedList = giant.OrderedList.create(),
+        var orderedList = $data.OrderedList.create(),
             result;
 
         result = orderedList.addItems(['c', 'a', 'b']);
@@ -275,7 +275,7 @@
     });
 
     test("Item removal in ascending order", function () {
-        var orderedList = giant.OrderedList.create(["bar", "foo", "hello", "ipsum", "lorem", "world"]),
+        var orderedList = $data.OrderedList.create(["bar", "foo", "hello", "ipsum", "lorem", "world"]),
             result;
 
         result = orderedList.removeItem('hell');
@@ -298,7 +298,7 @@
     });
 
     test("Item removal in descending order", function () {
-        var orderedList = giant.OrderedList.create(["world", "lorem", "ipsum", "hello", "foo", "bar"], 'descending'),
+        var orderedList = $data.OrderedList.create(["world", "lorem", "ipsum", "hello", "foo", "bar"], 'descending'),
             result;
 
         result = orderedList.removeItem('hello');
@@ -312,7 +312,7 @@
     });
 
     test("Multiple item removal", function () {
-        var orderedList = giant.OrderedList.create(['ahoy', 'a', 'b', 'cool', 'c']),
+        var orderedList = $data.OrderedList.create(['ahoy', 'a', 'b', 'cool', 'c']),
             result;
 
         result = orderedList.removeItems(['c', 'a', 'b']);
@@ -326,7 +326,7 @@
     });
 
     test("Range removal in ascending order", function () {
-        var orderedList = giant.OrderedList.create(["bar", "foo", "hello", "ipsum", "lorem", "world"]),
+        var orderedList = $data.OrderedList.create(["bar", "foo", "hello", "ipsum", "lorem", "world"]),
             result;
 
         result = orderedList.removeRange("for", "fun");
@@ -358,7 +358,7 @@
     });
 
     test("Range removal in descending order", function () {
-        var orderedList = giant.OrderedList.create(["world", "lorem", "ipsum", "hello", "foo", "bar"], 'descending'),
+        var orderedList = $data.OrderedList.create(["world", "lorem", "ipsum", "hello", "foo", "bar"], 'descending'),
             result;
 
         result = orderedList.removeRange("in", "foo");

@@ -1,30 +1,30 @@
-/*global giant */
-$oop.postpone(giant, 'Set', function () {
+/*global $data */
+$oop.postpone($data, 'Set', function () {
     "use strict";
 
-    var base = giant.Hash,
+    var base = $data.Hash,
         self = base.extend(),
         hOP = Object.prototype.hasOwnProperty;
 
     /**
      * Instantiates class.
-     * @name giant.Set.create
+     * @name $data.Set.create
      * @function
      * @param {object} items
-     * @returns {giant.Set}
+     * @returns {$data.Set}
      */
 
     /**
      * Hash-based structure for performing standard set operations such as union, intersection, and difference.
      * @class
-     * @extends giant.Hash
+     * @extends $data.Hash
      */
-    giant.Set = self
-        .addMethods(/** @lends giant.Set# */{
+    $data.Set = self
+        .addMethods(/** @lends $data.Set# */{
             /**
              * Retrieves intersection of two sets.
-             * @param {giant.Set} remoteSet
-             * @returns {giant.Set} New set instance with items present in both current and remote set.
+             * @param {$data.Set} remoteSet
+             * @returns {$data.Set} New set instance with items present in both current and remote set.
              */
             intersectWith: function (remoteSet) {
                 $assertion.isSet(remoteSet, "Invalid set");
@@ -46,8 +46,8 @@ $oop.postpone(giant, 'Set', function () {
 
             /**
              * Extracts symmetric difference of two sets.
-             * @param {giant.Set} remoteSet
-             * @returns {giant.Set} New set instance with elements only present in either current or remote set.
+             * @param {$data.Set} remoteSet
+             * @returns {$data.Set} New set instance with elements only present in either current or remote set.
              */
             differenceWith: function (remoteSet) {
                 return this
@@ -57,13 +57,13 @@ $oop.postpone(giant, 'Set', function () {
 
             /**
              * Unites two sets.
-             * @param {giant.Set} remoteSet
-             * @returns {giant.Set} New set instance with items from both current and remote sets.
+             * @param {$data.Set} remoteSet
+             * @returns {$data.Set} New set instance with items from both current and remote sets.
              */
             unionWith: function (remoteSet) {
                 $assertion.isSet(remoteSet, "Invalid set");
 
-                var resultItems = giant.DataUtils.shallowCopy(this.items),
+                var resultItems = $data.DataUtils.shallowCopy(this.items),
                     currentItems = this.items,
                     remoteItems = remoteSet.items,
                     itemKey;
@@ -79,8 +79,8 @@ $oop.postpone(giant, 'Set', function () {
 
             /**
              * Retrieves relative complement of two sets (A\B).
-             * @param {giant.Set} remoteSet
-             * @returns {giant.Set} New set instance with items from current instance except what's also present in
+             * @param {$data.Set} remoteSet
+             * @returns {$data.Set} New set instance with items from current instance except what's also present in
              * remote set.
              */
             subtract: function (remoteSet) {
@@ -102,8 +102,8 @@ $oop.postpone(giant, 'Set', function () {
 
             /**
              * Retrieves relative complement of two sets (B\A).
-             * @param {giant.Set} remoteSet
-             * @returns {giant.Set} New set instance with items from remote instance except what's also present in
+             * @param {$data.Set} remoteSet
+             * @returns {$data.Set} New set instance with items from remote instance except what's also present in
              * current set.
              */
             subtractFrom: function (remoteSet) {
@@ -125,16 +125,16 @@ $oop.postpone(giant, 'Set', function () {
         });
 });
 
-$oop.amendPostponed(giant, 'Hash', function () {
+$oop.amendPostponed($data, 'Hash', function () {
     "use strict";
 
-    giant.Hash.addMethods(/** @lends giant.Hash# */{
+    $data.Hash.addMethods(/** @lends $data.Hash# */{
         /**
          * Reinterprets hash as a string dictionary.
-         * @returns {giant.Set}
+         * @returns {$data.Set}
          */
         toSet: function () {
-            return giant.Set.create(this.items);
+            return $data.Set.create(this.items);
         }
     });
 });
@@ -142,24 +142,24 @@ $oop.amendPostponed(giant, 'Hash', function () {
 (function () {
     "use strict";
 
-    $assertion.addTypes(/** @lends giant */{
+    $assertion.addTypes(/** @lends $data */{
         isSet: function (expr) {
-            return giant.Set.isBaseOf(expr);
+            return $data.Set.isBaseOf(expr);
         },
 
         isSetOptional: function (expr) {
             return typeof expr === 'undefined' ||
-                giant.Set.isBaseOf(expr);
+                $data.Set.isBaseOf(expr);
         }
     });
 
     $oop.extendBuiltIn(Array.prototype, /** @lends Array# */{
         /**
          * Creates a new Set instance based on the current array.
-         * @returns {giant.Set}
+         * @returns {$data.Set}
          */
         toSet: function () {
-            return giant.Set.create(this);
+            return $data.Set.create(this);
         }
     });
 }());

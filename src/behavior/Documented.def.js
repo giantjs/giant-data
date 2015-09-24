@@ -1,14 +1,14 @@
-/*global giant */
-$oop.postpone(giant, 'Documented', function () {
+/*global $data */
+$oop.postpone($data, 'Documented', function () {
     "use strict";
 
     var base = $oop.Base,
         self = base.extend();
 
     /**
-     * @name giant.Documented.create
+     * @name $data.Documented.create
      * @function
-     * @returns {giant.Documented}
+     * @returns {$data.Documented}
      */
 
     /**
@@ -16,15 +16,15 @@ $oop.postpone(giant, 'Documented', function () {
      * @class
      * @extends $oop.Base
      */
-    giant.Documented = self
-        .addPublic(/** @lends giant.Documented */{
+    $data.Documented = self
+        .addPublic(/** @lends $data.Documented */{
             /**
              * Next instance ID.
              * @type {number}
              */
             nextInstanceId: 0
         })
-        .addMethods(/** @lends giant.Documented# */{
+        .addMethods(/** @lends $data.Documented# */{
             /**
              * Extends class adding meta information.
              * @param {string} className Class name
@@ -33,9 +33,9 @@ $oop.postpone(giant, 'Documented', function () {
             extend: function (className) {
                 $assertion.isString(className, "Invalid class name");
 
-                var result = /** @type {giant.Documented} */ base.extend.call(this);
+                var result = /** @type {$data.Documented} */ base.extend.call(this);
 
-                result.addConstants(/** @lends giant.Documented */{
+                result.addConstants(/** @lends $data.Documented */{
                     /**
                      * @type {string}
                      */

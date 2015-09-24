@@ -1,4 +1,4 @@
-/*global giant */
+/*global $data */
 (function () {
     "use strict";
 
@@ -7,17 +7,17 @@
     test("Instantiation", function () {
         throws(function () {
             $oop.Base.extend()
-                .addTrait(giant.Documented)
+                .addTrait($data.Documented)
                 .extend();
         }, "Invalid class name");
 
         var MyDocumented = $oop.Base.extend()
-                .addTrait(giant.Documented)
+                .addTrait($data.Documented)
                 .extend('MyDocumented')
                 .addMethods({
-                    init: function () { giant.Documented.init.call(this); }
+                    init: function () { $data.Documented.init.call(this); }
                 }),
-            nextInstanceId = giant.Documented.nextInstanceId,
+            nextInstanceId = $data.Documented.nextInstanceId,
             myInstance;
 
         equal(MyDocumented.className, 'MyDocumented', "Class name");
@@ -26,6 +26,6 @@
 
         equal(myInstance.instanceId, nextInstanceId, "Assigned instance ID");
 
-        equal(giant.Documented.nextInstanceId, nextInstanceId + 1, "Incremented instance ID");
+        equal($data.Documented.nextInstanceId, nextInstanceId + 1, "Incremented instance ID");
     });
 }());

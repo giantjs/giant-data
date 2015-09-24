@@ -1,26 +1,26 @@
-/*global giant */
-$oop.postpone(giant, 'OrderedList', function () {
+/*global $data */
+$oop.postpone($data, 'OrderedList', function () {
     "use strict";
 
-    var base = giant.Hash;
+    var base = $data.Hash;
 
     /**
      * Instantiates class.
      * Sets the list up with initial items.
-     * @name giant.OrderedList.create
+     * @name $data.OrderedList.create
      * @function
      * @param {string[]|number[]} [items] Initial values: array of strings or numbers.
      * @param {string} [orderType='ascending'] Order type. Either 'ascending' or 'descending'.
-     * @returns {giant.OrderedList}
+     * @returns {$data.OrderedList}
      */
 
     /**
      * Manages a list of strings or numbers and keeps it prepared for quick access and queries.
-     * @class giant.OrderedList
-     * @extends giant.Hash
+     * @class $data.OrderedList
+     * @extends $data.Hash
      */
-    giant.OrderedList = base.extend()
-        .addConstants(/** @lends giant.OrderedList */{
+    $data.OrderedList = base.extend()
+        .addConstants(/** @lends $data.OrderedList */{
             /**
              * @type {object}
              * @constant
@@ -30,11 +30,11 @@ $oop.postpone(giant, 'OrderedList', function () {
                 descending: 'descending'
             }
         })
-        .addPrivateMethods(/** @lends giant.OrderedList# */{
+        .addPrivateMethods(/** @lends $data.OrderedList# */{
             /**
              * Compares numbers in ascending order. To be supplied to Array.sort().
              * @private
-             * @memberOf giant.OrderedList
+             * @memberOf $data.OrderedList
              */
             _compareAscending: function (a, b) {
                 return a > b ? 1 : a < b ? -1 : 0;
@@ -43,7 +43,7 @@ $oop.postpone(giant, 'OrderedList', function () {
             /**
              * Compares numbers in descending order. To be supplied to Array.sort().
              * @private
-             * @memberOf giant.OrderedList
+             * @memberOf $data.OrderedList
              */
             _compareDescending: function (a, b) {
                 return b > a ? 1 : b < a ? -1 : 0;
@@ -82,13 +82,13 @@ $oop.postpone(giant, 'OrderedList', function () {
 
             /**
              * Gets splice index for descending order.
-             * Same as giant.OrderedList#_spliceIndexOfAsc but with value comparisons flipped.
+             * Same as $data.OrderedList#_spliceIndexOfAsc but with value comparisons flipped.
              * @param {string|number} value
              * @param {number} start
              * @param {number} end
              * @returns {number}
              * @private
-             * @see giant.OrderedList#_spliceIndexOfAsc
+             * @see $data.OrderedList#_spliceIndexOfAsc
              */
             _spliceIndexOfDesc: function (value, start, end) {
                 var items = this.items,
@@ -113,7 +113,7 @@ $oop.postpone(giant, 'OrderedList', function () {
                 return -1;
             }
         })
-        .addMethods(/** @lends giant.OrderedList# */{
+        .addMethods(/** @lends $data.OrderedList# */{
             /**
              * @param {string[]|number[]} [items]
              * @param {boolean} [orderType='ascending']
@@ -134,7 +134,7 @@ $oop.postpone(giant, 'OrderedList', function () {
                 }
 
                 /**
-                 * @name giant.OrderedList#items
+                 * @name $data.OrderedList#items
                  * @type {string[]|number[]}
                  */
 
@@ -155,7 +155,7 @@ $oop.postpone(giant, 'OrderedList', function () {
              * a given value would be spliced into or out of the list. For exact hits, this is the actual position,
              * but no information is given whether the value is present in the list or not.
              * @example
-             * var ol = giant.OrderedList.create(['foo', 'bar', 'bee']);
+             * var ol = $data.OrderedList.create(['foo', 'bar', 'bee']);
              * ol.spliceIndexOf('bee') // 1
              * ol.spliceIndexOf('ban') // 0
              * ol.spliceIndexOf('fun') // 3
@@ -184,7 +184,7 @@ $oop.postpone(giant, 'OrderedList', function () {
             /**
              * Returns list items in a sorted array starting from `startValue` up to but not including `endValue`.
              * @example
-             * var ol = giant.OrderedList.create(['foo', 'bar', 'ban', 'bee']);
+             * var ol = $data.OrderedList.create(['foo', 'bar', 'ban', 'bee']);
              * ol.getRange('bar', 'foo') // ['bar', 'bee', 'foo']
              * ol.getRange('a', 'bee') // ['ban', 'bar', 'bee']
              * ol.getRange('foo', 'fun') // ['foo']
@@ -210,12 +210,12 @@ $oop.postpone(giant, 'OrderedList', function () {
              * @param {string|number} endValue Value marking end of the range.
              * @param {number} [offset=0] Number of items to skip at start.
              * @param {number} [limit=Infinity] Number of items to fetch at most.
-             * @returns {giant.Hash} Hash with a shallow copy of the array's affected segment.
-             * @see giant.OrderedList#getRange
+             * @returns {$data.Hash} Hash with a shallow copy of the array's affected segment.
+             * @see $data.OrderedList#getRange
              */
             getRangeAsHash: function (startValue, endValue, offset, limit) {
                 var range = this.getRange.apply(this, arguments);
-                return giant.Hash.create(range);
+                return $data.Hash.create(range);
             },
 
             //////////////////////////////
@@ -224,7 +224,7 @@ $oop.postpone(giant, 'OrderedList', function () {
             /**
              * Adds a single value to the list and returns the position where the value was inserted.
              * @example
-             * var ol = giant.OrderedList.create(['b', 'c']);
+             * var ol = $data.OrderedList.create(['b', 'c']);
              * var pos = ol.addItem('a');
              * pos // 0
              * ol.items // ['a', 'b', 'c']
@@ -240,7 +240,7 @@ $oop.postpone(giant, 'OrderedList', function () {
             /**
              * Adds multiple values to the list.
              * @param {string[]|number[]} values Array of values to be inserted.
-             * @returns {giant.OrderedList}
+             * @returns {$data.OrderedList}
              */
             addItems: function (values) {
                 $assertion.isArray(values, "Invalid item values");
@@ -255,7 +255,7 @@ $oop.postpone(giant, 'OrderedList', function () {
              * Removes the first available item matching the value and returns the affected position.
              * Returns -1 when the value is not present in the list.
              * @example
-             * var ol = giant.OrderedList.create(['b', 'c', 'a']);
+             * var ol = $data.OrderedList.create(['b', 'c', 'a']);
              * var pos = ol.removeItem('b');
              * pos // 1
              * ol.items // ['a', 'c']
@@ -279,7 +279,7 @@ $oop.postpone(giant, 'OrderedList', function () {
             /**
              * Removes all items specified in `values`.
              * @param {string[]|number[]} values Array of values to be removed.
-             * @returns {giant.OrderedList}
+             * @returns {$data.OrderedList}
              */
             removeItems: function (values) {
                 $assertion.isArray(values, "Invalid item values");
@@ -313,7 +313,7 @@ $oop.postpone(giant, 'OrderedList', function () {
 
             /**
              * Clones OrderedList instance, setting the correct orderType property.
-             * @returns {giant.OrderedList}
+             * @returns {$data.OrderedList}
              */
             clone: function () {
                 var result = base.clone.call(this);
@@ -326,24 +326,24 @@ $oop.postpone(giant, 'OrderedList', function () {
 
             /**
              * Clears the list.
-             * @name giant.OrderedList#clear
+             * @name $data.OrderedList#clear
              * @function
-             * @returns {giant.OrderedList}
+             * @returns {$data.OrderedList}
              */
         });
 });
 
-$oop.amendPostponed(giant, 'Hash', function () {
+$oop.amendPostponed($data, 'Hash', function () {
     "use strict";
 
-    giant.Hash.addMethods(/** @lends giant.Hash# */{
+    $data.Hash.addMethods(/** @lends $data.Hash# */{
         /**
          * Converts Hash to OrderedList instance.
          * @param {string} [orderType='ascending']
-         * @returns {giant.OrderedList}
+         * @returns {$data.OrderedList}
          */
         toOrderedList: function (orderType) {
-            return giant.OrderedList.create(this.items, orderType);
+            return $data.OrderedList.create(this.items, orderType);
         }
     });
 });
@@ -351,15 +351,15 @@ $oop.amendPostponed(giant, 'Hash', function () {
 (function () {
     "use strict";
 
-    $assertion.addTypes(/** @lends giant */{
+    $assertion.addTypes(/** @lends $data */{
         /** @param {string} expr */
         isOrderType: function (expr) {
-            return expr && giant.OrderedList.orderTypes[expr] === expr;
+            return expr && $data.OrderedList.orderTypes[expr] === expr;
         },
 
         /** @param {string} [expr] */
         isOrderTypeOptional: function (expr) {
-            return giant.OrderedList.orderTypes[expr] === expr;
+            return $data.OrderedList.orderTypes[expr] === expr;
         }
     });
 
@@ -367,10 +367,10 @@ $oop.amendPostponed(giant, 'Hash', function () {
         /**
          * Creates a new OrderedList instance based on the current array.
          * @param {string} [orderType='ascending']
-         * @returns {giant.OrderedList}
+         * @returns {$data.OrderedList}
          */
         toOrderedList: function (orderType) {
-            return giant.OrderedList.create(this, orderType);
+            return $data.OrderedList.create(this, orderType);
         }
     });
 }());

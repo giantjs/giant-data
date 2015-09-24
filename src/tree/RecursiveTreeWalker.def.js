@@ -1,27 +1,27 @@
-/*global giant */
-$oop.postpone(giant, 'RecursiveTreeWalker', function () {
+/*global $data */
+$oop.postpone($data, 'RecursiveTreeWalker', function () {
     "use strict";
 
-    var base = giant.TreeWalker,
+    var base = $data.TreeWalker,
         self = base.extend(),
         hOP = Object.prototype.hasOwnProperty;
 
     /**
      * Instantiates class
-     * @name giant.RecursiveTreeWalker.create
+     * @name $data.RecursiveTreeWalker.create
      * @function
      * @param {function} handler
-     * @param {giant.Query} [query]
-     * @returns {giant.RecursiveTreeWalker}
+     * @param {$data.Query} [query]
+     * @returns {$data.RecursiveTreeWalker}
      */
 
     /**
      * Traverses tree recursively, according to a query expression.
-     * @class giant.RecursiveTreeWalker
-     * @extends giant.TreeWalker
+     * @class $data.RecursiveTreeWalker
+     * @extends $data.TreeWalker
      */
-    giant.RecursiveTreeWalker = self
-        .addConstants(/** @lends giant.RecursiveTreeWalker */{
+    $data.RecursiveTreeWalker = self
+        .addConstants(/** @lends $data.RecursiveTreeWalker */{
             /**
              * Key-value pair marker character for marking return value.
              * Queries will collect leaf nodes unless there's a kvp in the query is marked like this.
@@ -30,7 +30,7 @@ $oop.postpone(giant, 'RecursiveTreeWalker', function () {
              */
             RETURN_MARKER: '{'
         })
-        .addPrivateMethods(/** @lends giant.RecursiveTreeWalker */{
+        .addPrivateMethods(/** @lends $data.RecursiveTreeWalker */{
             /**
              * Gathers all indices of specified value from specified array.
              * @param {Array} array
@@ -109,7 +109,7 @@ $oop.postpone(giant, 'RecursiveTreeWalker', function () {
              * Retrieves an array of keys from the node passed
              * according to the given pattern.
              * @param {object} node Node for which to obtain the keys.
-             * @param {string|giant.KeyValuePattern} pattern
+             * @param {string|$data.KeyValuePattern} pattern
              * @returns {object} Lookup of suitable keys
              * @private
              */
@@ -158,7 +158,7 @@ $oop.postpone(giant, 'RecursiveTreeWalker', function () {
                                 }
                             }
                         }
-                    } else if (descriptor.symbol === giant.KeyValuePattern.WILDCARD_SYMBOL) {
+                    } else if (descriptor.symbol === $data.KeyValuePattern.WILDCARD_SYMBOL) {
                         if (hOP.call(descriptor, 'value')) {
                             // there's a value specified within pattern
                             if (node instanceof Array) {
@@ -172,7 +172,7 @@ $oop.postpone(giant, 'RecursiveTreeWalker', function () {
                             // wildcard pattern
                             result = node;
                         }
-                    } else if (descriptor.symbol === giant.KeyValuePattern.PRIMITIVE_SYMBOL) {
+                    } else if (descriptor.symbol === $data.KeyValuePattern.PRIMITIVE_SYMBOL) {
                         // obtaining all matching keys from object
                         result = this._getKeysForPrimitiveValues(node, descriptor.value);
                     }
@@ -202,7 +202,7 @@ $oop.postpone(giant, 'RecursiveTreeWalker', function () {
              * Traverses a set of keys under the specified parent node.
              * @param {string[]} parentPath
              * @param {*} parentNode
-             * @param {giant.Set} keySet
+             * @param {$data.Set} keySet
              * @param {number} queryPos Position of the current KPV in the query.
              * @param {boolean} isInSkipMode
              * @param {boolean} hasMarkedParent
@@ -241,7 +241,7 @@ $oop.postpone(giant, 'RecursiveTreeWalker', function () {
              * @param {boolean} isInSkipMode
              * @param {boolean} isUnderMarkedNode
              * @returns {boolean} Indicates whether there were any matching nodes under the current node.
-             * @memberOf giant.RecursiveTreeWalker#
+             * @memberOf $data.RecursiveTreeWalker#
              * @private
              */
             _walk: function (currentPath, currentNode, queryPos, isInSkipMode, isUnderMarkedNode) {
@@ -249,7 +249,7 @@ $oop.postpone(giant, 'RecursiveTreeWalker', function () {
                     currentKvp = queryAsArray[queryPos],
                     result = false;
 
-                if (currentKvp === giant.Query.PATTERN_SKIP) {
+                if (currentKvp === $data.Query.PATTERN_SKIP) {
                     // current pattern is skipper
                     // setting skip mode on, and moving on to next KVP in query
                     isInSkipMode = true;
@@ -270,9 +270,9 @@ $oop.postpone(giant, 'RecursiveTreeWalker', function () {
                     return true;
                 }
 
-                var matchingKeySet = giant.Set.create(this._getKeysByPattern(currentNode, currentKvp)),
+                var matchingKeySet = $data.Set.create(this._getKeysByPattern(currentNode, currentKvp)),
                     parentKvp = queryAsArray[queryPos - 1],
-                    hasMarkedParent = giant.KeyValuePattern.isBaseOf(parentKvp) &&
+                    hasMarkedParent = $data.KeyValuePattern.isBaseOf(parentKvp) &&
                                       parentKvp.getMarker() === self.RETURN_MARKER;
 
                 if (matchingKeySet.getKeyCount()) {
@@ -296,7 +296,7 @@ $oop.postpone(giant, 'RecursiveTreeWalker', function () {
                     // we're in skip mode so rest of the keys under the current node must be traversed
 
                     // obtaining keys for properties that can be traversed
-                    objectKeySet = giant.Set.create(this._getKeysForObjectProperties(currentNode));
+                    objectKeySet = $data.Set.create(this._getKeysForObjectProperties(currentNode));
                     traversableKeySet = matchingKeySet.subtractFrom(objectKeySet);
 
                     if (traversableKeySet.getKeyCount()) {
@@ -320,10 +320,10 @@ $oop.postpone(giant, 'RecursiveTreeWalker', function () {
                 return result;
             }
         })
-        .addMethods(/** @lends giant.RecursiveTreeWalker# */{
+        .addMethods(/** @lends $data.RecursiveTreeWalker# */{
             /**
              * @param {function} handler
-             * @param {giant.Query} [query]
+             * @param {$data.Query} [query]
              * @ignore
              */
             init: function (handler, query) {
@@ -333,7 +333,7 @@ $oop.postpone(giant, 'RecursiveTreeWalker', function () {
 
                 /**
                  * Query guiding the traversal.
-                 * @type {giant.Query}
+                 * @type {$data.Query}
                  */
                 this.query = query || '\\>"'.toQuery();
             },
@@ -341,11 +341,11 @@ $oop.postpone(giant, 'RecursiveTreeWalker', function () {
             /**
              * Walks the specified node according to query
              * @param {*} node
-             * @returns {giant.RecursiveTreeWalker}
+             * @returns {$data.RecursiveTreeWalker}
              */
             walk: function (node) {
                 // initializing traversal path state
-                this.currentPath = giant.Path.create([]);
+                this.currentPath = $data.Path.create([]);
 
                 // walking node
                 this._walk([], node, 0, false, false);

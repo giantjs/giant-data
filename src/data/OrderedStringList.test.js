@@ -1,17 +1,17 @@
-/*global giant */
+/*global $data */
 (function () {
     "use strict";
 
     module("Ordered String List");
 
     test("Conversion from Hash", function () {
-        var hash = giant.Hash.create([]),
+        var hash = $data.Hash.create([]),
             list = hash.toOrderedStringList();
 
-        ok(list.isA(giant.OrderedStringList), "should return OrderedStringList instance");
+        ok(list.isA($data.OrderedStringList), "should return OrderedStringList instance");
 
-        list = hash.toOrderedStringList(giant.OrderedList.orderTypes.descending);
-        equal(list.orderType, giant.OrderedList.orderTypes.descending,
+        list = hash.toOrderedStringList($data.OrderedList.orderTypes.descending);
+        equal(list.orderType, $data.OrderedList.orderTypes.descending,
             "should set orderType property to the specified value");
     });
 
@@ -19,26 +19,26 @@
         var buffer = [1, 2, 3, 4],
             list = buffer.toOrderedStringList();
 
-        ok(list.isA(giant.OrderedStringList), "should return OrderedStringList instance");
+        ok(list.isA($data.OrderedStringList), "should return OrderedStringList instance");
         strictEqual(list.items, buffer, "should retain original buffer");
 
-        list = buffer.toOrderedStringList(giant.OrderedList.orderTypes.descending);
-        equal(list.orderType, giant.OrderedList.orderTypes.descending,
+        list = buffer.toOrderedStringList($data.OrderedList.orderTypes.descending);
+        equal(list.orderType, $data.OrderedList.orderTypes.descending,
             "should set orderType property to the specified value");
     });
 
     test("End value", function () {
-        equal(giant.OrderedStringList._getEndValue('hello'), 'hellp', "should return string with last char changed");
-        equal(giant.OrderedStringList._getEndValue('a'), 'b', "should return next character for single char string");
+        equal($data.OrderedStringList._getEndValue('hello'), 'hellp', "should return string with last char changed");
+        equal($data.OrderedStringList._getEndValue('a'), 'b', "should return next character for single char string");
     });
 
     test("Next value", function () {
-        equal(giant.OrderedStringList._getNextValue('hello'), 'hello' + String.fromCharCode(0),
+        equal($data.OrderedStringList._getNextValue('hello'), 'hello' + String.fromCharCode(0),
             "should append 0 character code to specified string");
     });
 
     test("String prefix search", function () {
-        var orderedStringList = giant.OrderedStringList.create([
+        var orderedStringList = $data.OrderedStringList.create([
             "animal", "apple", "ant", "bar", "insect", "insert", "item"
         ]);
 
@@ -72,7 +72,7 @@
     });
 
     test("String prefix search w/ exclusion", function () {
-        var orderedStringList = giant.OrderedStringList.create(["car", "car", "career", "carpet", "foo"]);
+        var orderedStringList = $data.OrderedStringList.create(["car", "car", "career", "carpet", "foo"]);
 
         deepEqual(
             orderedStringList.getRangeByPrefix("car", true),
@@ -82,7 +82,7 @@
     });
 
     test("String prefix search w/ offset & limit", function () {
-        var orderedStringList = giant.OrderedStringList.create(["car", "car", "career", "carpet", "foo"]);
+        var orderedStringList = $data.OrderedStringList.create(["car", "car", "career", "carpet", "foo"]);
 
         deepEqual(
             orderedStringList.getRangeByPrefix('car', false, 1),
@@ -98,13 +98,13 @@
     });
 
     test("String prefix search as hash", function () {
-        var orderedStringList = giant.OrderedStringList.create([
+        var orderedStringList = $data.OrderedStringList.create([
                 "animal", "apple", "ant", "bar", "insect", "insert", "item"
             ]),
             result;
 
         result = orderedStringList.getRangeByPrefixAsHash("a");
-        ok(result.isA(giant.Hash), "should return Hash instance");
+        ok(result.isA($data.Hash), "should return Hash instance");
         deepEqual(
             result.items,
             ["animal", "ant", "apple"],
@@ -113,7 +113,7 @@
     });
 
     test("Removing all occurrence of a value", function () {
-        var orderedStringList = giant.OrderedStringList.create(["animal", "apple", "apple", "apple", "fruit"]);
+        var orderedStringList = $data.OrderedStringList.create(["animal", "apple", "apple", "apple", "fruit"]);
 
         orderedStringList.removeEvery("foo");
 

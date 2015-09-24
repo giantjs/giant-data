@@ -1,27 +1,27 @@
-/*global giant */
-$oop.postpone(giant, 'Dictionary', function () {
+/*global $data */
+$oop.postpone($data, 'Dictionary', function () {
     "use strict";
 
-    var base = giant.Hash;
+    var base = $data.Hash;
 
     /**
      * Instantiates class.
      * Constructs a dictionary, initialized with the items passed in the optional argument.
-     * @name giant.Dictionary.create
+     * @name $data.Dictionary.create
      * @function
      * @param {object} [items]
-     * @returns {giant.Dictionary}
+     * @returns {$data.Dictionary}
      */
 
     /**
      * Manages key-value pairs. In a dictionary, one item is equivalent to a key-value pair.
      * Internally, `Dictionary` stores key-value pairs in an object hash, its keys being dictionary keys,
      * associated with values or arrays of values.
-     * @class giant.Dictionary
-     * @extends giant.Hash
+     * @class $data.Dictionary
+     * @extends $data.Hash
      */
-    giant.Dictionary = base.extend()
-        .addPrivateMethods(/** @lends giant.Dictionary# */{
+    $data.Dictionary = base.extend()
+        .addPrivateMethods(/** @lends $data.Dictionary# */{
             /**
              * Counts key-value pairs in dictionary.
              * Since one item may hold multiple values, value count =/= key count.
@@ -44,7 +44,7 @@ $oop.postpone(giant, 'Dictionary', function () {
                 return result;
             }
         })
-        .addMethods(/** @lends giant.Dictionary# */{
+        .addMethods(/** @lends $data.Dictionary# */{
             /**
              * @param {object} [items]
              * @ignore
@@ -64,12 +64,12 @@ $oop.postpone(giant, 'Dictionary', function () {
             /**
              * Adds key-value pairs to dictionary, where one key, and multiple values may be specified.
              * @example
-             * var d = giant.Dictionary.create({foo: "bar"});
+             * var d = $data.Dictionary.create({foo: "bar"});
              * d.addItem('hello', 'world').items // {foo: "bar", hello: "world"}
              * d.addItem('foo', 'boo').items // {foo: ["bar", "boo"], hello: "world"}
              * @param {string} key Single dictionary key.
              * @param {*|Array} value Value or values to be assigned to the specified key.
-             * @returns {giant.Dictionary}
+             * @returns {$data.Dictionary}
              */
             addItem: function (key, value) {
                 var items = this.items,
@@ -117,12 +117,12 @@ $oop.postpone(giant, 'Dictionary', function () {
              * Adds key-value pairs to the dictionary, where multiple keys and values may be specified.
              * All specified keys will be assigned each value listed in `value`.
              * @example
-             * var d = giant.Dictionary.create();
+             * var d = $data.Dictionary.create();
              * d.addItems(['hello', 'greetings'], 'world').items // {hello: "world", greetings: "world"}
              * d.addItem(['foo', 'hello'], 'bar').items // {hello: ["world", "bar"], greetings: "world", foo: "bar"}
              * @param {string[]} keys Array of keys.
              * @param {*|Array} value Value or values to be assigned to the specified keys.
-             * @returns {giant.Dictionary}
+             * @returns {$data.Dictionary}
              */
             addItems: function (keys, value) {
                 $assertion.isArray(keys, "Invalid keys");
@@ -138,14 +138,14 @@ $oop.postpone(giant, 'Dictionary', function () {
              * Removes single key-value pair from dictionary. When `value` is omitted all items matched by `key`
              * will be removed from the dictionary.
              * @example
-             * var d = giant.Dictionary.create({
+             * var d = $data.Dictionary.create({
              *     foo: 'bar',
              *     hello: ['world', 'all', 'bar']
              * });
              * d.removeItem('hello', 'bar').items // {foo: 'bar', hello: ['world', 'all']}
              * @param {string} key Key identifying a dictionary item.
              * @param {*} [value] Value (by reference if object) to be removed from the item.
-             * @returns {giant.Dictionary}
+             * @returns {$data.Dictionary}
              */
             removeItem: function (key, value) {
                 var items = this.items,
@@ -193,7 +193,7 @@ $oop.postpone(giant, 'Dictionary', function () {
              * When `value` is omitted, all items matching any of `keys` will be removed.
              * @param {string[]} keys Array of keys.
              * @param {*} [value] Value (by reference if object).
-             * @returns {giant.Dictionary}
+             * @returns {$data.Dictionary}
              */
             removeItems: function (keys, value) {
                 $assertion.isArray(keys, "Invalid keys");
@@ -241,7 +241,7 @@ $oop.postpone(giant, 'Dictionary', function () {
             /**
              * Retrieves the number of items (key-value pairs) in the dictionary.
              * @example
-             * var d = giant.Dictionary.create({
+             * var d = $data.Dictionary.create({
              *     foo: 'bar',
              *     hello: ['world', 'all', 'bar']
              * }).getItemCount() // 4
@@ -256,10 +256,10 @@ $oop.postpone(giant, 'Dictionary', function () {
 
             /**
              * Clones dictionary.
-             * @returns {giant.Dictionary}
+             * @returns {$data.Dictionary}
              */
             clone: function () {
-                var result = /** @type {giant.Dictionary} */base.clone.call(this);
+                var result = /** @type {$data.Dictionary} */base.clone.call(this);
 
                 result.itemCount = this.itemCount;
 
@@ -268,7 +268,7 @@ $oop.postpone(giant, 'Dictionary', function () {
 
             /**
              * Clears dictionary and resets counters.
-             * @returns {giant.Dictionary}
+             * @returns {$data.Dictionary}
              */
             clear: function () {
                 // clearing items buffer
@@ -282,16 +282,16 @@ $oop.postpone(giant, 'Dictionary', function () {
         });
 });
 
-$oop.amendPostponed(giant, 'Hash', function () {
+$oop.amendPostponed($data, 'Hash', function () {
     "use strict";
 
-    giant.Hash.addMethods(/** @lends giant.Hash# */{
+    $data.Hash.addMethods(/** @lends $data.Hash# */{
         /**
          * Reinterprets hash as a dictionary.
-         * @returns {giant.Dictionary}
+         * @returns {$data.Dictionary}
          */
         toDictionary: function () {
-            return giant.Dictionary.create(this.items);
+            return $data.Dictionary.create(this.items);
         }
     });
 });
@@ -299,24 +299,24 @@ $oop.amendPostponed(giant, 'Hash', function () {
 (function () {
     "use strict";
 
-    $assertion.addTypes(/** @lends giant */{
+    $assertion.addTypes(/** @lends $data */{
         isDictionary: function (expr) {
-            return giant.Dictionary.isBaseOf(expr);
+            return $data.Dictionary.isBaseOf(expr);
         },
 
         isDictionaryOptional: function (expr) {
             return typeof expr === 'undefined' ||
-                giant.Dictionary.isBaseOf(expr);
+                $data.Dictionary.isBaseOf(expr);
         }
     });
 
     $oop.extendBuiltIn(Array.prototype, /** @lends Array# */{
         /**
          * Creates a new Dictionary instance based on the current array.
-         * @returns {giant.Dictionary}
+         * @returns {$data.Dictionary}
          */
         toDictionary: function () {
-            return giant.Dictionary.create(this);
+            return $data.Dictionary.create(this);
         }
     });
 }());
