@@ -29,7 +29,7 @@ giant.postpone(giant, 'Hash', function () {
              * @ignore
              */
             init: function (items) {
-                giant.isObjectOptional(items, "Invalid items");
+                $assertion.isObjectOptional(items, "Invalid items");
 
                 /**
                  * Object buffer that stores items. Technically writable and public for performance
@@ -238,7 +238,7 @@ giant.postpone(giant, 'Hash', function () {
             passItemsTo: function (handler, context, argIndex) {
                 argIndex = argIndex || 0;
                 var args = slice.call(arguments, 3);
-                giant.assert(args.length >= argIndex, "Invalid argument index", argIndex);
+                $assertion.assert(args.length >= argIndex, "Invalid argument index", argIndex);
                 args.splice(argIndex, 0, this.items);
                 return handler.apply(context || this, args);
             },
@@ -254,7 +254,7 @@ giant.postpone(giant, 'Hash', function () {
             passSelfTo: function (handler, context, argIndex) {
                 argIndex = argIndex || 0;
                 var args = slice.call(arguments, 3);
-                giant.assert(args.length >= argIndex, "Invalid argument index", argIndex);
+                $assertion.assert(args.length >= argIndex, "Invalid argument index", argIndex);
                 args.splice(argIndex, 0, this);
                 return handler.apply(context || this, args);
             }
@@ -264,7 +264,7 @@ giant.postpone(giant, 'Hash', function () {
 (function () {
     "use strict";
 
-    giant.addTypes(/** @lends giant */{
+    $assertion.addTypes(/** @lends giant */{
         isHash: function (expr) {
             return giant.Hash.isBaseOf(expr);
         },

@@ -15,7 +15,7 @@ giant.postpone(giant, 'TreeWalker', function () {
              * @ignore
              */
             init: function (handler) {
-                giant.isFunction(handler, "Invalid walker handler");
+                $assertion.isFunction(handler, "Invalid walker handler");
 
                 /**
                  * Handler to be called on each relevant node. Receives TreeWalker instance as context

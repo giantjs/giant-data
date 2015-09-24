@@ -104,7 +104,7 @@ giant.postpone(giant, 'OpenChain', function () {
              * @returns {giant.OpenChain}
              */
             forEachLink: function (handler, context) {
-                giant
+                $assertion
                     .isFunction(handler, "Invalid callback function")
                     .isObjectOptional(context, "Invalid context");
 

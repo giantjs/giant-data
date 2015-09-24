@@ -53,7 +53,7 @@ giant.postpone(giant, 'OrderedStringList', function () {
              * @returns {string[]} Sorted array of matches.
              */
             getRangeByPrefix: function (prefix, excludeOriginal, offset, limit) {
-                giant
+                $assertion
                     .assert(typeof prefix === 'string' && prefix.length > 0, "Empty prefix")
                     .isBooleanOptional(excludeOriginal);
 
@@ -88,7 +88,7 @@ giant.postpone(giant, 'OrderedStringList', function () {
              * @returns {giant.OrderedStringList}
              */
             removeEvery: function (value) {
-                giant.isString(value);
+                $assertion.isString(value);
                 this.removeRange(value, this._getNextValue(value));
                 return this;
             }

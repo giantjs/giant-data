@@ -5,7 +5,7 @@ giant.postpone(giant, 'KeyValuePattern', function () {
     var base = giant.Base,
         self = base.extend(),
         hOP = Object.prototype.hasOwnProperty,
-        validators = giant.validators;
+        validators = $assertion.validators;
 
     /**
      * Instantiates class
@@ -205,7 +205,7 @@ giant.postpone(giant, 'KeyValuePattern', function () {
                 } else if (pattern instanceof Object) {
                     this.descriptor = pattern;
                 } else {
-                    giant.assert(false, "Invalid pattern");
+                    $assertion.assert(false, "Invalid pattern");
                 }
             },
 
@@ -247,7 +247,7 @@ giant.postpone(giant, 'KeyValuePattern', function () {
              * @returns {giant.KeyValuePattern}
              */
             setMarker: function (marker) {
-                giant.assert(
+                $assertion.assert(
                     marker === self.MARKER_BRACKET || marker === self.MARKER_CURLY,
                     "Invalid marker"
                 );
@@ -372,7 +372,7 @@ giant.postpone(giant, 'KeyValuePatternCollection', function () {
 (function () {
     "use strict";
 
-    giant.addTypes(/** @lends giant */{
+    $assertion.addTypes(/** @lends giant */{
         isKeyValuePattern: function (expr) {
             return giant.KeyValuePattern.isBaseOf(expr);
         },

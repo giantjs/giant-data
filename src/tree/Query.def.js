@@ -118,7 +118,7 @@ giant.postpone(giant, 'Query', function () {
                             result.push(pattern);
                         }
                     } else {
-                        giant.assert(false, "Invalid key-value pattern", pattern);
+                        $assertion.assert(false, "Invalid key-value pattern", pattern);
                     }
                 }
 
@@ -243,9 +243,9 @@ giant.postpone(giant, 'Query', function () {
 (function () {
     "use strict";
 
-    var validators = giant.validators;
+    var validators = $assertion.validators;
 
-    giant.addTypes(/** @lends giant */{
+    $assertion.addTypes(/** @lends giant */{
         isQuery: function (expr) {
             return giant.Query.isBaseOf(expr);
         },

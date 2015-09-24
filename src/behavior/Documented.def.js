@@ -31,7 +31,7 @@ giant.postpone(giant, 'Documented', function () {
              * @returns {giant.Base}
              */
             extend: function (className) {
-                giant.isString(className, "Invalid class name");
+                $assertion.isString(className, "Invalid class name");
 
                 var result = /** @type {giant.Documented} */ base.extend.call(this);
 

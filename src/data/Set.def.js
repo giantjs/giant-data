@@ -27,7 +27,7 @@ giant.postpone(giant, 'Set', function () {
              * @returns {giant.Set} New set instance with items present in both current and remote set.
              */
             intersectWith: function (remoteSet) {
-                giant.isSet(remoteSet, "Invalid set");
+                $assertion.isSet(remoteSet, "Invalid set");
 
                 var currentItems = this.items,
                     remoteItems = remoteSet.items,
@@ -61,7 +61,7 @@ giant.postpone(giant, 'Set', function () {
              * @returns {giant.Set} New set instance with items from both current and remote sets.
              */
             unionWith: function (remoteSet) {
-                giant.isSet(remoteSet, "Invalid set");
+                $assertion.isSet(remoteSet, "Invalid set");
 
                 var resultItems = giant.DataUtils.shallowCopy(this.items),
                     currentItems = this.items,
@@ -84,7 +84,7 @@ giant.postpone(giant, 'Set', function () {
              * remote set.
              */
             subtract: function (remoteSet) {
-                giant.isSet(remoteSet, "Invalid set");
+                $assertion.isSet(remoteSet, "Invalid set");
 
                 var currentItems = this.items,
                     remoteItems = remoteSet.items,
@@ -107,7 +107,7 @@ giant.postpone(giant, 'Set', function () {
              * current set.
              */
             subtractFrom: function (remoteSet) {
-                giant.isSet(remoteSet, "Invalid set");
+                $assertion.isSet(remoteSet, "Invalid set");
 
                 var currentItems = this.items,
                     remoteItems = remoteSet.items,
@@ -142,7 +142,7 @@ giant.amendPostponed(giant, 'Hash', function () {
 (function () {
     "use strict";
 
-    giant.addTypes(/** @lends giant */{
+    $assertion.addTypes(/** @lends giant */{
         isSet: function (expr) {
             return giant.Set.isBaseOf(expr);
         },

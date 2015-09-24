@@ -120,7 +120,7 @@ giant.postpone(giant, 'OrderedList', function () {
              * @ignore
              */
             init: function (items, orderType) {
-                giant
+                $assertion
                     .isArrayOptional(items, "Invalid items")
                     .isOrderTypeOptional(orderType, "Invalid order type");
 
@@ -243,7 +243,7 @@ giant.postpone(giant, 'OrderedList', function () {
              * @returns {giant.OrderedList}
              */
             addItems: function (values) {
-                giant.isArray(values, "Invalid item values");
+                $assertion.isArray(values, "Invalid item values");
                 var i;
                 for (i = 0; i < values.length; i++) {
                     this.addItem(values[i]);
@@ -282,7 +282,7 @@ giant.postpone(giant, 'OrderedList', function () {
              * @returns {giant.OrderedList}
              */
             removeItems: function (values) {
-                giant.isArray(values, "Invalid item values");
+                $assertion.isArray(values, "Invalid item values");
                 var i;
                 for (i = 0; i < values.length; i++) {
                     this.removeItem(values[i]);
@@ -351,7 +351,7 @@ giant.amendPostponed(giant, 'Hash', function () {
 (function () {
     "use strict";
 
-    giant.addTypes(/** @lends giant */{
+    $assertion.addTypes(/** @lends giant */{
         /** @param {string} expr */
         isOrderType: function (expr) {
             return expr && giant.OrderedList.orderTypes[expr] === expr;

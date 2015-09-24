@@ -30,7 +30,7 @@ giant.postpone(giant, 'Path', function () {
              * @ignore
              */
             init: function (asArray) {
-                giant.isArray(asArray, "Invalid path array");
+                $assertion.isArray(asArray, "Invalid path array");
 
                 /**
                  * Path in array representation. Keys are unencoded. Not to be modified externally.
@@ -175,7 +175,7 @@ giant.postpone(giant, 'Path', function () {
              * @returns {boolean}
              */
             isRelativeTo: function (rootPath) {
-                giant.isPath(rootPath, "Invalid path");
+                $assertion.isPath(rootPath, "Invalid path");
 
                 var currentArray = this.asArray,
                     rootArray = rootPath.asArray,
@@ -200,7 +200,7 @@ giant.postpone(giant, 'Path', function () {
              * @returns {boolean}
              */
             isRootOf: function (relativePath) {
-                giant.isPath(relativePath, "Invalid path");
+                $assertion.isPath(relativePath, "Invalid path");
                 return relativePath.isRelativeTo(this);
             },
 
@@ -219,7 +219,7 @@ giant.postpone(giant, 'Path', function () {
 (function () {
     "use strict";
 
-    giant.addTypes(/** @lends giant */{
+    $assertion.addTypes(/** @lends giant */{
         isPath: function (expr) {
             return giant.Path.isBaseOf(expr);
         },

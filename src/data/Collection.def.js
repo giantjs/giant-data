@@ -4,7 +4,7 @@ giant.postpone(giant, 'Collection', function () {
 
     var hOP = Object.prototype.hasOwnProperty,
         slice = Array.prototype.slice,
-        validators = giant.validators,
+        validators = $assertion.validators,
         base = giant.Hash,
         self = base.extend();
 
@@ -150,7 +150,7 @@ giant.postpone(giant, 'Collection', function () {
                 } else if (validators.isObject(template)) {
                     methodNames = this._getObjectMethodNames(template);
                 } else {
-                    giant.isArray(template, "Invalid collection template");
+                    $assertion.isArray(template, "Invalid collection template");
                     methodNames = template;
                 }
 
@@ -232,7 +232,7 @@ giant.postpone(giant, 'Collection', function () {
              * caller's item buffer and item count.
              */
             asType: function (subClass) {
-                giant.isCollection(subClass, "Type must be Collection-based");
+                $assertion.isCollection(subClass, "Type must be Collection-based");
 
                 var result = /** @type giant.Collection */ subClass.create();
 
@@ -260,7 +260,7 @@ giant.postpone(giant, 'Collection', function () {
              * Return type will be that of the current collection.
              */
             mergeWith: function (collection, conflictResolver) {
-                giant
+                $assertion
                     .isCollection(collection, "Invalid collection")
                     .isFunctionOptional(conflictResolver, "Invalid conflict resolver callback")
                     .assert(collection.isA(this.getBase()), "Collection types do not match");
@@ -298,7 +298,7 @@ giant.postpone(giant, 'Collection', function () {
              *  });
              */
             mergeIn: function (collection, conflictResolver) {
-                giant
+                $assertion
                     .isCollection(collection, "Invalid collection")
                     .isFunctionOptional(conflictResolver, "Invalid conflict resolver callback")
                     .assert(collection.isA(this.getBase()), "Collection types do not match");
@@ -332,7 +332,7 @@ giant.postpone(giant, 'Collection', function () {
              * @returns {string[]}
              */
             getKeysByPrefix: function (prefix) {
-                giant.isString(prefix, "Invalid prefix");
+                $assertion.isString(prefix, "Invalid prefix");
 
                 var result = [],
                     itemKeys = this.getKeys(),
@@ -405,7 +405,7 @@ giant.postpone(giant, 'Collection', function () {
              * @returns {giant.Collection} New instance of the same collection subclass holding the filtered contents.
              */
             filterByKeys: function (itemKeys) {
-                giant.isArray(itemKeys, "Invalid item keys");
+                $assertion.isArray(itemKeys, "Invalid item keys");
 
                 var items = this.items,
                     resultItems = items instanceof Array ? [] : {},
@@ -484,7 +484,7 @@ giant.postpone(giant, 'Collection', function () {
              * @returns {giant.Collection} New instance of the same collection subclass holding the filtered contents.
              */
             filterBySelector: function (selector, context) {
-                giant
+                $assertion
                     .isFunction(selector, "Invalid selector")
                     .isObjectOptional(context, "Invalid context");
 
@@ -513,7 +513,7 @@ giant.postpone(giant, 'Collection', function () {
              * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
              */
             getSortedValues: function (comparator) {
-                giant.isFunctionOptional(comparator, "Invalid comparator function");
+                $assertion.isFunctionOptional(comparator, "Invalid comparator function");
 
                 var keys = this.getKeys().sort(comparator ? comparator.bind(this) : undefined),
                     result = [],
@@ -554,7 +554,7 @@ giant.postpone(giant, 'Collection', function () {
              * @returns {giant.Collection}
              */
             forEachItem: function (handler, context) {
-                giant
+                $assertion
                     .isFunction(handler, "Invalid callback function")
                     .isObjectOptional(context, "Invalid context");
 
@@ -586,7 +586,7 @@ giant.postpone(giant, 'Collection', function () {
              * @see https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/sort
              */
             forEachItemSorted: function (handler, context, comparator) {
-                giant
+                $assertion
                     .isFunction(handler, "Invalid callback function")
                     .isObjectOptional(context, "Invalid context")
                     .isFunctionOptional(comparator, "Invalid comparator function");
@@ -617,7 +617,7 @@ giant.postpone(giant, 'Collection', function () {
              * @returns {giant.Collection} New collection with mapped keys.
              */
             mapKeys: function (mapper, context, conflictResolver, subClass) {
-                giant
+                $assertion
                     .isFunction(mapper, "Invalid mapper function")
                     .isObjectOptional(context, "Invalid context")
                     .isFunctionOptional(conflictResolver, "Invalid conflict resolver function")
@@ -655,7 +655,7 @@ giant.postpone(giant, 'Collection', function () {
              * @returns {giant.Collection} New collection instance (of the specified type) containing mapped items.
              */
             mapValues: function (mapper, context, subClass) {
-                giant
+                $assertion
                     .isFunction(mapper, "Invalid mapper function")
                     .isObjectOptional(context, "Invalid context")
                     .isCollectionOptional(subClass, "Invalid collection subclass");
@@ -683,7 +683,7 @@ giant.postpone(giant, 'Collection', function () {
              * @returns {giant.Collection}
              */
             collectProperty: function (propertyName, subClass) {
-                giant.isCollectionOptional(subClass, "Invalid collection subclass");
+                $assertion.isCollectionOptional(subClass, "Invalid collection subclass");
 
                 var items = this.items,
                     keys = this.getKeys(),
@@ -752,7 +752,7 @@ giant.postpone(giant, 'Collection', function () {
              * @returns {giant.Collection}
              */
             createWithEachItem: function (template, argIndex) {
-                giant.isClass(template, "Invalid template class");
+                $assertion.isClass(template, "Invalid template class");
                 return this.passEachItemTo(template.create, template, argIndex);
             },
 
@@ -771,7 +771,7 @@ giant.postpone(giant, 'Collection', function () {
              * @returns {giant.Collection}
              */
             callOnEachItem: function (methodName) {
-                giant.isString(methodName, "Invalid method name");
+                $assertion.isString(methodName, "Invalid method name");
 
                 var args = slice.call(arguments, 1),
                     items = this.items,
@@ -811,7 +811,7 @@ giant.amendPostponed(giant, 'Hash', function () {
          * @returns {giant.Collection}
          */
         toCollection: function (subClass) {
-            giant.isCollectionOptional(subClass);
+            $assertion.isCollectionOptional(subClass);
 
             if (subClass) {
                 return subClass.create(this.items);
@@ -825,7 +825,7 @@ giant.amendPostponed(giant, 'Hash', function () {
 (function () {
     "use strict";
 
-    giant.addTypes(/** @lends giant */{
+    $assertion.addTypes(/** @lends giant */{
         isCollection: function (expr) {
             return giant.Collection.isPrototypeOf(expr);
         },

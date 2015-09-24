@@ -125,7 +125,7 @@ giant.postpone(giant, 'Dictionary', function () {
              * @returns {giant.Dictionary}
              */
             addItems: function (keys, value) {
-                giant.isArray(keys, "Invalid keys");
+                $assertion.isArray(keys, "Invalid keys");
 
                 var i;
                 for (i = 0; i < keys.length; i++) {
@@ -196,7 +196,7 @@ giant.postpone(giant, 'Dictionary', function () {
              * @returns {giant.Dictionary}
              */
             removeItems: function (keys, value) {
-                giant.isArray(keys, "Invalid keys");
+                $assertion.isArray(keys, "Invalid keys");
 
                 var i;
                 for (i = 0; i < keys.length; i++) {
@@ -232,7 +232,7 @@ giant.postpone(giant, 'Dictionary', function () {
                         result = undefined;
                     }
                 } else {
-                    giant.assert(false, "Invalid key");
+                    $assertion.assert(false, "Invalid key");
                 }
 
                 return result;
@@ -299,7 +299,7 @@ giant.amendPostponed(giant, 'Hash', function () {
 (function () {
     "use strict";
 
-    giant.addTypes(/** @lends giant */{
+    $assertion.addTypes(/** @lends giant */{
         isDictionary: function (expr) {
             return giant.Dictionary.isBaseOf(expr);
         },

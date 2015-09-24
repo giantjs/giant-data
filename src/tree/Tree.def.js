@@ -562,7 +562,7 @@ giant.amendPostponed(giant, 'Hash', function () {
 (function () {
     "use strict";
 
-    giant.addTypes(/** @lends giant */{
+    $assertion.addTypes(/** @lends giant */{
         isTree: function (expr) {
             return giant.Tree.isBaseOf(expr);
         },

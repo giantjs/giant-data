@@ -36,7 +36,7 @@ giant.postpone(giant, 'StringDictionary', function () {
              * resulting in a regular dictionary, but not the other way around.
              */
             combineWith: function (remoteDict) {
-                giant.isDictionary(remoteDict, "Invalid dictionary");
+                $assertion.isDictionary(remoteDict, "Invalid dictionary");
 
                 var items = this.items,
                     resultBuffer = items instanceof Array ? [] : {},
@@ -144,7 +144,7 @@ giant.amendPostponed(giant, 'Hash', function () {
 (function () {
     "use strict";
 
-    giant.addTypes(/** @lends giant */{
+    $assertion.addTypes(/** @lends giant */{
         isStringDictionary: function (expr) {
             return giant.StringDictionary.isBaseOf(expr);
         },

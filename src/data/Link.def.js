@@ -46,7 +46,7 @@ giant.postpone(giant, 'Link', function () {
              * @returns {giant.Link}
              */
             addAfter: function (link) {
-                giant.assert(!this.previousLink && !this.nextLink,
+                $assertion.assert(!this.previousLink && !this.nextLink,
                     "Attempted to connect already connected link");
 
                 // setting links on current link
@@ -71,7 +71,7 @@ giant.postpone(giant, 'Link', function () {
              * @returns {giant.Link}
              */
             addBefore: function (link) {
-                giant.assert(!this.previousLink && !this.nextLink,
+                $assertion.assert(!this.previousLink && !this.nextLink,
                     "Attempted to connect already connected link");
 
                 // setting links on current link
@@ -119,7 +119,7 @@ giant.postpone(giant, 'Link', function () {
              * @returns {giant.Link}
              */
             setParentChain: function (parentChain) {
-                giant.assert(!this.previousLink && !this.nextLink,
+                $assertion.assert(!this.previousLink && !this.nextLink,
                     "Attempted to set parent chain on connected link");
                 this.parentChain = parentChain;
                 return this;

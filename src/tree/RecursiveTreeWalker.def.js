@@ -327,7 +327,7 @@ giant.postpone(giant, 'RecursiveTreeWalker', function () {
              * @ignore
              */
             init: function (handler, query) {
-                giant.isQueryOptional(query, "Invalid query");
+                $assertion.isQueryOptional(query, "Invalid query");
 
                 base.init.call(this, handler);
 
