@@ -1,4 +1,3 @@
-/*global $data */
 $oop.postpone($data, 'OrderedStringList', function () {
     "use strict";
 

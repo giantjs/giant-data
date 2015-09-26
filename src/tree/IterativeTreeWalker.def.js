@@ -1,4 +1,3 @@
-/*global $data */
 $oop.postpone($data, 'IterativeTreeWalker', function () {
     "use strict";
 

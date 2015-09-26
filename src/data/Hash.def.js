@@ -1,4 +1,3 @@
-/*global $data */
 $oop.postpone($data, 'Hash', function () {
     "use strict";
 

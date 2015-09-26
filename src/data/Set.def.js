@@ -1,4 +1,3 @@
-/*global $data */
 $oop.postpone($data, 'Set', function () {
     "use strict";
 

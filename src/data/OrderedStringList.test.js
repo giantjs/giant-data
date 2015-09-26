@@ -1,4 +1,3 @@
-/*global $data */
 (function () {
     "use strict";
 

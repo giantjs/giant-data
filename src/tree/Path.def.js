@@ -1,4 +1,3 @@
-/*global $data */
 $oop.postpone($data, 'Path', function () {
     "use strict";
 

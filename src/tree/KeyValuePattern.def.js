@@ -1,4 +1,3 @@
-/*global $data */
 $oop.postpone($data, 'KeyValuePattern', function () {
     "use strict";
 

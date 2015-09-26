@@ -1,4 +1,3 @@
-/*global $data */
 $oop.postpone($data, 'Link', function () {
     "use strict";
 

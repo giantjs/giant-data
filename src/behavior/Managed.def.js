@@ -1,4 +1,3 @@
-/*global $data */
 $oop.postpone($data, 'Managed', function (ns, className) {
     "use strict";
 
