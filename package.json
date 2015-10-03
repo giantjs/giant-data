@@ -22,7 +22,7 @@
     "type": "git",
     "url": "git@github.com:giantjs/giant-data.git"
   },
-  "dependencies": {
+  "peerDependencies": {
     "giant-assertion": "0.1.0",
     "giant-oop": "0.1.0",
     "giant-utils": "0.1.0"
