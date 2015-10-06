@@ -1,6 +1,6 @@
 {
   "name": "giant-data",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Data structures module for Giant",
   "keywords": [
     "tools",
@@ -23,9 +23,9 @@
     "url": "git@github.com:giantjs/giant-data.git"
   },
   "peerDependencies": {
-    "giant-assertion": "0.1.0",
-    "giant-oop": "0.1.0",
-    "giant-utils": "0.1.0"
+    "giant-assertion": "0.2.0",
+    "giant-oop": "0.2.0",
+    "giant-utils": "0.2.0"
   },
   "devDependencies": {
     "grocer": "^0.5.0",
