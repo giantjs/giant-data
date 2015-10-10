@@ -17,7 +17,10 @@ $oop.postpone($data, 'Managed', function (ns, className) {
      */
     $data.Managed = self
         .addPublic(/** @lends $data.Managed */{
-            instanceRegistry: $data.Collection.create()
+            /**
+             * @type {object}
+             */
+            instanceRegistry: {}
         })
         .addMethods(/** @lends $data.Managed# */{
             /**
@@ -33,7 +36,7 @@ $oop.postpone($data, 'Managed', function (ns, className) {
              * @returns {$data.Managed}
              */
             addToRegistry: function () {
-                self.instanceRegistry.setItem(this.instanceId, this);
+                self.instanceRegistry[this.instanceId] = this;
                 return this;
             },
 
@@ -42,7 +45,7 @@ $oop.postpone($data, 'Managed', function (ns, className) {
              * @returns {$data.Managed}
              */
             removeFromRegistry: function () {
-                self.instanceRegistry.deleteItem(this.instanceId);
+                delete self.instanceRegistry[this.instanceId];
                 return this;
             },
 
