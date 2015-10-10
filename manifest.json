@@ -21,8 +21,6 @@
         "src/tree/IterativeTreeWalker.def.js",
         "src/tree/RecursiveTreeWalker.def.js",
         "src/tree/Tree.def.js",
-        "src/behavior/Documented.def.js",
-        "src/behavior/Managed.def.js",
         "src/data/collections/ArrayCollection.def.js",
         "src/data/collections/DateCollection.def.js",
         "src/data/collections/StringCollection.def.js",
