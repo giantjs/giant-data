@@ -74,7 +74,7 @@ $oop.postpone($data, 'Managed', function (ns, className) {
              * @memberOf $data.Managed
              */
             getInstanceById: function (instanceId) {
-                return self.instanceRegistry.getItem(instanceId);
+                return self.instanceRegistry[instanceId];
             }
         });
 });

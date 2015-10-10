@@ -32,17 +32,17 @@
         result = myInstance.addToRegistry();
 
         strictEqual(result, myInstance, "Registry addition is chainable");
-        strictEqual($data.Managed.instanceRegistry.getItem(instanceId), myInstance, "Instance stored");
+        strictEqual($data.Managed.instanceRegistry[instanceId], myInstance, "Instance stored");
 
         result = myInstance.removeFromRegistry();
         strictEqual(result, myInstance, "Registry removal is chainable");
 
-        ok(!$data.Managed.instanceRegistry.getItem(instanceId), "Instance not in registry");
+        ok(!$data.Managed.instanceRegistry[instanceId], "Instance not in registry");
 
         result = myInstance.addToRegistry();
 
         strictEqual(result, myInstance, "Registry addition is chainable");
-        strictEqual($data.Managed.instanceRegistry.getItem(instanceId), myInstance, "Removed instance stored again");
+        strictEqual($data.Managed.instanceRegistry[instanceId], myInstance, "Removed instance stored again");
     });
 
     test("Fetching instance", function () {
