@@ -537,7 +537,7 @@ $oop.postpone($data, 'Collection', function () {
 
             /**
              * Iterates over collection items and calls the specified handler function on each, until
-             * either the iteration completes of handler returns `false`.
+             * either the iteration completes or handler returns `false`.
              * Iteration order is non-deterministic.
              * Iteration commences according to the initial state of the collection, with regards to
              * item keys and count. Therefore any handler function changing the collection will not thwart the

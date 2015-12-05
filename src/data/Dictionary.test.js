@@ -293,8 +293,8 @@
 
     test("Cloning", function () {
         var dictionary = $data.Dictionary.create()
-                .addItem('foo', ["hello", "world"])
-                .addItem('bar', "baz"),
+            .addItem('foo', ["hello", "world"])
+            .addItem('bar', "baz"),
             clone = dictionary.clone();
 
         notStrictEqual(clone.items, dictionary.items, "Buffers not the same");
@@ -312,5 +312,26 @@
         dict.clear();
         equal(dict.keyCount, 0, "Key count after emptying");
         equal(dict.itemCount, 0, "Item (KV pair) count after emptying");
+    });
+
+    test("For Each", function () {
+        var dictionary = $data.Dictionary.create({
+                foo : ['bar', 'baz'],
+                quux: 1
+            }),
+            result = [];
+
+        function handler(value, key) {
+            result.push([key, value]);
+        }
+
+        strictEqual(dictionary.forEachItem(handler), dictionary,
+            "should be chainable");
+
+        deepEqual(result, [
+            ['foo', 'bar'],
+            ['foo', 'baz'],
+            ['quux', 1]
+        ], "should iterate over all key-value pairs in dictionary");
     });
 }());

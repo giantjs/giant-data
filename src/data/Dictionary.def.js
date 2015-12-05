@@ -216,7 +216,7 @@ $oop.postpone($data, 'Dictionary', function () {
 
                 if (typeof key === 'string' ||
                     typeof key === 'number'
-                    ) {
+                ) {
                     result = this.items[key];
                 } else if (key instanceof Array) {
                     // key may be an array of keys
@@ -275,6 +275,56 @@ $oop.postpone($data, 'Dictionary', function () {
 
                 // resetting item counter
                 this.itemCount = 0;
+
+                return this;
+            },
+
+            /**
+             * Iterates over dictionary items and calls the specified handler function on each, until
+             * either the iteration completes or handler returns `false`.
+             * Iteration order is non-deterministic.
+             * Iteration commences according to the initial state of the dictionary, with regards to
+             * item keys and count. Therefore any handler function changing the dictionary will not thwart the
+             * iteration process. However, changing the dictionary while iterating is strongly discouraged.
+             * @example
+             * d.forEachItem(function (item, itemKey, extraParam) {
+             *  alert(itemKey + item + extraParam);
+             * }, 'foo'); // outputs: 'foo1foo', 'bar10foo', 'force100foo'
+             * @param {function} handler Function to be called on each item. The handler receives current item
+             * as first argument, item key as second argument, and all other arguments passed to `.forEachItem()`
+             * as the rest of its arguments.
+             * @param {object} [context=this] Optional handler context. Set to the dictionary instance by default.
+             * @returns {$data.Dictionary}
+             */
+            forEachItem: function (handler, context) {
+                $assertion
+                    .isFunction(handler, "Invalid callback function")
+                    .isObjectOptional(context, "Invalid context");
+
+                context = context || this;
+
+                var items = this.items,
+                    keys = this.getKeys(),
+                    keyCount = keys.length,
+                    i, itemKey, item,
+                    itemCount, j;
+
+                for (i = 0; i < keyCount; i++) {
+                    itemKey = keys[i];
+                    item = items[itemKey];
+                    if (item instanceof Array) {
+                        itemCount = item.length;
+                        for (j = 0; j < itemCount; j++) {
+                            if (handler.call(context, item[j], itemKey) === false) {
+                                break;
+                            }
+                        }
+                    } else {
+                        if (handler.call(context, item, itemKey) === false) {
+                            break;
+                        }
+                    }
+                }
 
                 return this;
             }
