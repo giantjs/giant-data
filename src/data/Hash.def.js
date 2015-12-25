@@ -211,7 +211,7 @@ $oop.postpone($data, 'Hash', function () {
             /**
              * Clears hash by replacing items buffer with an empty one.
              * Observes current buffer type, ie. if hash was array based, the new buffer will be also array.
-             * @param {function} handler Change handler callback. Receives the new `items` buffer.
+             * @param {function} [handler] Change handler callback. Receives the new `items` buffer.
              * @returns {$data.Hash}
              */
             clear: function (handler) {
