@@ -119,7 +119,7 @@ $oop.postpone($data, 'RecursiveTreeWalker', function () {
 
                 if (typeof pattern === 'string') {
                     // pattern is key literal
-                    if (hOP.call(node, pattern)) {
+                    if (node && hOP.call(node, pattern)) {
                         // key is present in node
                         result[pattern] = true;
                     }
@@ -151,7 +151,7 @@ $oop.postpone($data, 'RecursiveTreeWalker', function () {
                             // only key is expected to be matched
                             for (i = 0; i < descriptor.options.length; i++) {
                                 key = descriptor.options[i];
-                                if (hOP.call(node, key)) {
+                                if (node && hOP.call(node, key)) {
                                     // key present in node
                                     result[key] = true;
                                 }
